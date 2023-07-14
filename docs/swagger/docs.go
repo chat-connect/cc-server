@@ -127,74 +127,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/:userKey/spot_register": {
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Spot"
-                ],
-                "summary": "地点登録",
-                "parameters": [
-                    {
-                        "description": "地点名",
-                        "name": "name",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "URL",
-                        "name": "url",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "住所",
-                        "name": "address",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "type": "integer",
-                        "description": "ユーザーキー",
-                        "name": "user_key",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.SpotRegister"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/response.Error"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/user/user_check": {
+        "/user/{userKey}/user_check": {
             "get": {
                 "security": [
                     {
@@ -265,7 +198,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
+                        "type": "string",
                         "description": "ユーザーキー",
                         "name": "user_key",
                         "in": "path",
@@ -297,32 +230,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "response.SpotRegister": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "latitude": {
-                    "type": "string"
-                },
-                "longitude": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "spot_key": {
-                    "type": "string"
-                },
-                "url": {
                     "type": "string"
                 }
             }
