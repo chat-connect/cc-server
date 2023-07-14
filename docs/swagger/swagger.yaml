@@ -1,0 +1,242 @@
+definitions:
+  response.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  response.SpotRegister:
+    properties:
+      address:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      spot_key:
+        type: string
+      url:
+        type: string
+    type: object
+  response.UserCheck:
+    properties:
+      email:
+        type: string
+      user_key:
+        type: string
+      username:
+        type: string
+    type: object
+  response.UserDelete:
+    properties:
+      message:
+        type: string
+    type: object
+  response.UserLogin:
+    properties:
+      email:
+        type: string
+      message:
+        type: string
+      token:
+        type: string
+      user_key:
+        type: string
+      username:
+        type: string
+    type: object
+  response.UserRegister:
+    properties:
+      email:
+        type: string
+      message:
+        type: string
+      user_key:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/user_login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: パスワード
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      - description: メールアドレス
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserLogin'
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/response.Error'
+            type: array
+      summary: ユーザーログイン
+      tags:
+      - Auth
+  /auth/user_register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ユーザー名
+        in: body
+        name: username
+        required: true
+        schema:
+          type: string
+      - description: パスワード
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      - description: メールアドレス
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserRegister'
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/response.Error'
+            type: array
+      summary: ユーザー登録
+      tags:
+      - Auth
+  /user/:userKey/spot_register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 地点名
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: URL
+        in: body
+        name: url
+        required: true
+        schema:
+          type: string
+      - description: 住所
+        in: body
+        name: address
+        required: true
+        schema:
+          type: string
+      - description: ユーザーキー
+        in: path
+        name: user_key
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.SpotRegister'
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/response.Error'
+            type: array
+      summary: 地点登録
+      tags:
+      - Spot
+  /user/{userKey}/user_delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ユーザーキー
+        in: path
+        name: user_key
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserDelete'
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/response.Error'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー削除
+      tags:
+      - User
+  /user/user_check:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserCheck'
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/response.Error'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー取得
+      tags:
+      - User
+swagger: "2.0"

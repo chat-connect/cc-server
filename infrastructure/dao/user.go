@@ -1,0 +1,43 @@
+package dao
+
+import (
+	"github.com/chat-connect/cc-server/domain/model"
+)
+
+type UserDao struct {
+	SqlHandler
+}
+
+func (repo *UserDao) FindById(id int) (user model.User, err error) {
+	if err = repo.Find(&user, id).Error; err != nil {
+		return
+	}
+
+	return
+}
+
+func (repo *UserDao) FindByEmail(email string) (user model.User, err error) {
+	if err = repo.Where("email = ?", email).Find(&user).Error; err != nil {
+		return
+	}
+
+	return
+}
+
+func (repo *UserDao) Store(u model.User) (user model.User, err error) {
+	if err = repo.Create(&u).Error; err != nil {
+		return
+	}
+	
+	user = u
+
+	return
+}
+
+func (repo *UserDao) DeleteByUserKey(user model.User) (err error) {
+	if err = repo.Where("user_key = ?", user.UserKey).Delete(&user).Error; err != nil {
+		return
+	}
+	
+	return
+}
