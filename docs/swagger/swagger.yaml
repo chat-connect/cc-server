@@ -31,6 +31,11 @@ definitions:
       username:
         type: string
     type: object
+  response.UserLogout:
+    properties:
+      message:
+        type: string
+    type: object
   response.UserRegister:
     properties:
       email:

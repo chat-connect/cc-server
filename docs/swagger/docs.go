@@ -276,6 +276,14 @@ const docTemplate = `{
                 }
             }
         },
+        "response.UserLogout": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "response.UserRegister": {
             "type": "object",
             "properties": {
