@@ -28,7 +28,7 @@ func (interactor *UserService) FindByUserKey(userKey string) (user model.User, e
 	return
 }
 
-func (interactor *UserService) Add(u model.User) (user model.User, err error) {
+func (interactor *UserService) RegisterUser(u model.User) (user model.User, err error) {
 	// ユニークキーを生成
 	userKey, err := lib.GenerateKey()
 	if err != nil {
@@ -51,7 +51,7 @@ func (interactor *UserService) UpdateUser(u model.User) (user model.User, err er
 }
 
 
-func (interactor *UserService) DeleteByUserKey(u model.User) (err error) {
+func (interactor *UserService) DeleteUser(u model.User) (err error) {
 	err = interactor.UserDao.DeleteByUserKey(u)
 	
 	return

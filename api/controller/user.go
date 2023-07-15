@@ -50,7 +50,7 @@ func (controller *UserController) Register(c echo.Context) (err error) {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	u.Password = string(hashedPassword)
 
-	user, err = controller.Interactor.Add(u)
+	user, err = controller.Interactor.RegisterUser(u)
 	if err != nil {
 		return c.JSON(500, response.NewError(err))
 	}
@@ -155,7 +155,7 @@ func (controller *UserController) Delete(c echo.Context) (err error) {
 	userKey := c.Param("userKey")
 	user := model.User{ UserKey: userKey }
 
-	err = controller.Interactor.DeleteByUserKey(user)
+	err = controller.Interactor.DeleteUser(user)
 	if err != nil {
 		return c.JSON(500, response.NewError(err))
 	}
