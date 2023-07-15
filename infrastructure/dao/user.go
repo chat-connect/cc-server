@@ -24,6 +24,14 @@ func (repo *UserDao) FindByEmail(email string) (user model.User, err error) {
 	return
 }
 
+func (repo *UserDao) FindByUserKey(userKey string) (user model.User, err error) {
+	if err = repo.Where("user_key = ?", userKey).Find(&user).Error; err != nil {
+		return
+	}
+
+	return
+}
+
 func (repo *UserDao) Store(u model.User) (user model.User, err error) {
 	if err = repo.Create(&u).Error; err != nil {
 		return

@@ -22,6 +22,12 @@ func (interactor *UserService) FindByEmail(email string) (user model.User, err e
 	return
 }
 
+func (interactor *UserService) FindByUserKey(userKey string) (user model.User, err error) {
+	user, err = interactor.UserDao.FindByUserKey(userKey)
+
+	return
+}
+
 func (interactor *UserService) Add(u model.User) (user model.User, err error) {
 	// ユニークキーを生成
 	userKey, err := lib.GenerateKey()

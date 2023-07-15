@@ -14,6 +14,7 @@ import (
 
 func Init() *echo.Echo {
 	userController := controller.NewUserController(database.NewSqlHandler())
+	userMiddleware := customMiddleware.NewUserMiddleware(database.NewSqlHandler())
 	
 	e := echo.New()
 
@@ -30,7 +31,7 @@ func Init() *echo.Echo {
 
 	// user: 認証済ユーザーのみアクセス可能
 	u := e.Group("/user")
-	u.Use(customMiddleware.UserMiddleware)
+	u.Use(userMiddleware.UserMiddleware)
 	u.GET("/:userKey/user_check", func(c echo.Context) error { return userController.Check(c) }) // user/user_login
 	u.DELETE("/:userKey/user_delete", func(c echo.Context) error { return userController.Delete(c) }) // user/user_delete
 
