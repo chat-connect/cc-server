@@ -95,7 +95,7 @@ func (controller *UserController) Login(c echo.Context) (err error) {
 		return c.JSON(500, response.NewError(err))
 	}
 
-	user.Token = &token
+	user.Token = token
 	user.Status = "online"
 	_, err = controller.Interactor.UpdateUser(user)
 	if err != nil {
@@ -138,6 +138,29 @@ func (controller *UserController) Check(c echo.Context) (err error) {
 	email := claims["email"].(string)
   
 	return c.JSON(200,  response.ToUserCheck(userKey, username, email))
+}
+
+// Logout
+// @Summary     ログアウト
+// @tags        User
+// @Accept      json
+// @Produce     json
+// @Security    ApiKeyAuth
+// @param       Authorization header string true "Authorization"
+// @Param       user_key path string true "ユーザーキー"
+// @Success     200  {object} response.UserLogout
+// @Failure     500  {array}  response.Error
+// @Router      /user/{userKey}/user_delete [delete]
+func (controller *UserController) Logout(c echo.Context) (err error) {
+	userKey := c.Param("userKey")
+	user := model.User{ UserKey: userKey }
+
+	_, err = controller.Interactor.LogoutUser(user)
+	if err != nil {
+		return c.JSON(500, response.NewError(err))
+	}
+
+	return c.JSON(200, response.ToUserLogout())
 }
 
 // Delete

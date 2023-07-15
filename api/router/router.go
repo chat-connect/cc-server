@@ -33,6 +33,7 @@ func Init() *echo.Echo {
 	u := e.Group("/user")
 	u.Use(userMiddleware.UserMiddleware)
 	u.GET("/:userKey/user_check", func(c echo.Context) error { return userController.Check(c) }) // user/user_check
+	u.PUT("/:userKey/user_logout", func(c echo.Context) error { return userController.Logout(c) }) // user/user_logout
 	u.DELETE("/:userKey/user_delete", func(c echo.Context) error { return userController.Delete(c) }) // user/user_delete
 
 	e.Logger.Fatal(e.Start(":8000"))

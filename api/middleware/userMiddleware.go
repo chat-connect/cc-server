@@ -34,7 +34,7 @@ func (middleware *UserMiddleware) UserMiddleware(next echo.HandlerFunc) echo.Han
 			return fmt.Errorf("Invalid user_key")
 		}
 
-		if token != *user.Token {
+		if token != user.Token {
 			return fmt.Errorf("Invalid token")
 		}
 

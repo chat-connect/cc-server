@@ -65,3 +65,14 @@ func ToUserCheck(userKey string, username string, email string) *UserCheck {
 		Email:    email,
 	}
 }
+
+// user_logout
+type UserLogout struct {
+	Message  string `json:"message"`
+}
+
+func ToUserLogout() *UserDelete {
+	return &UserDelete{
+		Message: "user logout completed",
+	}
+}

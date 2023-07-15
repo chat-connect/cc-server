@@ -50,6 +50,13 @@ func (interactor *UserService) UpdateUser(u model.User) (user model.User, err er
 	return user, err
 }
 
+func (interactor *UserService) LogoutUser(u model.User) (user model.User, err error) {
+	u.Status = "offline"
+	u.Token = ""
+	user, err = interactor.UserDao.Update(u)
+	
+	return user, err
+}
 
 func (interactor *UserService) DeleteUser(u model.User) (err error) {
 	err = interactor.UserDao.DeleteByUserKey(u)
