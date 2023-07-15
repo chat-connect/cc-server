@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/chat-connect/cc-server/domain/model"
 	"github.com/chat-connect/cc-server/domain/repository"
+	"github.com/chat-connect/cc-server/library"
 )
 
 type UserService struct {
@@ -22,9 +23,18 @@ func (interactor *UserService) UserByEmail(email string) (user model.User, err e
 }
 
 func (interactor *UserService) Add(u model.User) (user model.User, err error) {
+	// ユニークキーを生成
+	userKey, err := lib.GenerateKey()
+	if err != nil {
+		return u, err
+	}
+
+	u.UserKey = userKey
+	u.Status = "offline"
+
 	user, err = interactor.UserDao.Store(u)
 
-	return
+	return user, err
 }
 
 func (interactor *UserService) DeleteByUserKey(u model.User) (err error) {

@@ -6,8 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"github.com/labstack/echo/v4"
 	"github.com/dgrijalva/jwt-go"
-	
-	"github.com/chat-connect/cc-server/library"
+
 	"github.com/chat-connect/cc-server/domain/model"
 	"github.com/chat-connect/cc-server/service"
 	"github.com/chat-connect/cc-server/infrastructure/dao"
@@ -48,12 +47,6 @@ func (controller *UserController) Register(c echo.Context) (err error) {
 		return c.JSON(500, response.NewError(err))
 	}
 
-	userKey, err := lib.GenerateKey()
-	if err != nil {
-		return c.JSON(500, response.NewError(err))
-	}
-
-	u.UserKey = userKey
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	u.Password = string(hashedPassword)
 
