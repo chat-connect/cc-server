@@ -140,7 +140,7 @@ func (controller *UserController) Check(c echo.Context) (err error) {
 	return c.JSON(200,  response.ToUserCheck(userKey, username, email))
 }
 
-// Check
+// Delete
 // @Summary     ユーザー削除
 // @tags        User
 // @Accept      json
