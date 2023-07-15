@@ -12,6 +12,7 @@ type User struct {
 	Username  string    `json:"username"`
 	Email     string    `json:"email"`
 	Password  string    `json:"password"`
+	Token     *string   `json:"token"`
 	Status    string    `json:"status"`
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
