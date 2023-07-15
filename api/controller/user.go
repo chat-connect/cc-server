@@ -42,7 +42,7 @@ func (controller *UserController) Register(c echo.Context) (err error) {
 	u := model.User{}
 	c.Bind(&u)
 
-	user, err := controller.Interactor.UserByEmail(u.Email)
+	user, err := controller.Interactor.FindByEmail(u.Email)
 	if err == nil {
 		return c.JSON(500, response.NewError(err))
 	}
@@ -73,7 +73,7 @@ func (controller *UserController) Login(c echo.Context) (err error) {
 	c.Bind(&u)
 	
 	email := u.Email
-	user, err := controller.Interactor.UserByEmail(email)
+	user, err := controller.Interactor.FindByEmail(email)
 	if err != nil {
 		return c.JSON(500, response.NewError(err))
 	}

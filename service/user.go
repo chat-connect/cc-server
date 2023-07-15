@@ -16,7 +16,7 @@ func (interactor *UserService) UserById(id int) (user model.User, err error) {
 	return
 }
 
-func (interactor *UserService) UserByEmail(email string) (user model.User, err error) {
+func (interactor *UserService) FindByEmail(email string) (user model.User, err error) {
 	user, err = interactor.UserDao.FindByEmail(email)
 
 	return
