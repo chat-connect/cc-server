@@ -23,12 +23,12 @@ func Init() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	// auth
+	// auth: 認証API
 	a := e.Group("/auth")
 	a.POST("/user_register", func(c echo.Context) error { return userController.Register(c) }) // auth/user_register
 	a.POST("/user_login", func(c echo.Context) error { return userController.Login(c) }) // auth/user_login
 
-	// user
+	// user: 認証済ユーザーのみアクセス可能
 	u := e.Group("/user")
 	u.Use(customMiddleware.UserMiddleware)
 	u.GET("/:userKey/user_check", func(c echo.Context) error { return userController.Check(c) }) // user/user_login
