@@ -9,18 +9,18 @@ import (
 	
 	"github.com/chat-connect/cc-server/library"
 	"github.com/chat-connect/cc-server/domain/model"
-	"github.com/chat-connect/cc-server/usecase"
+	"github.com/chat-connect/cc-server/service"
 	"github.com/chat-connect/cc-server/infrastructure/dao"
 	"github.com/chat-connect/cc-server/api/response"
 )
 
 type UserController struct {
-	Interactor usecase.UserUseCase
+	Interactor service.UserService
 }
 
 func NewUserController(sqlHandler dao.SqlHandler) *UserController {
 	return &UserController{
-		Interactor: usecase.UserUseCase {
+		Interactor: service.UserService {
 				UserDao: &dao.UserDao {
 				SqlHandler: sqlHandler,
 			},
