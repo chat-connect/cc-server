@@ -5,7 +5,7 @@ CREATE TABLE `user` (
     `username` VARCHAR(50) NOT NULL COMMENT "ユーザー名",
     `email` VARCHAR(255) NOT NULL COMMENT "メールアドレス",
     `password` VARCHAR(255) NOT NULL COMMENT "パスワード",
-    `token` VARCHAR(255) DEFAULT NULL COMMENT "アクセストークン",
+    `token` VARCHAR(255) NOT NULL COMMENT "アクセストークン",
     `status` VARCHAR(255) NOT NULL COMMENT "状態",
     `created_at` TIMESTAMP NOT NULL COMMENT "作成日時",
     `updated_at` TIMESTAMP NOT NULL COMMENT "更新日時",
