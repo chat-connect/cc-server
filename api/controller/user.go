@@ -95,6 +95,13 @@ func (controller *UserController) Login(c echo.Context) (err error) {
 		return c.JSON(500, response.NewError(err))
 	}
 
+	user.Token = &token
+	user.Status = "online"
+	_, err = controller.Interactor.UpdateUser(user)
+	if err != nil {
+		return c.JSON(500, response.NewError(err))
+	}
+
 	return c.JSON(200, response.ToUserLogin(user, token))
 }
 

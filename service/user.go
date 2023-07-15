@@ -37,6 +37,14 @@ func (interactor *UserService) Add(u model.User) (user model.User, err error) {
 	return user, err
 }
 
+func (interactor *UserService) UpdateUser(u model.User) (user model.User, err error) {
+
+	user, err = interactor.UserDao.Update(u)
+
+	return user, err
+}
+
+
 func (interactor *UserService) DeleteByUserKey(u model.User) (err error) {
 	err = interactor.UserDao.DeleteByUserKey(u)
 	

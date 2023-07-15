@@ -34,6 +34,14 @@ func (repo *UserDao) Store(u model.User) (user model.User, err error) {
 	return
 }
 
+func (repo *UserDao) Update(u model.User) (user model.User, err error) {
+	if err = repo.Find(&user).Where("user_key = ?", u.UserKey).Update(&u).Error; err != nil {
+		return
+	}
+
+	return
+}
+
 func (repo *UserDao) DeleteByUserKey(user model.User) (err error) {
 	if err = repo.Where("user_key = ?", user.UserKey).Delete(&user).Error; err != nil {
 		return
