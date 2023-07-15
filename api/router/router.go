@@ -32,7 +32,7 @@ func Init() *echo.Echo {
 	// user: 認証済ユーザーのみアクセス可能
 	u := e.Group("/user")
 	u.Use(userMiddleware.UserMiddleware)
-	u.GET("/:userKey/user_check", func(c echo.Context) error { return userController.Check(c) }) // user/user_login
+	u.GET("/:userKey/user_check", func(c echo.Context) error { return userController.Check(c) }) // user/user_check
 	u.DELETE("/:userKey/user_delete", func(c echo.Context) error { return userController.Delete(c) }) // user/user_delete
 
 	e.Logger.Fatal(e.Start(":8000"))
