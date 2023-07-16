@@ -116,8 +116,13 @@ func (controller *UserController) Login(c echo.Context) (err error) {
 // @Failure     500  {array}  response.Error
 // @Router      /user/{userKey}/user_check [get]
 func (controller *UserController) Check(c echo.Context) (err error) {
-	baseToken := c.Request().Header.Get("Authorization")
-	token, err := jwt.Parse(baseToken[7:], func(token *jwt.Token) (interface{}, error) {
+	cookie, err := c.Cookie("access_token")
+	if err != nil {
+		return c.JSON(500, response.NewError(err))
+	}
+
+	baseToken := cookie.Value
+	token, err := jwt.Parse(baseToken, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Invalid token")
 		}

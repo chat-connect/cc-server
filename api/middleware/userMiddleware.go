@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"fmt"
-	"strings"
 	"github.com/labstack/echo/v4"
 
 	"github.com/chat-connect/cc-server/service"
@@ -25,8 +24,12 @@ func NewUserMiddleware(sqlHandler dao.SqlHandler) *UserMiddleware {
 
 func (middleware *UserMiddleware) UserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
     return func(c echo.Context) error {
-		token := c.Request().Header.Get("Authorization")
-		token = strings.ReplaceAll(token, "Bearer ", "")
+		cookie, err := c.Cookie("access_token")
+		if err != nil {
+			return fmt.Errorf("Invalid access_token")
+		}
+	
+		token := cookie.Value
 		userKey := c.Param("userKey")
 
 		user, err := middleware.Interactor.FindByUserKey(userKey)
