@@ -51,8 +51,6 @@ func (interactor *UserService) UpdateUser(u model.User) (user model.User, err er
 }
 
 func (interactor *UserService) LogoutUser(u model.User) (user model.User, err error) {
-	u.Status = "offline"
-	u.Token = ""
 	user, err = interactor.UserDao.Update(u)
 	
 	return user, err

@@ -157,10 +157,14 @@ func (controller *UserController) Check(c echo.Context) (err error) {
 // @Failure     500  {array}  response.Error
 // @Router      /user/{userKey}/user_delete [delete]
 func (controller *UserController) Logout(c echo.Context) (err error) {
+	u := model.User{}
+	c.Bind(&u)
+	
 	userKey := c.Param("userKey")
-	user := model.User{ UserKey: userKey }
-
-	_, err = controller.Interactor.LogoutUser(user)
+	u.UserKey =  userKey 
+	u.Status = "offline"
+	u.Token = "None"
+	_, err = controller.Interactor.LogoutUser(u)
 	if err != nil {
 		return c.JSON(500, response.NewError(err))
 	}
