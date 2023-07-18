@@ -114,7 +114,7 @@ func (controller *UserController) Login(c echo.Context) (err error) {
 // @param       Authorization header string true "Authorization"
 // @Success     200  {object} response.UserCheck
 // @Failure     500  {array}  response.Error
-// @Router      /user/{userKey}/user_check [get]
+// @Router      /user/{user_key}/user_check [get]
 func (controller *UserController) Check(c echo.Context) (err error) {
 	baseToken := c.Request().Header.Get("Authorization")
 	token, err := jwt.Parse(baseToken[7:], func(token *jwt.Token) (interface{}, error) {
@@ -150,7 +150,7 @@ func (controller *UserController) Check(c echo.Context) (err error) {
 // @Param       user_key path string true "ユーザーキー"
 // @Success     200  {object} response.UserLogout
 // @Failure     500  {array}  response.Error
-// @Router      /user/{userKey}/user_delete [delete]
+// @Router      /user/{user_key}/user_logout [delete]
 func (controller *UserController) Logout(c echo.Context) (err error) {
 	u := model.User{}
 	c.Bind(&u)
@@ -177,7 +177,7 @@ func (controller *UserController) Logout(c echo.Context) (err error) {
 // @Param       user_key path string true "ユーザーキー"
 // @Success     200  {object} response.UserDelete
 // @Failure     500  {array}  response.Error
-// @Router      /user/{userKey}/user_delete [delete]
+// @Router      /user/{user_key}/user_delete [delete]
 func (controller *UserController) Delete(c echo.Context) (err error) {
 	userKey := c.Param("userKey")
 	user := model.User{ UserKey: userKey }

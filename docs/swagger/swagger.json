@@ -1,8 +1,17 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is a sample swagger server.",
+        "title": "Chat Connect",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
     },
+    "host": "localhost:8001",
+    "basePath": "/",
     "paths": {
         "/auth/user_login": {
             "post": {
@@ -115,7 +124,7 @@
                 }
             }
         },
-        "/user/{userKey}/user_check": {
+        "/user/{user_key}/user_check": {
             "get": {
                 "security": [
                     {
@@ -160,7 +169,7 @@
                 }
             }
         },
-        "/user/{userKey}/user_delete": {
+        "/user/{user_key}/user_delete": {
             "delete": {
                 "security": [
                     {
@@ -198,6 +207,58 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/response.UserDelete"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{user_key}/user_logout": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "ログアウト",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ユーザーキー",
+                        "name": "user_key",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserLogout"
                         }
                     },
                     "500": {

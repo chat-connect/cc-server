@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   response.Error:
     properties:
@@ -47,8 +48,15 @@ definitions:
       username:
         type: string
     type: object
+host: localhost:8001
 info:
   contact: {}
+  description: This is a sample swagger server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Chat Connect
+  version: "1.0"
 paths:
   /auth/user_login:
     post:
@@ -122,7 +130,7 @@ paths:
       summary: ユーザー登録
       tags:
       - Auth
-  /user/{userKey}/user_check:
+  /user/{user_key}/user_check:
     get:
       consumes:
       - application/json
@@ -150,7 +158,7 @@ paths:
       summary: ユーザー取得
       tags:
       - User
-  /user/{userKey}/user_delete:
+  /user/{user_key}/user_delete:
     delete:
       consumes:
       - application/json
@@ -181,6 +189,39 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: ユーザー削除
+      tags:
+      - User
+  /user/{user_key}/user_logout:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ユーザーキー
+        in: path
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserLogout'
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/response.Error'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ログアウト
       tags:
       - User
 swagger: "2.0"
