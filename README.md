@@ -3,22 +3,16 @@ chat-connectのサーバー。
 
 ## 環境構築
 1.コンテナを起動
+・development: air
+・production: go build
 ```
 docker compose up -d --build
 ```
-2.コンテナに入る
+2.Swaggerのビルド
 ```
-docker container exec -it cc-server-app-1 bash
+docker container exec -it cc-server-api-1 swag init --output=docs/swagger
 ```
-3.マイグレーションの作成(例：userテーブル)
+3.Swaggerのmackサーバーを起動
 ```
-migrate create -ext sql -dir docs/migration -seq create_user
-```
-4.マイグレーションの実行
-```
-migrate -database="mysql://root:root@tcp(host.docker.internal:3306)/cc_server?multiStatements=true" -path=docs/migration up
-```
-5.Swaggerのビルド
-```
-swag init --output docs/swagger
+docker container exec -it cc-server-swagger-1 prism mock ./docs/swagger/swagger.yaml --port=9000 --host=0.0.0.0
 ```
