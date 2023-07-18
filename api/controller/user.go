@@ -32,9 +32,7 @@ func NewUserController(sqlHandler dao.SqlHandler) *UserController {
 // @tags        Auth
 // @Accept      json
 // @Produce     json
-// @Param       username body string true "ユーザー名"
-// @Param       password body string true "パスワード"
-// @Param       email    body string true "メールアドレス"
+// @Param       body body request.UserRegister true "ユーザー登録"
 // @Success     200  {object} response.UserRegister
 // @Failure     500  {array}  response.Error
 // @Router      /auth/user_register [post]
@@ -63,8 +61,7 @@ func (controller *UserController) Register(c echo.Context) (err error) {
 // @tags        Auth
 // @Accept      json
 // @Produce     json
-// @Param       password body string true "パスワード"
-// @Param       email    body string true "メールアドレス"
+// @Param       body body request.UserLogin true "ユーザーログイン"
 // @Success     200  {object} response.UserLogin
 // @Failure     500  {array}  response.Error
 // @Router      /auth/user_login [post]
@@ -150,7 +147,7 @@ func (controller *UserController) Check(c echo.Context) (err error) {
 // @Param       user_key path string true "ユーザーキー"
 // @Success     200  {object} response.UserLogout
 // @Failure     500  {array}  response.Error
-// @Router      /user/{user_key}/user_logout [delete]
+// @Router      /user/{user_key}/user_logout [put]
 func (controller *UserController) Logout(c echo.Context) (err error) {
 	u := model.User{}
 	c.Bind(&u)
