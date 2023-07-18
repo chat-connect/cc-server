@@ -1,8 +1,10 @@
 version: '3'
 services:
-  app:
-    build:
+# APIサーバー
+  api:
+    build: 
       target: ${APP_ENV}
+      context: ./
     volumes:
       - ./:/go/src/app
     ports:
@@ -14,3 +16,14 @@ services:
       MYSQL_HOST: ${MYSQL_HOST}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+# Swaggerのmockサーバー
+  swagger:
+    build:
+      target: ${APP_ENV}
+      context: ./docs/swagger
+    volumes:
+      - .:/swagger:cached
+    ports:
+      - "9000:9000"
+    tty: true

@@ -1,5 +1,21 @@
 basePath: /
 definitions:
+  request.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  request.UserRegister:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   response.Error:
     properties:
       message:
@@ -63,18 +79,12 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: パスワード
+      - description: ユーザーログイン
         in: body
-        name: password
+        name: body
         required: true
         schema:
-          type: string
-      - description: メールアドレス
-        in: body
-        name: email
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/request.UserLogin'
       produces:
       - application/json
       responses:
@@ -96,24 +106,12 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: ユーザー名
+      - description: ユーザー登録
         in: body
-        name: username
+        name: body
         required: true
         schema:
-          type: string
-      - description: パスワード
-        in: body
-        name: password
-        required: true
-        schema:
-          type: string
-      - description: メールアドレス
-        in: body
-        name: email
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/request.UserRegister'
       produces:
       - application/json
       responses:
@@ -192,7 +190,7 @@ paths:
       tags:
       - User
   /user/{user_key}/user_logout:
-    delete:
+    put:
       consumes:
       - application/json
       parameters:

@@ -34,21 +34,12 @@ const docTemplate = `{
                 "summary": "ユーザーログイン",
                 "parameters": [
                     {
-                        "description": "パスワード",
-                        "name": "password",
+                        "description": "ユーザーログイン",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "メールアドレス",
-                        "name": "email",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/request.UserLogin"
                         }
                     }
                 ],
@@ -85,30 +76,12 @@ const docTemplate = `{
                 "summary": "ユーザー登録",
                 "parameters": [
                     {
-                        "description": "ユーザー名",
-                        "name": "username",
+                        "description": "ユーザー登録",
+                        "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "パスワード",
-                        "name": "password",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "メールアドレス",
-                        "name": "email",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/request.UserRegister"
                         }
                     }
                 ],
@@ -229,7 +202,7 @@ const docTemplate = `{
             }
         },
         "/user/{user_key}/user_logout": {
-            "delete": {
+            "put": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -282,6 +255,31 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.UserLogin": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserRegister": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "response.Error": {
             "type": "object",
             "properties": {

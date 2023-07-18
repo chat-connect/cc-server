@@ -18,6 +18,7 @@ COPY /log/api_debug.log /app/log
 COPY /log/batch_debug.log /app/log
 COPY wait-for.sh .
 RUN chmod +x wait-for.sh
+
 EXPOSE 8000
 
 CMD [ "/app/main" ]
@@ -33,7 +34,7 @@ COPY . .
 RUN apk upgrade --update && apk add bash && apk --no-cache add git
 RUN go install github.com/cosmtrek/air@v1.44.0
 RUN go install github.com/swaggo/swag/cmd/swag@v1.8.0
-RUN swag init --output docs/swagger
+
 EXPOSE 8000
 
 CMD ["air", "-c", ".air.toml"]
