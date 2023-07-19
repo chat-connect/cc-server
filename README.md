@@ -1,10 +1,13 @@
 # cc-server
 chat-connectのサーバー。
 
+## URL
+- APIサーバー：[http://localhost:8001]()
+- mockサーバー：[http://localhost:9000]()
 ## 環境構築
 1.コンテナを起動
-・development: air
-・production: go build
+- APP_ENV=development：air
+- APP_ENV=production：go build
 ```
 docker compose up -d --build
 ```
