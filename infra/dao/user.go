@@ -8,6 +8,14 @@ type UserDao struct {
 	SqlHandler
 }
 
+func (repo *UserDao) FindAll() (users model.Users, err error) {
+	if err = repo.Find(&users).Error; err != nil {
+		return
+	}
+	
+	return
+}
+
 func (repo *UserDao) FindById(id int) (user model.User, err error) {
 	if err = repo.Find(&user, id).Error; err != nil {
 		return
@@ -26,6 +34,14 @@ func (repo *UserDao) FindByEmail(email string) (user model.User, err error) {
 
 func (repo *UserDao) FindByUserKey(userKey string) (user model.User, err error) {
 	if err = repo.Where("user_key = ?", userKey).Find(&user).Error; err != nil {
+		return
+	}
+
+	return
+}
+
+func (repo *UserDao) FindByStatus(status string) (users model.Users, err error) {
+	if err = repo.Where("status = ?", status).Find(&users).Error; err != nil {
 		return
 	}
 
