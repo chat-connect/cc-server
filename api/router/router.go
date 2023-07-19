@@ -8,7 +8,7 @@ import (
 	"github.com/chat-connect/cc-server/infra/database"
 	"github.com/chat-connect/cc-server/api/controller"
 	customMiddleware "github.com/chat-connect/cc-server/api/middleware"
-	_ "github.com/chat-connect/cc-server/docs/swagger"
+	_ "github.com/chat-connect/cc-server/swagger"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 

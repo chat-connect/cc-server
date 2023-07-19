@@ -21,7 +21,7 @@ services:
   swagger:
     build:
       target: ${APP_ENV}
-      context: ./docs/swagger
+      context: ./swagger
     volumes:
       - .:/swagger:cached
     ports:
