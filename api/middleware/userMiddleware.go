@@ -5,7 +5,7 @@ import (
 	"strings"
 	"github.com/labstack/echo/v4"
 
-	"github.com/chat-connect/cc-server/service"
+	"github.com/chat-connect/cc-server/api/service"
 	"github.com/chat-connect/cc-server/infra/dao"
 )
 

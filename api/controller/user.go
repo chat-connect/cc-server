@@ -8,8 +8,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 
 	"github.com/chat-connect/cc-server/domain/model"
-	"github.com/chat-connect/cc-server/service"
 	"github.com/chat-connect/cc-server/infra/dao"
+	"github.com/chat-connect/cc-server/api/service"
 	"github.com/chat-connect/cc-server/api/response"
 )
 
