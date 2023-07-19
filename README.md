@@ -19,3 +19,9 @@ docker container exec -it cc-server-api-1 swag init --output=swagger
 ```
 docker container exec -it cc-server-swagger-1 prism mock ./swagger/swagger.yaml --port=9000 --host=0.0.0.0
 ```
+
+## テスト
+1.model
+```
+docker container exec -it cc-server-api-1 go test -v ./domain/model
+```
