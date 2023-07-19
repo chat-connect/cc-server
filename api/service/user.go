@@ -44,7 +44,6 @@ func (interactor *UserService) Register(u model.User) (user model.User, err erro
 }
 
 func (interactor *UserService) Update(u model.User) (user model.User, err error) {
-
 	user, err = interactor.UserDao.Update(u)
 
 	return user, err
