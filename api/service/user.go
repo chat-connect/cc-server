@@ -38,7 +38,7 @@ func (interactor *UserService) Register(u model.User) (user model.User, err erro
 	u.UserKey = userKey
 	u.Status = "offline"
 
-	user, err = interactor.UserDao.Store(u)
+	user, err = interactor.UserDao.Insert(u)
 
 	return user, err
 }

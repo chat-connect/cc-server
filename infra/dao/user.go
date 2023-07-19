@@ -32,7 +32,7 @@ func (repo *UserDao) FindByUserKey(userKey string) (user model.User, err error) 
 	return
 }
 
-func (repo *UserDao) Store(u model.User) (user model.User, err error) {
+func (repo *UserDao) Insert(u model.User) (user model.User, err error) {
 	if err = repo.Create(&u).Error; err != nil {
 		return
 	}
