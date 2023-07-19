@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/chat-connect/cc-server/log"
-	"github.com/chat-connect/cc-server/infrastructure/database"
+	"github.com/chat-connect/cc-server/infra/database"
 	"github.com/chat-connect/cc-server/api/controller"
 	customMiddleware "github.com/chat-connect/cc-server/api/middleware"
 	_ "github.com/chat-connect/cc-server/docs/swagger"

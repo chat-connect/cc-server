@@ -6,7 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
-	"github.com/chat-connect/cc-server/infrastructure/dao"
+	"github.com/chat-connect/cc-server/infra/dao"
 )
 
 type SqlHandler struct {

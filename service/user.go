@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/chat-connect/cc-server/domain/model"
 	"github.com/chat-connect/cc-server/domain/repository"
-	"github.com/chat-connect/cc-server/library"
+	"github.com/chat-connect/cc-server/lib"
 )
 
 type UserService struct {

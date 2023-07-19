@@ -9,7 +9,7 @@ import (
 
 	"github.com/chat-connect/cc-server/domain/model"
 	"github.com/chat-connect/cc-server/service"
-	"github.com/chat-connect/cc-server/infrastructure/dao"
+	"github.com/chat-connect/cc-server/infra/dao"
 	"github.com/chat-connect/cc-server/api/response"
 )
 

@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"github.com/chat-connect/cc-server/service"
-	"github.com/chat-connect/cc-server/infrastructure/dao"
+	"github.com/chat-connect/cc-server/infra/dao"
 )
 
 type UserMiddleware struct {
