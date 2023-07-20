@@ -8,7 +8,7 @@ import (
 
 	"github.com/chat-connect/cc-server/domain/model"
 	"github.com/chat-connect/cc-server/domain/repository"
-	"github.com/chat-connect/cc-server/lib"
+	"github.com/chat-connect/cc-server/config/key"
 )
 
 type UserService interface {
@@ -48,7 +48,7 @@ func (u *userService) FindByUserKey(userKey string) (*model.User, error) {
 }
 
 func (u *userService) UserRegister(userModel *model.User) (*model.User, error) {
-	userKey, err := lib.GenerateKey()
+	userKey, err := key.GenerateKey()
 	if err != nil {
 		return userModel, err
 	}

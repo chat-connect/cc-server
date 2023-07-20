@@ -1,4 +1,4 @@
-package lib
+package key
 
 import (
 	gonanoid "github.com/matoous/go-nanoid/v2"
