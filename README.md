@@ -17,5 +17,10 @@ docker container exec -it cc-server-api-1 swag init --dir=api --output=swagger
 ```
 3.Swaggerのmackサーバーを起動
 ```
-docker container exec -it cc-server-swagger-1 prism mock ./swagger/swagger.yaml --port=9000 --host=0.0.0.0
+docker container exec -it cc-server-swagger-1 prism mock ./swagger/swagger.yaml --port=8002 --host=0.0.0.0
+```
+## DI
+1.ビルド
+```
+docker container exec -it cc-server-api-1 wire api/di/wire.go
 ```
