@@ -1,4 +1,4 @@
-package request
+package parameter
 
 // user_register
 type UserRegister struct {

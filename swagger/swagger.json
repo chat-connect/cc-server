@@ -32,7 +32,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserLogin"
+                            "$ref": "#/definitions/parameter.UserLogin"
                         }
                     }
                 ],
@@ -40,7 +40,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserLogin"
+                            "$ref": "#/definitions/output.UserLogin"
                         }
                     },
                     "500": {
@@ -48,7 +48,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -74,7 +74,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserRegister"
+                            "$ref": "#/definitions/parameter.UserRegister"
                         }
                     }
                 ],
@@ -82,7 +82,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserRegister"
+                            "$ref": "#/definitions/output.UserRegister"
                         }
                     },
                     "500": {
@@ -90,7 +90,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -127,7 +127,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserCheck"
+                            "$ref": "#/definitions/output.UserCheck"
                         }
                     },
                     "500": {
@@ -135,7 +135,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -179,7 +179,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserDelete"
+                            "$ref": "#/definitions/output.UserDelete"
                         }
                     },
                     "500": {
@@ -187,7 +187,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -231,7 +231,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserLogout"
+                            "$ref": "#/definitions/output.UserLogout"
                         }
                     },
                     "500": {
@@ -239,7 +239,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -248,32 +248,7 @@
         }
     },
     "definitions": {
-        "request.UserLogin": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.UserRegister": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "response.Error": {
+        "output.Error": {
             "type": "object",
             "properties": {
                 "message": {
@@ -281,7 +256,7 @@
                 }
             }
         },
-        "response.UserCheck": {
+        "output.UserCheck": {
             "type": "object",
             "properties": {
                 "email": {
@@ -295,7 +270,7 @@
                 }
             }
         },
-        "response.UserDelete": {
+        "output.UserDelete": {
             "type": "object",
             "properties": {
                 "message": {
@@ -303,7 +278,7 @@
                 }
             }
         },
-        "response.UserLogin": {
+        "output.UserLogin": {
             "type": "object",
             "properties": {
                 "email": {
@@ -323,7 +298,7 @@
                 }
             }
         },
-        "response.UserLogout": {
+        "output.UserLogout": {
             "type": "object",
             "properties": {
                 "message": {
@@ -331,7 +306,7 @@
                 }
             }
         },
-        "response.UserRegister": {
+        "output.UserRegister": {
             "type": "object",
             "properties": {
                 "email": {
@@ -341,6 +316,31 @@
                     "type": "string"
                 },
                 "user_key": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "parameter.UserLogin": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "parameter.UserRegister": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 },
                 "username": {

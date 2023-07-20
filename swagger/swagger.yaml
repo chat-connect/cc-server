@@ -1,27 +1,11 @@
 basePath: /
 definitions:
-  request.UserLogin:
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-    type: object
-  request.UserRegister:
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-      username:
-        type: string
-    type: object
-  response.Error:
+  output.Error:
     properties:
       message:
         type: string
     type: object
-  response.UserCheck:
+  output.UserCheck:
     properties:
       email:
         type: string
@@ -30,12 +14,12 @@ definitions:
       username:
         type: string
     type: object
-  response.UserDelete:
+  output.UserDelete:
     properties:
       message:
         type: string
     type: object
-  response.UserLogin:
+  output.UserLogin:
     properties:
       email:
         type: string
@@ -48,18 +32,34 @@ definitions:
       username:
         type: string
     type: object
-  response.UserLogout:
+  output.UserLogout:
     properties:
       message:
         type: string
     type: object
-  response.UserRegister:
+  output.UserRegister:
     properties:
       email:
         type: string
       message:
         type: string
       user_key:
+        type: string
+      username:
+        type: string
+    type: object
+  parameter.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  parameter.UserRegister:
+    properties:
+      email:
+        type: string
+      password:
         type: string
       username:
         type: string
@@ -84,19 +84,19 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.UserLogin'
+          $ref: '#/definitions/parameter.UserLogin'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.UserLogin'
+            $ref: '#/definitions/output.UserLogin'
         "500":
           description: Internal Server Error
           schema:
             items:
-              $ref: '#/definitions/response.Error'
+              $ref: '#/definitions/output.Error'
             type: array
       summary: ユーザーログイン
       tags:
@@ -111,19 +111,19 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/request.UserRegister'
+          $ref: '#/definitions/parameter.UserRegister'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.UserRegister'
+            $ref: '#/definitions/output.UserRegister'
         "500":
           description: Internal Server Error
           schema:
             items:
-              $ref: '#/definitions/response.Error'
+              $ref: '#/definitions/output.Error'
             type: array
       summary: ユーザー登録
       tags:
@@ -144,12 +144,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.UserCheck'
+            $ref: '#/definitions/output.UserCheck'
         "500":
           description: Internal Server Error
           schema:
             items:
-              $ref: '#/definitions/response.Error'
+              $ref: '#/definitions/output.Error'
             type: array
       security:
       - ApiKeyAuth: []
@@ -177,12 +177,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.UserDelete'
+            $ref: '#/definitions/output.UserDelete'
         "500":
           description: Internal Server Error
           schema:
             items:
-              $ref: '#/definitions/response.Error'
+              $ref: '#/definitions/output.Error'
             type: array
       security:
       - ApiKeyAuth: []
@@ -210,12 +210,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.UserLogout'
+            $ref: '#/definitions/output.UserLogout'
         "500":
           description: Internal Server Error
           schema:
             items:
-              $ref: '#/definitions/response.Error'
+              $ref: '#/definitions/output.Error'
             type: array
       security:
       - ApiKeyAuth: []

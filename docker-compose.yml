@@ -1,6 +1,6 @@
 version: '3'
 services:
-# APIサーバー
+# API
   api:
     build: 
       target: ${APP_ENV}
@@ -17,7 +17,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-# Swaggerのmockサーバー
+# Swagger mock
   swagger:
     build:
       target: ${APP_ENV}
@@ -25,5 +25,5 @@ services:
     volumes:
       - .:/swagger:cached
     ports:
-      - "9000:9000"
+      - "8002:8000"
     tty: true

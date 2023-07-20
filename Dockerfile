@@ -5,7 +5,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o main /app/main.go
+RUN go build -o main /app/api/main.go
 
 # Run Production
 FROM alpine AS production
@@ -32,9 +32,10 @@ WORKDIR ${ROOT}
 ENV GO111MODULE=on
 COPY . .
 RUN apk upgrade --update && apk add bash && apk --no-cache add git
-RUN go install github.com/cosmtrek/air@v1.44.0
+
 RUN go install github.com/swaggo/swag/cmd/swag@v1.8.0
+RUN go install github.com/google/wire/cmd/wire@v0.5.0
 
 EXPOSE 8000
 
-CMD ["air", "-c", ".air.toml"]
+CMD [ "go", "run", "api/main.go" ]

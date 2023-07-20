@@ -39,7 +39,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserLogin"
+                            "$ref": "#/definitions/parameter.UserLogin"
                         }
                     }
                 ],
@@ -47,7 +47,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserLogin"
+                            "$ref": "#/definitions/output.UserLogin"
                         }
                     },
                     "500": {
@@ -55,7 +55,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -81,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.UserRegister"
+                            "$ref": "#/definitions/parameter.UserRegister"
                         }
                     }
                 ],
@@ -89,7 +89,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserRegister"
+                            "$ref": "#/definitions/output.UserRegister"
                         }
                     },
                     "500": {
@@ -97,7 +97,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -134,7 +134,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserCheck"
+                            "$ref": "#/definitions/output.UserCheck"
                         }
                     },
                     "500": {
@@ -142,7 +142,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -186,7 +186,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserDelete"
+                            "$ref": "#/definitions/output.UserDelete"
                         }
                     },
                     "500": {
@@ -194,7 +194,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -238,7 +238,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.UserLogout"
+                            "$ref": "#/definitions/output.UserLogout"
                         }
                     },
                     "500": {
@@ -246,7 +246,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/response.Error"
+                                "$ref": "#/definitions/output.Error"
                             }
                         }
                     }
@@ -255,32 +255,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "request.UserLogin": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.UserRegister": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "response.Error": {
+        "output.Error": {
             "type": "object",
             "properties": {
                 "message": {
@@ -288,7 +263,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserCheck": {
+        "output.UserCheck": {
             "type": "object",
             "properties": {
                 "email": {
@@ -302,7 +277,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserDelete": {
+        "output.UserDelete": {
             "type": "object",
             "properties": {
                 "message": {
@@ -310,7 +285,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserLogin": {
+        "output.UserLogin": {
             "type": "object",
             "properties": {
                 "email": {
@@ -330,7 +305,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserLogout": {
+        "output.UserLogout": {
             "type": "object",
             "properties": {
                 "message": {
@@ -338,7 +313,7 @@ const docTemplate = `{
                 }
             }
         },
-        "response.UserRegister": {
+        "output.UserRegister": {
             "type": "object",
             "properties": {
                 "email": {
@@ -348,6 +323,31 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_key": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "parameter.UserLogin": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "parameter.UserRegister": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 },
                 "username": {
