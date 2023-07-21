@@ -21,17 +21,17 @@ docker container exec -it cc-server-api-1 go run api/main.go
 ## Batch
 2.バッチを実行
 ```
-docker container exec -it cc-server-batch-1 go run batch/main.go --command=example
+docker container exec -it cc-batch go run batch/main.go --command=example
 ```
 
 ## Swagger
 1.Swaggerのビルド
 ```
-docker container exec -it cc-server-api-1 swag init --dir=api --output=swagger
+docker container exec -it cc-api swag init --dir=api --output=swagger
 ```
 2.Swaggerのmackサーバーを起動
 ```
-docker container exec -it cc-server-swagger-1 prism mock ./swagger/swagger.yaml --port=8002 --host=0.0.0.0
+docker container exec -it cc-swagger prism mock ./swagger/swagger.yaml --port=8002 --host=0.0.0.0
 ```
 
 ## DI
