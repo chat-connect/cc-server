@@ -17,7 +17,7 @@ func InitializeUserController() controller.UserController {
     wire.Build(
         database.NewDB,
         dao.NewUserRepository,
-        service.NewTaskService,
+        service.NewUserService,
         controller.NewUserController,
     )
     return nil
@@ -28,7 +28,7 @@ func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(
         database.NewDB,
         dao.NewUserRepository,
-        service.NewTaskService,
+        service.NewUserService,
 		middleware.NewUserMiddleware,
     )
     return nil

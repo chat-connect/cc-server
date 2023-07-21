@@ -20,7 +20,7 @@ import (
 func InitializeUserController() controller.UserController {
 	db := database.NewDB()
 	userRepository := dao.NewUserRepository(db)
-	userService := service.NewTaskService(userRepository)
+	userService := service.NewUserService(userRepository)
 	userController := controller.NewUserController(userService)
 	return userController
 }
@@ -29,7 +29,7 @@ func InitializeUserController() controller.UserController {
 func InitializeUserMiddleware() middleware.UserMiddleware {
 	db := database.NewDB()
 	userRepository := dao.NewUserRepository(db)
-	userService := service.NewTaskService(userRepository)
+	userService := service.NewUserService(userRepository)
 	userMiddleware := middleware.NewUserMiddleware(userService)
 	return userMiddleware
 }
