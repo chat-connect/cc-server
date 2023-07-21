@@ -8,7 +8,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func NewDB() *gorm.DB {
+func NewDB() (db *gorm.DB) {
 	user := os.Getenv("MYSQL_USER")
 	password := os.Getenv("MYSQL_PASSWORD")
 	host := os.Getenv("MYSQL_HOST")

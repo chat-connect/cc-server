@@ -31,8 +31,8 @@ func NewTaskService(userRepository repository.UserRepository) UserService {
 	}
 }
 
-func (userService *userService) FindByEmail(email string) (*model.User, error) {
-	userResult, err := userService.userRepository.FindByEmail(email)
+func (userService *userService) FindByEmail(email string) (userResult *model.User, err error) {
+	userResult, err = userService.userRepository.FindByEmail(email)
 	if err != nil {
 		return userResult, err
 	}
@@ -40,8 +40,8 @@ func (userService *userService) FindByEmail(email string) (*model.User, error) {
 	return userResult, nil
 }
 
-func (userService *userService) FindByUserKey(userKey string) (*model.User, error) {
-	userResult, err := userService.userRepository.FindByUserKey(userKey)
+func (userService *userService) FindByUserKey(userKey string) (userResult *model.User, err error) {
+	userResult, err = userService.userRepository.FindByUserKey(userKey)
 	if err != nil {
 		return userResult, err
 	}
@@ -49,7 +49,7 @@ func (userService *userService) FindByUserKey(userKey string) (*model.User, erro
 	return userResult, nil
 }
 
-func (userService *userService) UserRegister(userModel *model.User) (*model.User, error) {
+func (userService *userService) UserRegister(userModel *model.User) (userResult *model.User, err error) {
 	userKey, err := key.GenerateKey()
 	if err != nil {
 		return userModel, err
@@ -61,7 +61,7 @@ func (userService *userService) UserRegister(userModel *model.User) (*model.User
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(userModel.Password), bcrypt.DefaultCost)
 	userModel.Password = string(hashedPassword)
 
-	userResult, err := userService.userRepository.Insert(userModel)
+	userResult, err = userService.userRepository.Insert(userModel)
 	if err != nil {
 		return nil, err
 	}
@@ -69,8 +69,8 @@ func (userService *userService) UserRegister(userModel *model.User) (*model.User
 	return userResult, nil
 }
 
-func (userService *userService) UserLogin(userModel *model.User) (*model.User, error) {
-	user, err := userService.userRepository.FindByEmail(userModel.Email)
+func (userService *userService) UserLogin(userModel *model.User) (user *model.User, err error) {
+	user, err = userService.userRepository.FindByEmail(userModel.Email)
 	if err != nil {
 		return user, err
 	}
@@ -127,8 +127,8 @@ func (userService *userService) UserCheck(baseToken string) (userKey string, use
 	return userKey, username, email, nil
 }
 
-func (userService *userService) UserLogout(userModel *model.User) (*model.User, error) {
-	user, err := userService.userRepository.Update(userModel)
+func (userService *userService) UserLogout(userModel *model.User) (user *model.User, err error) {
+	user, err = userService.userRepository.Update(userModel)
 	if err != nil {
 		return nil, err
 	}
@@ -136,8 +136,8 @@ func (userService *userService) UserLogout(userModel *model.User) (*model.User, 
 	return user, nil
 }
 
-func (userService *userService) UserDelete(userKey string) (error) {
-	err := userService.userRepository.DeleteByUserKey(userKey)
+func (userService *userService) UserDelete(userKey string) (err error) {
+	err = userService.userRepository.DeleteByUserKey(userKey)
 	if err != nil {
 		return err
 	}

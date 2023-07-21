@@ -17,8 +17,8 @@ func NewUserRepository(conn *gorm.DB) repository.UserRepository {
 	}
 }
 
-func (userRepository *userRepository) FindByEmail(email string) (*model.User, error) {
-	entity := &model.User{}
+func (userRepository *userRepository) FindByEmail(email string) (entity *model.User, err error) {
+	entity = &model.User{}
 	res := userRepository.Conn.Where("email = ?", email).Find(entity)
 	if err := res.Error; err != nil {
 		return entity, err
@@ -27,8 +27,8 @@ func (userRepository *userRepository) FindByEmail(email string) (*model.User, er
 	return entity, nil
 }
 
-func (userRepository *userRepository) FindByUserKey(userKey string) (*model.User, error) {
-	entity := &model.User{}
+func (userRepository *userRepository) FindByUserKey(userKey string) (entity *model.User, err error) {
+	entity = &model.User{}
 	res := userRepository.Conn.Where("user_key = ?", userKey).Find(entity)
 	if err := res.Error; err != nil {
 		return entity, err
@@ -37,8 +37,8 @@ func (userRepository *userRepository) FindByUserKey(userKey string) (*model.User
 	return entity, nil
 }
 
-func (userRepository *userRepository) Insert(param *model.User) (*model.User, error) {
-	entity := &model.User{
+func (userRepository *userRepository) Insert(param *model.User) (entity *model.User, err error) {
+	entity = &model.User{
 		UserKey:  param.UserKey,
 		Username: param.Username,
 		Email:    param.Email,
@@ -55,8 +55,8 @@ func (userRepository *userRepository) Insert(param *model.User) (*model.User, er
 	return entity, nil
 }
 
-func (userRepository *userRepository) Update(param *model.User) (*model.User, error) {
-	entity := &model.User{
+func (userRepository *userRepository) Update(param *model.User) (entity *model.User, err error) {
+	entity = &model.User{
 		UserKey:  param.UserKey,
 		Username: param.Username,
 		Email:    param.Email,
@@ -73,13 +73,13 @@ func (userRepository *userRepository) Update(param *model.User) (*model.User, er
 	return entity, nil
 }
 
-func (userRepository *userRepository) DeleteByUserKey(userKey string) (error) {
+func (userRepository *userRepository) DeleteByUserKey(userKey string) (err error) {
 	entity := &model.User{}
 
 	res := userRepository.Conn.Where("user_key = ?", userKey).Delete(entity)
 	if err := res.Error; err != nil {
 		return err
 	}
-
+	
 	return nil
 }

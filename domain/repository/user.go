@@ -5,9 +5,9 @@ import (
 )
 
 type UserRepository interface {
-	FindByEmail(email string) (*model.User, error)
-	FindByUserKey(userKey string) (*model.User, error)
-	Insert(userModel *model.User) (*model.User, error)
-	Update(userModel *model.User) (*model.User, error)
-	DeleteByUserKey(userKey string) (error)
+	FindByEmail(email string) (entity *model.User, err error)
+	FindByUserKey(userKey string) (entity *model.User, err error)
+	Insert(userModel *model.User) (entity *model.User, err error)
+	Update(userModel *model.User) (entity *model.User, err error)
+	DeleteByUserKey(userKey string) (err error)
 }
