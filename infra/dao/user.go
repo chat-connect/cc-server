@@ -37,6 +37,16 @@ func (userRepository *userRepository) FindByUserKey(userKey string) (entity *mod
 	return entity, nil
 }
 
+func (userRepository *userRepository) CountByStatus(status string) (count int64, err error) {
+	entity := &model.User{}
+	res := userRepository.Conn.Model(entity).Where("status = ?", status).Count(&count)
+	if err := res.Error; err != nil {
+		return count, err
+	}
+
+	return count, nil
+}
+
 func (userRepository *userRepository) Insert(param *model.User) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
