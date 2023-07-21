@@ -43,4 +43,4 @@ docker container exec -it cc-server-api-1 wire api/di/wire.go
 2.Batch
 ```
 docker container exec -it cc-server-api-1 wire batch/di/wire.go
-``
+```
