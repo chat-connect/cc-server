@@ -93,7 +93,7 @@ func (userService *userService) UserLogin(userModel *model.User) (user *model.Us
 	}
 
 	user.Token = token
-	user.Status = "online"
+	user.Status = "login"
 
 	_, err = userService.userRepository.Update(user)
 	if err != nil {

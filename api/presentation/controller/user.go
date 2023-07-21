@@ -118,7 +118,7 @@ func (userController *userController) UserLogout() echo.HandlerFunc {
 		
 		userKey := c.Param("userKey")
 		userModel.UserKey =  userKey 
-		userModel.Status = "offline"
+		userModel.Status = "logout"
 		userModel.Token = "nil"
 		_, err := userController.userService.UserLogout(userModel)
 		if err != nil {
