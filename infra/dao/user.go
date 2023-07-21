@@ -47,7 +47,7 @@ func (userRepository *userRepository) CountByStatus(status string) (count int64,
 	return count, nil
 }
 
-func (userRepository *userRepository) Insert(param *model.User) (entity *model.User, err error) {
+func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
 		Username: param.Username,
@@ -57,7 +57,13 @@ func (userRepository *userRepository) Insert(param *model.User) (entity *model.U
 		Status:   param.Status,
 	}
 
-	res := userRepository.Conn.Create(entity)
+	var res *gorm.DB
+	if tx != nil {
+		res = tx.Create(entity)
+	} else {
+		res = userRepository.Conn.Create(entity)
+	}
+
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -65,7 +71,7 @@ func (userRepository *userRepository) Insert(param *model.User) (entity *model.U
 	return entity, nil
 }
 
-func (userRepository *userRepository) Update(param *model.User) (entity *model.User, err error) {
+func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
 		Username: param.Username,
@@ -75,7 +81,13 @@ func (userRepository *userRepository) Update(param *model.User) (entity *model.U
 		Status:   param.Status,
 	}
 
-	res := userRepository.Conn.Model(entity).Where("user_key = ?", entity.UserKey).Update(entity)
+	var res *gorm.DB
+	if tx != nil {
+		res = tx.Create(entity)
+	} else {
+		res = userRepository.Conn.Model(entity).Where("user_key = ?", entity.UserKey).Update(entity)
+	}
+
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -83,10 +95,16 @@ func (userRepository *userRepository) Update(param *model.User) (entity *model.U
 	return entity, nil
 }
 
-func (userRepository *userRepository) DeleteByUserKey(userKey string) (err error) {
+func (userRepository *userRepository) DeleteByUserKey(userKey string, tx *gorm.DB) (err error) {
 	entity := &model.User{}
 
-	res := userRepository.Conn.Where("user_key = ?", userKey).Delete(entity)
+	var res *gorm.DB
+	if tx != nil {
+		res = tx.Create(entity)
+	} else {
+		res = userRepository.Conn.Where("user_key = ?", userKey).Delete(entity)
+	}
+
 	if err := res.Error; err != nil {
 		return err
 	}

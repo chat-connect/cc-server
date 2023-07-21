@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"time"
+	"log"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/dgrijalva/jwt-go"
 
@@ -22,12 +23,17 @@ type UserService interface {
 }
 
 type userService struct {
-	userRepository repository.UserRepository
+	userRepository        repository.UserRepository
+	transactionRepository repository.TransactionRepository
 }
 
-func NewUserService(userRepository repository.UserRepository) UserService {
+func NewUserService(
+		userRepository repository.UserRepository,
+		transactionRepository repository.TransactionRepository,
+	) UserService {
 	return &userService{
-		userRepository: userRepository,
+		userRepository:        userRepository,
+		transactionRepository: transactionRepository,
 	}
 }
 
@@ -50,6 +56,25 @@ func (userService *userService) FindByUserKey(userKey string) (userResult *model
 }
 
 func (userService *userService) UserRegister(userModel *model.User) (userResult *model.User, err error) {
+	// transaction
+	tx, err := userService.transactionRepository.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if err != nil {
+			err := userService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := userService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
 	userKey, err := key.GenerateKey()
 	if err != nil {
 		return userModel, err
@@ -61,15 +86,36 @@ func (userService *userService) UserRegister(userModel *model.User) (userResult 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(userModel.Password), bcrypt.DefaultCost)
 	userModel.Password = string(hashedPassword)
 
-	userResult, err = userService.userRepository.Insert(userModel)
+	userResult, err = userService.userRepository.Insert(userModel, tx)
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println(userResult)
 
 	return userResult, nil
 }
 
 func (userService *userService) UserLogin(userModel *model.User) (user *model.User, err error) {
+	// transaction
+	tx, err := userService.transactionRepository.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if err != nil {
+			err := userService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := userService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
 	user, err = userService.userRepository.FindByEmail(userModel.Email)
 	if err != nil {
 		return user, err
@@ -95,7 +141,7 @@ func (userService *userService) UserLogin(userModel *model.User) (user *model.Us
 	user.Token = token
 	user.Status = "login"
 
-	_, err = userService.userRepository.Update(user)
+	_, err = userService.userRepository.Update(user, tx)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +174,26 @@ func (userService *userService) UserCheck(baseToken string) (userKey string, use
 }
 
 func (userService *userService) UserLogout(userModel *model.User) (user *model.User, err error) {
-	user, err = userService.userRepository.Update(userModel)
+	// transaction
+	tx, err := userService.transactionRepository.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if err != nil {
+			err := userService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := userService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	user, err = userService.userRepository.Update(userModel, tx)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +202,26 @@ func (userService *userService) UserLogout(userModel *model.User) (user *model.U
 }
 
 func (userService *userService) UserDelete(userKey string) (err error) {
-	err = userService.userRepository.DeleteByUserKey(userKey)
+	// transaction
+	tx, err := userService.transactionRepository.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			err := userService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := userService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	err = userService.userRepository.DeleteByUserKey(userKey, tx)
 	if err != nil {
 		return err
 	}
