@@ -24,7 +24,7 @@ func (userRepository *userRepository) FindByEmail(email string) (entity *model.U
 		return entity, err
 	}
 	
-	return entity, nil
+	return entity, err
 }
 
 func (userRepository *userRepository) FindByUserKey(userKey string) (entity *model.User, err error) {
@@ -34,7 +34,7 @@ func (userRepository *userRepository) FindByUserKey(userKey string) (entity *mod
 		return entity, err
 	}
 	
-	return entity, nil
+	return entity, err
 }
 
 func (userRepository *userRepository) CountByStatus(status string) (count int64, err error) {
@@ -44,7 +44,7 @@ func (userRepository *userRepository) CountByStatus(status string) (count int64,
 		return count, err
 	}
 
-	return count, nil
+	return count, err
 }
 
 func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
@@ -106,7 +106,7 @@ func (userRepository *userRepository) DeleteByUserKey(userKey string, tx *gorm.D
 	} else {
 		conn = userRepository.Conn
 	}
-	
+
 	res := conn.Model(&model.User{}).Where("user_key = ?", userKey).Delete(entity)
 	if err := res.Error; err != nil {
 		return err
