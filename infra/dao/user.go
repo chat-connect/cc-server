@@ -57,18 +57,19 @@ func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (en
 		Status:   param.Status,
 	}
 
-	var res *gorm.DB
+	var conn *gorm.DB
 	if tx != nil {
-		res = tx.Create(entity)
+		conn = tx
 	} else {
-		res = userRepository.Conn.Create(entity)
+		conn = userRepository.Conn
 	}
-
+	
+	res := conn.Model(&model.User{}).Create(entity)
 	if err := res.Error; err != nil {
-		return nil, err
+		return entity, err
 	}
 
-	return entity, nil
+	return entity, err
 }
 
 func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
@@ -81,33 +82,35 @@ func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (en
 		Status:   param.Status,
 	}
 
-	var res *gorm.DB
+	var conn *gorm.DB
 	if tx != nil {
-		res = tx.Create(entity)
+		conn = tx
 	} else {
-		res = userRepository.Conn.Model(entity).Where("user_key = ?", entity.UserKey).Update(entity)
+		conn = userRepository.Conn
 	}
-
+	
+	res := conn.Model(&model.User{}).Where("user_key = ?", entity.UserKey).Update(entity)
 	if err := res.Error; err != nil {
-		return nil, err
+		return entity, err
 	}
 
-	return entity, nil
+	return entity, err
 }
 
 func (userRepository *userRepository) DeleteByUserKey(userKey string, tx *gorm.DB) (err error) {
 	entity := &model.User{}
 
-	var res *gorm.DB
+	var conn *gorm.DB
 	if tx != nil {
-		res = tx.Create(entity)
+		conn = tx
 	} else {
-		res = userRepository.Conn.Where("user_key = ?", userKey).Delete(entity)
+		conn = userRepository.Conn
 	}
-
+	
+	res := conn.Model(&model.User{}).Where("user_key = ?", userKey).Delete(entity)
 	if err := res.Error; err != nil {
 		return err
 	}
 	
-	return nil
+	return err
 }
