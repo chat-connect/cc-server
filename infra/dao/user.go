@@ -12,12 +12,14 @@ type userRepository struct {
 }
 
 func NewUserRepository(conn *gorm.DB) repository.UserRepository {
-	return &userRepository{Conn: conn}
+	return &userRepository{
+		Conn: conn,
+	}
 }
 
-func (u *userRepository) FindByEmail(email string) (*model.User, error) {
+func (userRepository *userRepository) FindByEmail(email string) (*model.User, error) {
 	entity := &model.User{}
-	res := u.Conn.Where("email = ?", email).Find(entity)
+	res := userRepository.Conn.Where("email = ?", email).Find(entity)
 	if err := res.Error; err != nil {
 		return entity, err
 	}
@@ -25,9 +27,9 @@ func (u *userRepository) FindByEmail(email string) (*model.User, error) {
 	return entity, nil
 }
 
-func (u *userRepository) FindByUserKey(userKey string) (*model.User, error) {
+func (userRepository *userRepository) FindByUserKey(userKey string) (*model.User, error) {
 	entity := &model.User{}
-	res := u.Conn.Where("user_key = ?", userKey).Find(entity)
+	res := userRepository.Conn.Where("user_key = ?", userKey).Find(entity)
 	if err := res.Error; err != nil {
 		return entity, err
 	}
@@ -35,7 +37,7 @@ func (u *userRepository) FindByUserKey(userKey string) (*model.User, error) {
 	return entity, nil
 }
 
-func (u *userRepository) Insert(param *model.User) (*model.User, error) {
+func (userRepository *userRepository) Insert(param *model.User) (*model.User, error) {
 	entity := &model.User{
 		UserKey:  param.UserKey,
 		Username: param.Username,
@@ -45,7 +47,7 @@ func (u *userRepository) Insert(param *model.User) (*model.User, error) {
 		Status:   param.Status,
 	}
 
-	res := u.Conn.Create(entity)
+	res := userRepository.Conn.Create(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -53,7 +55,7 @@ func (u *userRepository) Insert(param *model.User) (*model.User, error) {
 	return entity, nil
 }
 
-func (u *userRepository) Update(param *model.User) (*model.User, error) {
+func (userRepository *userRepository) Update(param *model.User) (*model.User, error) {
 	entity := &model.User{
 		UserKey:  param.UserKey,
 		Username: param.Username,
@@ -63,7 +65,7 @@ func (u *userRepository) Update(param *model.User) (*model.User, error) {
 		Status:   param.Status,
 	}
 
-	res := u.Conn.Model(entity).Where("user_key = ?", entity.UserKey).Update(entity)
+	res := userRepository.Conn.Model(entity).Where("user_key = ?", entity.UserKey).Update(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -71,10 +73,10 @@ func (u *userRepository) Update(param *model.User) (*model.User, error) {
 	return entity, nil
 }
 
-func (u *userRepository) DeleteByUserKey(userKey string) (error) {
+func (userRepository *userRepository) DeleteByUserKey(userKey string) (error) {
 	entity := &model.User{}
 
-	res := u.Conn.Where("user_key = ?", userKey).Delete(entity)
+	res := userRepository.Conn.Where("user_key = ?", userKey).Delete(entity)
 	if err := res.Error; err != nil {
 		return err
 	}

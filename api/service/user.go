@@ -22,15 +22,17 @@ type UserService interface {
 }
 
 type userService struct {
-	userRepo repository.UserRepository
+	userRepository repository.UserRepository
 }
 
-func NewTaskService(userRepo repository.UserRepository) UserService {
-	return &userService{ userRepo: userRepo }
+func NewTaskService(userRepository repository.UserRepository) UserService {
+	return &userService{
+		userRepository: userRepository,
+	}
 }
 
-func (u *userService) FindByEmail(email string) (*model.User, error) {
-	userResult, err := u.userRepo.FindByEmail(email)
+func (userService *userService) FindByEmail(email string) (*model.User, error) {
+	userResult, err := userService.userRepository.FindByEmail(email)
 	if err != nil {
 		return userResult, err
 	}
@@ -38,8 +40,8 @@ func (u *userService) FindByEmail(email string) (*model.User, error) {
 	return userResult, nil
 }
 
-func (u *userService) FindByUserKey(userKey string) (*model.User, error) {
-	userResult, err := u.userRepo.FindByUserKey(userKey)
+func (userService *userService) FindByUserKey(userKey string) (*model.User, error) {
+	userResult, err := userService.userRepository.FindByUserKey(userKey)
 	if err != nil {
 		return userResult, err
 	}
@@ -47,7 +49,7 @@ func (u *userService) FindByUserKey(userKey string) (*model.User, error) {
 	return userResult, nil
 }
 
-func (u *userService) UserRegister(userModel *model.User) (*model.User, error) {
+func (userService *userService) UserRegister(userModel *model.User) (*model.User, error) {
 	userKey, err := key.GenerateKey()
 	if err != nil {
 		return userModel, err
@@ -59,7 +61,7 @@ func (u *userService) UserRegister(userModel *model.User) (*model.User, error) {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(userModel.Password), bcrypt.DefaultCost)
 	userModel.Password = string(hashedPassword)
 
-	userResult, err := u.userRepo.Insert(userModel)
+	userResult, err := userService.userRepository.Insert(userModel)
 	if err != nil {
 		return nil, err
 	}
@@ -67,8 +69,8 @@ func (u *userService) UserRegister(userModel *model.User) (*model.User, error) {
 	return userResult, nil
 }
 
-func (u *userService) UserLogin(userModel *model.User) (*model.User, error) {
-	user, err := u.userRepo.FindByEmail(userModel.Email)
+func (userService *userService) UserLogin(userModel *model.User) (*model.User, error) {
+	user, err := userService.userRepository.FindByEmail(userModel.Email)
 	if err != nil {
 		return user, err
 	}
@@ -93,7 +95,7 @@ func (u *userService) UserLogin(userModel *model.User) (*model.User, error) {
 	user.Token = token
 	user.Status = "online"
 
-	_, err = u.userRepo.Update(user)
+	_, err = userService.userRepository.Update(user)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +103,7 @@ func (u *userService) UserLogin(userModel *model.User) (*model.User, error) {
 	return user, nil
 }
 
-func (u *userService) UserCheck(baseToken string) (userKey string, username string, email string, err error) {
+func (userService *userService) UserCheck(baseToken string) (userKey string, username string, email string, err error) {
 	token, err := jwt.Parse(baseToken[7:], func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Invalid token")
@@ -125,8 +127,8 @@ func (u *userService) UserCheck(baseToken string) (userKey string, username stri
 	return userKey, username, email, nil
 }
 
-func (u *userService) UserLogout(userModel *model.User) (*model.User, error) {
-	user, err := u.userRepo.Update(userModel)
+func (userService *userService) UserLogout(userModel *model.User) (*model.User, error) {
+	user, err := userService.userRepository.Update(userModel)
 	if err != nil {
 		return nil, err
 	}
@@ -134,8 +136,8 @@ func (u *userService) UserLogout(userModel *model.User) (*model.User, error) {
 	return user, nil
 }
 
-func (u *userService) UserDelete(userKey string) (error) {
-	err := u.userRepo.DeleteByUserKey(userKey)
+func (userService *userService) UserDelete(userKey string) (error) {
+	err := userService.userRepository.DeleteByUserKey(userKey)
 	if err != nil {
 		return err
 	}
