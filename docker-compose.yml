@@ -48,5 +48,3 @@ services:
     ports:
       - "8002:8000"
     tty: true
-
-# Batch
