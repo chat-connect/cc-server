@@ -17,3 +17,18 @@ type User struct {
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
+
+func EmptyUser() *User {
+	return &User{}
+}
+
+func (user *User) IsEmpty() bool {
+	return (
+		user.ID == 0 &&
+		user.UserKey == "" &&
+		user.Username == "" &&
+		user.Email == "" &&
+		user.Password == "" &&
+		user.Token == "" &&
+		user.Status == "")
+}
