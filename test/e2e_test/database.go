@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/go-sql-driver/mysql"
 
 	"github.com/chat-connect/cc-server/config/database"
 )
