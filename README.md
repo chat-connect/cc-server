@@ -37,16 +37,20 @@ docker container exec -it cc-swagger prism mock ./swagger/swagger.yaml --port=80
 ## DI
 1.API
 ```
-docker container exec -it cc-api go run api/main.go 
+docker container exec -it cc-api wire api/di/wire.go
 ```
 
 2.Batch
 ```
-docker container exec -it cc-server-api-1 wire batch/di/wire.go
+docker container exec -it cc-batch wire batch/di/wire.go
 ```
 
 ## Test
 1.dao
 ```
 docker container exec -it cc-api go test -v ./infra/dao/...
+```
+2.model
+```
+docker container exec -it cc-api go test -v ./domain/model/...
 ```
