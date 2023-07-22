@@ -4,6 +4,7 @@ chat-connectのサーバー。
 ## URL
 - APIサーバー：[http://localhost:8001]()
 - mockサーバー：[http://localhost:8002]()
+- testサーバー: [http://localhost:8003]()
 
 ## 環境構築
 1.コンテナを起動
