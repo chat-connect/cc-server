@@ -1,23 +1,25 @@
-package model
+package model_test
 
 import (
 	"testing"
+
+	"github.com/chat-connect/cc-server/domain/model"
 )
 
 func TestUserModel_EmptyUser(t *testing.T) {
 	tests := []struct {
 		name     string
-		user     *User
+		user     *model.User
 		expected bool
 	}{
 		{
 			name:     "Empty User",
-			user:     EmptyUser(),
+			user:     model.EmptyUser(),
 			expected: true,
 		},
 		{
 			name: "Not Empty User",
-			user: &User{
+			user: &model.User{
 				ID:        1,
 				UserKey:   "test_key",
 				Username:  "test",

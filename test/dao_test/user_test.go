@@ -1,4 +1,4 @@
-package dao
+package dao_test
 
 import (
 	"testing"
@@ -8,6 +8,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/chat-connect/cc-server/infra/dao"
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
@@ -63,7 +64,7 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := NewUserRepository(gormDB)
+			repo := dao.NewUserRepository(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs("test@example.com").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
 
 			// run test
@@ -126,7 +127,7 @@ func TestUserRepository_FindByUserKey(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := NewUserRepository(gormDB)
+			repo := dao.NewUserRepository(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs("test_key").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
 
 			user, err := repo.FindByUserKey("test_key")
@@ -161,7 +162,7 @@ func TestUserRepository_CountByStatus(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := NewUserRepository(gormDB)
+			repo := dao.NewUserRepository(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs(tc.status).WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(tc.mockResult)).WillReturnError(tc.mockError)
 
 			count, err := repo.CountByStatus(tc.status)
@@ -215,7 +216,7 @@ func TestUserRepository_Insert(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := NewUserRepository(gormDB)
+            repo := dao.NewUserRepository(gormDB)
             mock.ExpectBegin()
             mock.ExpectExec("INSERT").
                 WillReturnResult(sqlmock.NewResult(tc.mockLastInsertID, tc.mockRowsAffected)).
@@ -281,7 +282,7 @@ func TestUserRepository_Update(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := NewUserRepository(gormDB)
+            repo := dao.NewUserRepository(gormDB)
             mock.ExpectBegin()
 			mock.ExpectExec("UPDATE").
                 WillReturnResult(sqlmock.NewResult(tc.mockLastUpdateID, tc.mockRowsAffected)).
@@ -327,7 +328,7 @@ func TestUserRepository_DeleteByUserKey(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := NewUserRepository(gormDB)
+            repo := dao.NewUserRepository(gormDB)
             mock.ExpectBegin()
             mock.ExpectExec("DELETE").WithArgs(tc.userKey).
                 WillReturnResult(sqlmock.NewResult(tc.mockRowsAffected, tc.mockRowsAffected)).
