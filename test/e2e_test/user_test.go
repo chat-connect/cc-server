@@ -13,16 +13,15 @@ import (
 
 	"github.com/chat-connect/cc-server/api/presentation/parameter"
 	"github.com/chat-connect/cc-server/api/presentation/output"
-	"github.com/chat-connect/cc-server/domain/model"
 )
 
 func TestUserE2E_Register(t *testing.T) {
-	models := []Model{
-		&model.User{},
+	files := []File{
+		"sql/user/user_table.sql",
 	}
 
-	db := SetupTestDatabase(models...)
-	defer TeardownTestDatabase(db, models...)
+	db := LoadTestSql(files...)
+	defer ClearTestSql(db)
 
 	testCases := []struct {
 		name         string
@@ -89,17 +88,13 @@ func TestUserE2E_Register(t *testing.T) {
 }
 
 func TestUserE2E_Login(t *testing.T) {
-	models := []Model{
-		&model.User{},
-	}
-
 	files := []File{
-		"sql/user/user.sql",
+		"sql/user/user_table.sql",
+		"sql/user/user_insert.sql",
 	}
 
-	db := SetupTestDatabase(models...)
-	LoadTestData(files...)
-	defer TeardownTestDatabase(db, models...)
+	db := LoadTestSql(files...)
+	defer ClearTestSql(db)
 
 	testCases := []struct {
 		name         string
@@ -162,17 +157,13 @@ func TestUserE2E_Login(t *testing.T) {
 }
 
 func TestUserE2E_Check(t *testing.T) {
-	models := []Model{
-		&model.User{},
-	}
-
 	files := []File{
-		"sql/user/user.sql",
+		"sql/user/user_table.sql",
+		"sql/user/user_insert.sql",
 	}
 
-	db := SetupTestDatabase(models...)
-	LoadTestData(files...)
-	defer TeardownTestDatabase(db, models...)
+	db := LoadTestSql(files...)
+	defer ClearTestSql(db)
 
 	testCases := []struct {
 		name         string
@@ -231,17 +222,13 @@ func TestUserE2E_Check(t *testing.T) {
 }
 
 func TestUserE2E_Delete(t *testing.T) {
-	models := []Model{
-		&model.User{},
-	}
-
 	files := []File{
-		"sql/user/user.sql",
+		"sql/user/user_table.sql",
+		"sql/user/user_insert.sql",
 	}
 
-	db := SetupTestDatabase(models...)
-	LoadTestData(files...)
-	defer TeardownTestDatabase(db, models...)
+	db := LoadTestSql(files...)
+	defer ClearTestSql(db)
 
 	testCases := []struct {
 		name         string

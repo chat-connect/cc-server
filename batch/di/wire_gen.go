@@ -17,7 +17,7 @@ import (
 
 // user
 func InitializeUserCommand() command.UserCommand {
-	db := database.NewGormDB()
+	db := database.NewDB()
 	userRepository := dao.NewUserRepository(db)
 	userService := service.NewUserService(userRepository)
 	userCommand := command.NewUserCommand(userService)

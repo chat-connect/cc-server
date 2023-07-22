@@ -16,7 +16,7 @@ docker compose up -d --build
 ## API
 1.サーバーを起動
 ```
-docker container exec -it cc-server-api-1 go run api/main.go
+docker container exec -it cc-api go run api/main.go
 ```
 
 ## Batch

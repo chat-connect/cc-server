@@ -15,7 +15,7 @@ import (
 // user
 func InitializeUserController() controller.UserController {
     wire.Build(
-        database.NewGormDB,
+        database.NewDB,
         dao.NewUserRepository,
         dao.NewTransactionRepository,
         service.NewUserService,
@@ -27,7 +27,7 @@ func InitializeUserController() controller.UserController {
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(
-        database.NewGormDB,
+        database.NewDB,
         dao.NewUserRepository,
         dao.NewTransactionRepository,
         service.NewUserService,
