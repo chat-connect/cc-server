@@ -14,7 +14,7 @@ import (
 // user
 func InitializeUserCommand() command.UserCommand {
     wire.Build(
-        database.NewDB,
+        database.NewGormDB,
         dao.NewUserRepository,
         service.NewUserService,
         command.NewUserCommand,
