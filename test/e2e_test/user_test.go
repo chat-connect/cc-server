@@ -160,3 +160,72 @@ func TestUserLogin(t *testing.T) {
 		})
 	}
 }
+
+func TestUserCheck(t *testing.T) {
+	models := []Model{
+		&model.User{},
+	}
+
+	files := []File{
+		"sql/user/user.sql",
+	}
+
+	db := SetupTestDatabase(models...)
+	LoadTestData(files...)
+	defer TeardownTestDatabase(db, models...)
+
+	testCases := []struct {
+		name         string
+		userKey      string
+		email        string
+		password     string
+		expectedCode int
+	}{
+		{
+			name:         "Successful User Check",
+			userKey:      "pRxN4QA9bt4p",
+			email:        "test@example.com",
+			password:     "test",
+			expectedCode: http.StatusOK,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			req, err := http.NewRequest("GET", fmt.Sprintf("%s/user/%s/user_check", os.Getenv("TEST_API_URL"), tc.userKey), nil)
+			if err != nil {
+				t.Fatalf("Failed to create request: %v", err)
+			}
+
+			token := AuthUserLogin(tc.email, tc.password)
+			req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+			req.Header.Set("Content-Type", "application/json")
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				t.Fatalf("Failed to send request: %v", err)
+			}
+			defer resp.Body.Close()
+
+			if resp.StatusCode != tc.expectedCode {
+				t.Fatalf("Expected status code %v, but got %v", tc.expectedCode, resp.StatusCode)
+			}
+
+			if tc.expectedCode == http.StatusOK {
+				actual := &output.UserCheck{}
+				expect := &output.UserCheck{
+					UserKey:  tc.userKey,
+					Username: "test",
+					Email:    "test@example.com",
+					Message:  "user check completed",
+				}
+
+				err = json.NewDecoder(resp.Body).Decode(actual)
+				if err != nil {
+					t.Fatalf("Failed to parse response: %v", err)
+				}
+				
+				assert.Equal(t, expect, actual)
+			}
+		})
+	}
+}

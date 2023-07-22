@@ -68,16 +68,18 @@ func ToUserDelete() *UserDelete {
 
 // user_check
 type UserCheck struct {
-	UserKey string `json:"user_key"`
+	UserKey  string `json:"user_key"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
+	Message  string `json:"message"`
 }
 
 func ToUserCheck(userKey string, username string, email string) *UserCheck {
 	return &UserCheck{
 		UserKey:  userKey,
-		Username:  username,
+		Username: username,
 		Email:    email,
+		Message:  "user check completed",
 	}
 }
 
