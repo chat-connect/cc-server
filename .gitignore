@@ -3,3 +3,8 @@
 /tmp
 /log/api_debug.log
 /log/batch_debug.log
+
+.docker/db/data
+.docker/db/sql
+.docker/testdb/data
+.docker/testdb/sql

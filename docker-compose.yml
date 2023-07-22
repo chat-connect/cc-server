@@ -1,10 +1,31 @@
-version: '3'
+version: '3.8'
 services:
+# DB
+  db:
+    container_name: cc-db
+    image: mysql:8.0.14
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cc_server
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./.docker/db/data:/var/lib/mysql  
+      - ./.docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./.docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    tty: true 
+
 # API
   api:
+    container_name: cc-api
+    depends_on:
+      - db
     env_file:
       - .env
-    container_name: cc-api
     build: 
       target: ${APP_ENV}
       context: .
@@ -17,9 +38,11 @@ services:
 
 # Batch
   batch:
+    container_name: cc-batch
+    depends_on:
+      - db
     env_file:
       - .env
-    container_name: cc-batch
     build: 
       target: ${APP_ENV}
       context: .
@@ -30,30 +53,15 @@ services:
 
 # Swagger
   swagger:
+    container_name: cc-swagger
     env_file:
       - .env    
-    container_name: cc-swagger
     build:
       target: ${APP_ENV}
       context: .
       dockerfile: .docker/swagger/Dockerfile
     volumes:
       - .:/swagger:cached
-    ports:
-      - "8002:8000"
-    tty: true
-
-# Test
-  test:
-    env_file:
-      - .env.test
-    container_name: cc-test
-    build: 
-      target: ${APP_ENV}
-      context: .
-      dockerfile: .docker/test/Dockerfile
-    volumes:
-      - ./:/go/src/app
     ports:
       - "8003:8000"
     tty: true
