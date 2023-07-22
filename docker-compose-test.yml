@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+# Test DB
+  testdb:
+    container_name: cc-testdb
+    image: mysql:8.0.14
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cc_server_test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./.docker/testdb/data:/var/lib/mysql  
+      - ./.docker/testdb/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./.docker/testdb/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3306"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    tty: true 
+
+# Test
+  test:
+    container_name: cc-test
+    depends_on:
+      - testdb
+    env_file:
+      - .env.test
+    build: 
+      target: ${APP_ENV}
+      context: .
+      dockerfile: .docker/test/Dockerfile
+    volumes:
+      - ./:/go/src/app
+    ports:
+      - "8002:8000"
+    tty: true
