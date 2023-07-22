@@ -16,7 +16,7 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-func TestUserRegister(t *testing.T) {
+func TestUserE2E_Register(t *testing.T) {
 	models := []Model{
 		&model.User{},
 	}
@@ -88,7 +88,7 @@ func TestUserRegister(t *testing.T) {
 	}
 }
 
-func TestUserLogin(t *testing.T) {
+func TestUserE2E_Login(t *testing.T) {
 	models := []Model{
 		&model.User{},
 	}
@@ -161,7 +161,7 @@ func TestUserLogin(t *testing.T) {
 	}
 }
 
-func TestUserCheck(t *testing.T) {
+func TestUserE2E_Check(t *testing.T) {
 	models := []Model{
 		&model.User{},
 	}
