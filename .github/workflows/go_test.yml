@@ -20,7 +20,7 @@ jobs:
         go-version: 1.18
 
     - name: Run tests
-      run: go test ./test/model/...
+      run: go test ./test/model_test/...
 
   dao_test:
     name: Dao test
@@ -36,5 +36,5 @@ jobs:
         go-version: 1.18
 
     - name: Run tests
-      run: go test ./test/dao/...
-  
+      run: go test ./test/dao_test/...
+
