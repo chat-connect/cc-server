@@ -85,6 +85,7 @@ func (userController *userController) UserLogin() echo.HandlerFunc {
 // @Produce     json
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
+// @Param       user_key path string true "user_key" maxlength(12)
 // @Success     200  {object} output.UserCheck
 // @Failure     500  {array}  output.Error
 // @Router      /user/{user_key}/user_check [get]
@@ -107,7 +108,7 @@ func (userController *userController) UserCheck() echo.HandlerFunc {
 // @Produce     json
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
-// @Param       user_key path string true "ユーザーキー"
+// @Param       user_key path string true "user_key" maxlength(12)
 // @Success     200  {object} output.UserLogout
 // @Failure     500  {array}  output.Error
 // @Router      /user/{user_key}/user_logout [put]

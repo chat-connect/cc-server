@@ -128,6 +128,14 @@ const docTemplate = `{
                         "name": "Authorization",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "maxLength": 12,
+                        "type": "string",
+                        "description": "user_key",
+                        "name": "user_key",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -227,8 +235,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "maxLength": 12,
                         "type": "string",
-                        "description": "ユーザーキー",
+                        "description": "user_key",
                         "name": "user_key",
                         "in": "path",
                         "required": true
@@ -267,6 +276,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "email": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 },
                 "user_key": {

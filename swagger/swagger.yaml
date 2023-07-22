@@ -9,6 +9,8 @@ definitions:
     properties:
       email:
         type: string
+      message:
+        type: string
       user_key:
         type: string
       username:
@@ -138,6 +140,12 @@ paths:
         name: Authorization
         required: true
         type: string
+      - description: user_key
+        in: path
+        maxLength: 12
+        name: user_key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -199,8 +207,9 @@ paths:
         name: Authorization
         required: true
         type: string
-      - description: ユーザーキー
+      - description: user_key
         in: path
+        maxLength: 12
         name: user_key
         required: true
         type: string
