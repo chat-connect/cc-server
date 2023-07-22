@@ -46,7 +46,7 @@ func TestUserRegister(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			jsonData, err := json.Marshal(tc.body)
 			if err != nil {
-				fmt.Println("JSON encoding error:", err)
+				t.Fatalf("JSON encoding error: %v", err)
 				return
 			}
 
@@ -120,8 +120,7 @@ func TestUserLogin(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			jsonData, err := json.Marshal(tc.body)
 			if err != nil {
-				fmt.Println("JSON encoding error:", err)
-				return
+				t.Fatalf("JSON encoding error: %v", err)
 			}
 
 			req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/user_login", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
