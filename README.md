@@ -48,13 +48,13 @@ docker container exec -it cc-batch wire batch/di/wire.go
 ## Test
 1.model
 ```
-docker container exec -it cc-api go test -v ./test/model_test/...
+docker container exec -it cc-test sh -c "go clean -testcache && go test -v ./test/model_test/..."
 ```
 2.dao
 ```
-docker container exec -it cc-api go test -v ./test/dao_test/...
+docker container exec -it cc-test sh -c "go clean -testcache && go test -v ./test/dao_test/..."
 ```
 3.e2e
 ```
-docker container exec -it cc-test go test -v ./test/e2e_test/...
+docker container exec -it cc-test sh -c "go clean -testcache && go test -v ./test/e2e_test/..."
 ```
