@@ -2,6 +2,8 @@ version: '3'
 services:
 # API
   api:
+    env_file:
+      - .env
     container_name: cc-api
     build: 
       target: ${APP_ENV}
@@ -12,15 +14,11 @@ services:
     ports:
       - "8001:8000"
     tty: true
-    environment:
-      APP_ENV: ${APP_ENV}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
 # Batch
   batch:
+    env_file:
+      - .env
     container_name: cc-batch
     build: 
       target: ${APP_ENV}
@@ -28,16 +26,12 @@ services:
       dockerfile: .docker/batch/Dockerfile
     volumes:
       - ./:/go/src/app
-    tty: true
-    environment:
-      APP_ENV: ${APP_ENV}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    tty: true 
 
 # Swagger
   swagger:
+    env_file:
+      - .env    
     container_name: cc-swagger
     build:
       target: ${APP_ENV}
@@ -47,4 +41,19 @@ services:
       - .:/swagger:cached
     ports:
       - "8002:8000"
+    tty: true
+
+# Test
+  test:
+    env_file:
+      - .env.test
+    container_name: cc-test
+    build: 
+      target: ${APP_ENV}
+      context: .
+      dockerfile: .docker/test/Dockerfile
+    volumes:
+      - ./:/go/src/app
+    ports:
+      - "8003:8000"
     tty: true
