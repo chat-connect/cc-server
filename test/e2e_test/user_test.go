@@ -31,7 +31,7 @@ func TestUserE2E_Register(t *testing.T) {
 		expectedKey  string
 	}{
 		{
-			name: "Successful User Register",
+			name: "Successful: User Register",
 			body: &parameter.UserRegister{
 				Username:  "test",
 				Email:     "test@example.com",
@@ -107,7 +107,7 @@ func TestUserE2E_Login(t *testing.T) {
 		expectedCode int
 	}{
 		{
-			name: "Successful User Register",
+			name: "Successful: User Register",
 			body: &parameter.UserLogin{
 				Email:     "test@example.com",
 				Password:  "test",
@@ -182,7 +182,7 @@ func TestUserE2E_Check(t *testing.T) {
 		expectedCode int
 	}{
 		{
-			name:         "Successful User Check",
+			name:         "Successful: User Check",
 			userKey:      "pRxN4QA9bt4p",
 			email:        "test@example.com",
 			password:     "test",
@@ -251,7 +251,7 @@ func TestUserE2E_Delete(t *testing.T) {
 		expectedCode int
 	}{
 		{
-			name:         "Successful User Delete",
+			name:         "Successful: User Delete",
 			userKey:      "pRxN4QA9bt4p",
 			email:        "test@example.com",
 			password:     "test",
