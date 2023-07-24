@@ -16,8 +16,6 @@ services:
       - ./.docker/testdb/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./.docker/testdb/sql:/docker-entrypoint-initdb.d
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    ports:
-      - "3307:3306"
     tty: true 
 
 # Test
@@ -37,7 +35,4 @@ services:
       dockerfile: .docker/test/Dockerfile
     volumes:
       - ./:/go/src/app
-    ports:
-      - "8002:8000"
     tty: true
-
