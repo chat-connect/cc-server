@@ -1,0 +1,24 @@
+name: Go test
+
+on:
+  push:
+    branches:
+      - "feature/github_actions_test"
+
+jobs:
+  model_test:
+    name: Run tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: docker compose -f docker-compose-test.yml up -d --build
+
+      - name: Model Test
+        run: docker compose -f docker-compose-test.yml exec test go test -v ./test/model_test/...
+
+      - name: Dao Test
+        run: docker compose -f docker-compose-test.yml exec test go test -v ./test/dao_test/...
+
+      - name: E2E Test
+        run: docker compose -f docker-compose-test.yml exec test go test -v ./test/e2e_test/...
