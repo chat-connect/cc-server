@@ -16,23 +16,23 @@ docker compose -f docker-compose.yml up -d --build
 ## API
 1.サーバーを起動
 ```
-docker container exec -it cc-api go run api/main.go
+docker compose -f docker-compose.yml exec api go run api/main.go
 ```
 
 ## Batch
 2.バッチを実行
 ```
-docker container exec -it cc-batch go run batch/main.go --command=example
+docker compose -f docker-compose.yml exec batch go run batch/main.go --command=example
 ```
 
 ## Swagger
 1.Swaggerのビルド
 ```
-docker container exec -it cc-api swag init --dir=api --output=swagger
+docker compose -f docker-compose.yml exec api swag init --dir=api --output=swagger
 ```
 2.Swaggerのmackサーバーを起動
 ```
-docker container exec -it cc-swagger prism mock ./swagger/swagger.yaml --port=8003 --host=0.0.0.0
+docker compose -f docker-compose.yml exec swagger prism mock ./swagger/swagger.yaml --port=8003 --host=0.0.0.0
 ```
 
 ## DI
@@ -53,13 +53,16 @@ docker compose -f docker-compose-test.yml up -d --build
 ```
 2.model
 ```
-docker container exec -it cc-test sh -c "go clean -testcache && go test -v ./test/model_test/..."
+docker compose -f docker-compose-test.yml exec test go clean -testcache
+docker compose -f docker-compose-test.yml exec test go test -v ./test/model_test/...
 ```
 3.dao
 ```
-docker container exec -it cc-test sh -c "go clean -testcache && go test -v ./test/dao_test/..."
+docker compose -f docker-compose-test.yml exec test go clean -testcache
+docker compose -f docker-compose-test.yml exec test go test -v ./test/dao_test/...
 ```
 4.e2e
 ```
-docker container exec -it cc-test sh -c "go clean -testcache && go test -v ./test/e2e_test/..."
+docker compose -f docker-compose-test.yml exec test go clean -testcache
+docker compose -f docker-compose-test.yml exec test go test -v ./test/e2e_test/...
 ```
