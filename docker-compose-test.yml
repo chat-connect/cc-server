@@ -15,14 +15,15 @@ services:
       - ./.docker/testdb/data:/var/lib/mysql  
       - ./.docker/testdb/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./.docker/testdb/sql:/docker-entrypoint-initdb.d
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    tty: true 
+    tty: true
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
 # Test
   test:
     container_name: cc-test
-    depends_on:
-      - testdb
     environment:
       MYSQL_DATABASE: cc_server_test
       MYSQL_USER: mysql_user
@@ -36,3 +37,6 @@ services:
     volumes:
       - ./:/go/src/app
     tty: true
+    depends_on:
+      testdb:
+        condition: service_healthy

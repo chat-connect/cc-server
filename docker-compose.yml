@@ -17,14 +17,15 @@ services:
       - ./.docker/db/sql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    tty: true 
+    tty: true
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 
 # API
   api:
     container_name: cc-api
-    depends_on:
-      - db
     env_file:
       - .env
     build: 
@@ -36,6 +37,9 @@ services:
     ports:
       - "8001:8000"
     tty: true
+    depends_on:
+      db:
+        condition: service_healthy
 
 # Batch
   batch:
@@ -66,3 +70,6 @@ services:
     ports:
       - "8003:8000"
     tty: true
+    depends_on:
+      db:
+        condition: service_healthy
