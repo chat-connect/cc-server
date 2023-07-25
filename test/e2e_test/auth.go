@@ -9,6 +9,7 @@ import (
 
 	"github.com/chat-connect/cc-server/api/presentation/parameter"
 	"github.com/chat-connect/cc-server/api/presentation/output"
+	"github.com/chat-connect/cc-server/api/presentation/response"
 )
 
 func AuthUserLogin(email string, password string) (token string) {
@@ -33,13 +34,17 @@ func AuthUserLogin(email string, password string) (token string) {
 	}
 	defer resp.Body.Close()
 
-	actual := &output.UserLogin{}
+	actual := &response.Success{
+		Items: &output.UserLogin{},
+	}
 	err = json.NewDecoder(resp.Body).Decode(actual)
 	if err != nil {
 		fmt.Println("Failed to parse response:", err)
 	}
 
-	token = actual.Token
+	if userLogin, ok := actual.Items.(*output.UserLogin); ok {
+		token = userLogin.Token
+	}
 	
 	return token
 }

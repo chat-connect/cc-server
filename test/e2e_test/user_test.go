@@ -13,6 +13,7 @@ import (
 
 	"github.com/chat-connect/cc-server/api/presentation/parameter"
 	"github.com/chat-connect/cc-server/api/presentation/output"
+	"github.com/chat-connect/cc-server/api/presentation/response"
 )
 
 func TestUserE2E_Register(t *testing.T) {
@@ -66,12 +67,18 @@ func TestUserE2E_Register(t *testing.T) {
 			}
 
 			if tc.expectedCode == http.StatusOK {
-				actual := &output.UserRegister{}
-				expect := &output.UserRegister{
-					UserKey:  "pRxN4QA9bt4p",
-					Username: "test",
-					Email:    "test@example.com",
-					Message:  "user register completed",
+				actual := &response.Success{
+					Items: &output.UserRegister{},
+				}
+				expect := &response.Success{
+					Types: "user_register",
+					Status: 200,
+					Items: &output.UserRegister{
+						UserKey:  "pRxN4QA9bt4p",
+						Username: "test",
+						Email:    "test@example.com",
+						Message:  "user register completed",						
+					},
 				}
 
 				err = json.NewDecoder(resp.Body).Decode(actual)
@@ -79,8 +86,10 @@ func TestUserE2E_Register(t *testing.T) {
 					t.Fatalf("Failed to parse response: %v", err)
 				}
 
-				actual.UserKey = "pRxN4QA9bt4p"
-				
+				if userRegister, ok := actual.Items.(*output.UserRegister); ok {
+					userRegister.UserKey = "pRxN4QA9bt4p"
+				}
+
 				assert.Equal(t, expect, actual)
 			}
 		})
@@ -135,12 +144,19 @@ func TestUserE2E_Login(t *testing.T) {
 			}
 
 			if tc.expectedCode == http.StatusOK {
-				actual := &output.UserLogin{}
-				expect := &output.UserLogin{
-					UserKey:  "pRxN4QA9bt4p",
-					Username: "test",
-					Email:    "test@example.com",
-					Message:  "user login completed",
+				actual := &response.Success{
+					Items: &output.UserLogin{},
+				}
+				expect := &response.Success{
+					Types: "user_login",
+					Status: 200,
+					Items: &output.UserLogin{
+						UserKey:  "pRxN4QA9bt4p",
+						Username: "test",
+						Email:    "test@example.com",
+						Token:    "test",
+						Message:  "user login completed",
+					},
 				}
 
 				err = json.NewDecoder(resp.Body).Decode(actual)
@@ -148,7 +164,9 @@ func TestUserE2E_Login(t *testing.T) {
 					t.Fatalf("Failed to parse response: %v", err)
 				}
 
-				expect.Token = actual.Token
+				if userLogin, ok := actual.Items.(*output.UserLogin); ok {
+					userLogin.Token = "test"
+				}
 				
 				assert.Equal(t, expect, actual)
 			}
@@ -202,12 +220,18 @@ func TestUserE2E_Check(t *testing.T) {
 			}
 
 			if tc.expectedCode == http.StatusOK {
-				actual := &output.UserCheck{}
-				expect := &output.UserCheck{
-					UserKey:  tc.userKey,
-					Username: "test",
-					Email:    "test@example.com",
-					Message:  "user check completed",
+				actual := &response.Success{
+					Items: &output.UserCheck{},
+				}
+				expect := &response.Success{
+					Types: "user_check",
+					Status: 200,
+					Items: &output.UserCheck{
+						UserKey:  tc.userKey,
+						Username: "test",
+						Email:    "test@example.com",
+						Message:  "user check completed",
+					},
 				}
 
 				err = json.NewDecoder(resp.Body).Decode(actual)
@@ -267,9 +291,15 @@ func TestUserE2E_Delete(t *testing.T) {
 			}
 
 			if tc.expectedCode == http.StatusOK {
-				actual := &output.UserDelete{}
-				expect := &output.UserDelete{
-					Message:  "user delete completed",
+				actual := &response.Success{
+					Items: &output.UserDelete{},
+				}
+				expect := &response.Success{
+					Types: "user_delete",
+					Status: 200,
+					Items: &output.UserDelete{
+						Message:  "user delete completed",					
+					},
 				}
 
 				err = json.NewDecoder(resp.Body).Decode(actual)
