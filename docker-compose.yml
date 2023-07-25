@@ -44,8 +44,6 @@ services:
 # Batch
   batch:
     container_name: cc-batch
-    depends_on:
-      - db
     env_file:
       - .env
     build: 
@@ -54,7 +52,10 @@ services:
       dockerfile: .docker/batch/Dockerfile
     volumes:
       - ./:/go/src/app
-    tty: true 
+    tty: true
+    depends_on:
+      db:
+        condition: service_healthy
 
 # Swagger
   swagger:
@@ -70,6 +71,3 @@ services:
     ports:
       - "8003:8000"
     tty: true
-    depends_on:
-      db:
-        condition: service_healthy
