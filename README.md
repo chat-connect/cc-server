@@ -32,18 +32,18 @@ docker compose -f docker-compose.yml exec api swag init --dir=api --output=swagg
 ```
 2.Swaggerのmackサーバーを起動
 ```
-docker compose -f docker-compose.yml exec swagger prism mock ./swagger/swagger.yaml --port=8003 --host=0.0.0.0
+docker compose -f docker-compose.yml exec swagger prism mock ./swagger/swagger.yaml --port=8000 --host=0.0.0.0
 ```
 
 ## DI
 1.API
 ```
-docker container exec -it cc-api wire api/di/wire.go
+docker compose -f docker-compose.yml exec exec api wire api/di/wire.go
 ```
 
 2.Batch
 ```
-docker container exec -it cc-batch wire batch/di/wire.go
+docker compose -f docker-compose.yml exec batch wire api/di/wire.go
 ```
 
 ## Test
