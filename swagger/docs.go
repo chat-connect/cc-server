@@ -47,7 +47,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/output.UserLogin"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.UserLogin"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -89,7 +101,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/output.UserRegister"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.UserRegister"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -142,7 +166,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/output.UserCheck"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.UserCheck"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -194,7 +230,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/output.UserDelete"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.UserDelete"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -247,7 +295,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/output.UserLogout"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.UserLogout"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
@@ -363,6 +423,18 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Success": {
+            "type": "object",
+            "properties": {
+                "items": {},
+                "status": {
+                    "type": "integer"
+                },
+                "types": {
                     "type": "string"
                 }
             }

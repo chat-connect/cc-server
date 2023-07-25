@@ -66,6 +66,14 @@ definitions:
       username:
         type: string
     type: object
+  response.Success:
+    properties:
+      items: {}
+      status:
+        type: integer
+      types:
+        type: string
+    type: object
 host: localhost:8001
 info:
   contact: {}
@@ -93,7 +101,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/output.UserLogin'
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserLogin'
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -120,7 +133,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/output.UserRegister'
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserRegister'
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -152,7 +170,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/output.UserCheck'
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserCheck'
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -185,7 +208,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/output.UserDelete'
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserDelete'
+              type: object
         "500":
           description: Internal Server Error
           schema:
@@ -219,7 +247,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/output.UserLogout'
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserLogout'
+              type: object
         "500":
           description: Internal Server Error
           schema:
