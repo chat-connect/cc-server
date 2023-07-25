@@ -1,9 +1,9 @@
 name: Go test
 
 on:
-  push:
+  pull_request:
     branches:
-      - "feature/github_actions_test"
+      - main
 
 jobs:
   model_test:
