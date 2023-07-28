@@ -2,7 +2,7 @@
 CREATE TABLE `user` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT "ユーザーID",
     `user_key` VARCHAR(12) NOT NULL UNIQUE KEY COMMENT "ユーザーKey",
-    `username` VARCHAR(50) NOT NULL COMMENT "ユーザー名",
+    `name` VARCHAR(50) NOT NULL COMMENT "ユーザー名",
     `email` VARCHAR(255) NOT NULL COMMENT "メールアドレス",
     `password` VARCHAR(255) NOT NULL COMMENT "パスワード",
     `token` VARCHAR(255) NOT NULL COMMENT "アクセストークン",
