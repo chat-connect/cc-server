@@ -129,7 +129,7 @@ func (userService *userService) UserLogin(userModel *model.User) (user *model.Us
 	baseToken := jwt.New(jwt.SigningMethodHS256)
 	claims := baseToken.Claims.(jwt.MapClaims)
 	claims["user_key"] = user.UserKey
-	claims["username"] = user.Username
+	claims["name"] = user.Name
 	claims["email"] = user.Email
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 	
@@ -149,7 +149,7 @@ func (userService *userService) UserLogin(userModel *model.User) (user *model.Us
 	return user, nil
 }
 
-func (userService *userService) UserCheck(baseToken string) (userKey string, username string, email string, err error) {
+func (userService *userService) UserCheck(baseToken string) (userKey string, name string, email string, err error) {
 	token, err := jwt.Parse(baseToken[7:], func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Invalid token")
@@ -158,19 +158,19 @@ func (userService *userService) UserCheck(baseToken string) (userKey string, use
 		return []byte("secret"), nil
 	})
 	if err != nil {
-		return userKey, username, email, err
+		return userKey, name, email, err
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return userKey, username, email, err
+		return userKey, name, email, err
 	}
 
 	userKey = claims["user_key"].(string)
-	username = claims["username"].(string)
+	name = claims["name"].(string)
 	email = claims["email"].(string)
 
-	return userKey, username, email, nil
+	return userKey, name, email, nil
 }
 
 func (userService *userService) UserLogout(userModel *model.User) (user *model.User, err error) {

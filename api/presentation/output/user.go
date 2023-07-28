@@ -7,7 +7,7 @@ import (
 // user_register
 type UserRegister struct {
 	UserKey string `json:"user_key"`
-	Username string `json:"username"`
+	Name    string `json:"name"`
 	Email    string `json:"email"`
 	Message  string `json:"message"`
 }
@@ -18,10 +18,10 @@ func ToUserRegister(u *model.User) *UserRegister {
 	}
 
 	return &UserRegister{
-		UserKey:  u.UserKey,
-		Username: u.Username,
-		Email:    u.Email,
-		Message:  "user register completed",
+		UserKey: u.UserKey,
+		Name:    u.Name,
+		Email:   u.Email,
+		Message: "user register completed",
 	}
 }
 
@@ -39,7 +39,7 @@ func ToEmailValidation() *EmailValidation {
 // user_login
 type UserLogin struct {
 	UserKey string `json:"user_key"`
-	Username string `json:"username"`
+	Name    string `json:"name"`
 	Email    string `json:"email"`
 	Token    string `json:"token"`
 	Message  string `json:"message"`
@@ -47,11 +47,11 @@ type UserLogin struct {
 
 func ToUserLogin(u *model.User) *UserLogin {
 	return &UserLogin{
-		UserKey:  u.UserKey,
-		Username: u.Username,
-		Email:    u.Email,
-		Token:    u.Token,
-		Message:  "user login completed",
+		UserKey: u.UserKey,
+		Name:    u.Name,
+		Email:   u.Email,
+		Token:   u.Token,
+		Message: "user login completed",
 	}
 }
 
@@ -68,18 +68,18 @@ func ToUserDelete() *UserDelete {
 
 // user_check
 type UserCheck struct {
-	UserKey  string `json:"user_key"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Message  string `json:"message"`
+	UserKey string `json:"user_key"`
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	Message string `json:"message"`
 }
 
-func ToUserCheck(userKey string, username string, email string) *UserCheck {
+func ToUserCheck(userKey string, name string, email string) *UserCheck {
 	return &UserCheck{
-		UserKey:  userKey,
-		Username: username,
-		Email:    email,
-		Message:  "user check completed",
+		UserKey: userKey,
+		Name:    name,
+		Email:   email,
+		Message: "user check completed",
 	}
 }
 

@@ -11,9 +11,9 @@ definitions:
         type: string
       message:
         type: string
-      user_key:
+      name:
         type: string
-      username:
+      user_key:
         type: string
     type: object
   output.UserDelete:
@@ -27,11 +27,11 @@ definitions:
         type: string
       message:
         type: string
+      name:
+        type: string
       token:
         type: string
       user_key:
-        type: string
-      username:
         type: string
     type: object
   output.UserLogout:
@@ -45,9 +45,9 @@ definitions:
         type: string
       message:
         type: string
-      user_key:
+      name:
         type: string
-      username:
+      user_key:
         type: string
     type: object
   parameter.UserLogin:
@@ -61,9 +61,9 @@ definitions:
     properties:
       email:
         type: string
-      password:
+      name:
         type: string
-      username:
+      password:
         type: string
     type: object
   response.Success:

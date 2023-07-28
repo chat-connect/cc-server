@@ -108,7 +108,7 @@ func (userController *userController) UserLogin() echo.HandlerFunc {
 func (userController *userController) UserCheck() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		baseToken := c.Request().Header.Get("Authorization")
-		userKey, username, email, err := userController.userService.UserCheck(baseToken)
+		userKey, name, email, err := userController.userService.UserCheck(baseToken)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_check", 500, out)
@@ -116,7 +116,7 @@ func (userController *userController) UserCheck() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 	
-		out := output.ToUserCheck(userKey, username, email)
+		out := output.ToUserCheck(userKey, name, email)
 		response := response.SuccessWith("user_check", 200, out)
 		
 		return c.JSON(200, response)

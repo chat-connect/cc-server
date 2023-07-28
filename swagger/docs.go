@@ -341,10 +341,10 @@ const docTemplate = `{
                 "message": {
                     "type": "string"
                 },
-                "user_key": {
+                "name": {
                     "type": "string"
                 },
-                "username": {
+                "user_key": {
                     "type": "string"
                 }
             }
@@ -366,13 +366,13 @@ const docTemplate = `{
                 "message": {
                     "type": "string"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "token": {
                     "type": "string"
                 },
                 "user_key": {
-                    "type": "string"
-                },
-                "username": {
                     "type": "string"
                 }
             }
@@ -394,10 +394,10 @@ const docTemplate = `{
                 "message": {
                     "type": "string"
                 },
-                "user_key": {
+                "name": {
                     "type": "string"
                 },
-                "username": {
+                "user_key": {
                     "type": "string"
                 }
             }
@@ -419,10 +419,10 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
-                "password": {
+                "name": {
                     "type": "string"
                 },
-                "username": {
+                "password": {
                     "type": "string"
                 }
             }

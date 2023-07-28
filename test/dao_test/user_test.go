@@ -22,14 +22,14 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 	}{
 		{
 			name: "Successful: User found",
-			mockRows: sqlmock.NewRows([]string{"id", "user_key", "username", "email", "password", "token", "status", "created_at", "updated_at"}).
+			mockRows: sqlmock.NewRows([]string{"id", "user_key", "name", "email", "password", "token", "status", "created_at", "updated_at"}).
 				AddRow(1, "test_key", "test", "test@example.com", "test_password", "test_token", "login",
 					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedUser: &model.User{
 				ID:        1,
 				UserKey:   "test_key",
-				Username:  "test",
+				Name:      "test",
 				Email:     "test@example.com",
 				Password:  "test_password",
 				Token:     "test_token",
@@ -41,12 +41,12 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 		},
 		{
 			name: "Successful: User not found",
-			mockRows: sqlmock.NewRows([]string{"id", "user_key", "username", "email", "password", "token", "status", "created_at", "updated_at"}),
+			mockRows: sqlmock.NewRows([]string{"id", "user_key", "name", "email", "password", "token", "status", "created_at", "updated_at"}),
 			mockError: nil,
 			expectedUser: &model.User{
 				ID:        0,
-				UserKey:  "",
-				Username:  "",
+				UserKey:   "",
+				Name:      "",
 				Email:     "",
 				Password:  "",
 				Token:     "",
@@ -85,14 +85,14 @@ func TestUserRepository_FindByUserKey(t *testing.T) {
 	}{
 		{
 			name: "Successful: User found",
-			mockRows: sqlmock.NewRows([]string{"id", "user_key", "username", "email", "password", "token", "status", "created_at", "updated_at"}).
+			mockRows: sqlmock.NewRows([]string{"id", "user_key", "name", "email", "password", "token", "status", "created_at", "updated_at"}).
 				AddRow(1, "test_key", "test", "test@example.com", "test_password", "test_token", "login",
 					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedUser: &model.User{
 				ID:        1,
 				UserKey:   "test_key",
-				Username:  "test",
+				Name:      "test",
 				Email:     "test@example.com",
 				Password:  "test_password",
 				Token:     "test_token",
@@ -104,12 +104,12 @@ func TestUserRepository_FindByUserKey(t *testing.T) {
 		},
 		{
 			name: "Successful: User not found",
-			mockRows: sqlmock.NewRows([]string{"id", "user_key", "username", "email", "password", "token", "status", "created_at", "updated_at"}),
+			mockRows: sqlmock.NewRows([]string{"id", "user_key", "name", "email", "password", "token", "status", "created_at", "updated_at"}),
 			mockError: nil,
 			expectedUser: &model.User{
 				ID:        0,
-				UserKey:  "",
-				Username:  "",
+				UserKey:   "",
+				Name:      "",
 				Email:     "",
 				Password:  "",
 				Token:     "",
@@ -185,12 +185,12 @@ func TestUserRepository_Insert(t *testing.T) {
         {
             name: "Successful",
             mockParam: &model.User{
-                UserKey:   "test_key",
-                Username:  "test",
-                Email:     "test@example.com",
-                Password:  "test_password",
-                Token:     "test_token",
-                Status:    "login",
+                UserKey:  "test_key",
+                Name:     "test",
+                Email:    "test@example.com",
+                Password: "test_password",
+                Token:    "test_token",
+                Status:   "login",
             },
             mockRowsAffected: 1,
             mockLastInsertID: 1,
@@ -198,7 +198,7 @@ func TestUserRepository_Insert(t *testing.T) {
             expectedUser: &model.User{
                 ID:        1,
                 UserKey:   "test_key",
-                Username:  "test",
+                Name:      "test",
                 Email:     "test@example.com",
                 Password:  "test_password",
                 Token:     "test_token",
@@ -251,12 +251,12 @@ func TestUserRepository_Update(t *testing.T) {
         {
             name: "Successful",
             mockParam: &model.User{
-                UserKey:   "test_key",
-                Username:  "test",
-                Email:     "test@example.com",
-                Password:  "test_password",
-                Token:     "test_token",
-                Status:    "login",
+                UserKey:  "test_key",
+                Name:     "test",
+                Email:    "test@example.com",
+                Password: "test_password",
+                Token:    "test_token",
+                Status:   "login",
             },
             mockRowsAffected: 1,
             mockLastUpdateID: 1,
@@ -264,7 +264,7 @@ func TestUserRepository_Update(t *testing.T) {
             expectedUser: &model.User{
                 ID:        0,
                 UserKey:   "test_key",
-                Username:  "test",
+                Name:      "test",
                 Email:     "test@example.com",
                 Password:  "test_password",
                 Token:     "test_token",

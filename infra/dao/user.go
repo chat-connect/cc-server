@@ -50,7 +50,7 @@ func (userRepository *userRepository) CountByStatus(status string) (count int64,
 func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
-		Username: param.Username,
+		Name:     param.Name,
 		Email:    param.Email,
 		Password: param.Password,
 		Token:    param.Token,
@@ -75,7 +75,7 @@ func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (en
 func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
-		Username: param.Username,
+		Name:     param.Name,
 		Email:    param.Email,
 		Password: param.Password,
 		Token:    param.Token,

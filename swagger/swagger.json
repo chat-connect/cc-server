@@ -334,10 +334,10 @@
                 "message": {
                     "type": "string"
                 },
-                "user_key": {
+                "name": {
                     "type": "string"
                 },
-                "username": {
+                "user_key": {
                     "type": "string"
                 }
             }
@@ -359,13 +359,13 @@
                 "message": {
                     "type": "string"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "token": {
                     "type": "string"
                 },
                 "user_key": {
-                    "type": "string"
-                },
-                "username": {
                     "type": "string"
                 }
             }
@@ -387,10 +387,10 @@
                 "message": {
                     "type": "string"
                 },
-                "user_key": {
+                "name": {
                     "type": "string"
                 },
-                "username": {
+                "user_key": {
                     "type": "string"
                 }
             }
@@ -412,10 +412,10 @@
                 "email": {
                     "type": "string"
                 },
-                "password": {
+                "name": {
                     "type": "string"
                 },
-                "username": {
+                "password": {
                     "type": "string"
                 }
             }

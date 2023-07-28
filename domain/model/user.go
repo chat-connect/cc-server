@@ -9,7 +9,7 @@ type Users []User
 type User struct {
 	ID        int       `json:"id"`
 	UserKey   string    `json:"user_key"`
-	Username  string    `json:"username"`
+	Name      string    `json:"name"`
 	Email     string    `json:"email"`
 	Password  string    `json:"password"`
 	Token     string    `json:"token"`
@@ -26,7 +26,7 @@ func (user *User) IsEmpty() bool {
 	return (
 		user.ID == 0 &&
 		user.UserKey == "" &&
-		user.Username == "" &&
+		user.Name == "" &&
 		user.Email == "" &&
 		user.Password == "" &&
 		user.Token == "" &&
