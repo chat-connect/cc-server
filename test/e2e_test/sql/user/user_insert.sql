@@ -1,6 +1,6 @@
 INSERT INTO user (
     user_key,
-    username,
+    name,
     email,
     password,
     token,

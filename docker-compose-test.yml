@@ -15,6 +15,8 @@ services:
       - ./.docker/testdb/data:/var/lib/mysql  
       - ./.docker/testdb/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./.docker/testdb/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3306"
     tty: true
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]

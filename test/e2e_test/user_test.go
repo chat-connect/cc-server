@@ -33,9 +33,9 @@ func TestUserE2E_Register(t *testing.T) {
 		{
 			name: "Successful: User Register",
 			body: &parameter.UserRegister{
-				Username:  "test",
-				Email:     "test@example.com",
-				Password:  "test_password",
+				Name:     "test",
+				Email:    "test@example.com",
+				Password: "test_password",
 			},
 			expectedCode: http.StatusOK,
 			expectedKey:  "pRxN4QA9bt4p",
@@ -74,10 +74,10 @@ func TestUserE2E_Register(t *testing.T) {
 					Types: "user_register",
 					Status: 200,
 					Items: &output.UserRegister{
-						UserKey:  "pRxN4QA9bt4p",
-						Username: "test",
-						Email:    "test@example.com",
-						Message:  "user register completed",						
+						UserKey: "pRxN4QA9bt4p",
+						Name:    "test",
+						Email:   "test@example.com",
+						Message: "user register completed",						
 					},
 				}
 
@@ -151,11 +151,11 @@ func TestUserE2E_Login(t *testing.T) {
 					Types: "user_login",
 					Status: 200,
 					Items: &output.UserLogin{
-						UserKey:  "pRxN4QA9bt4p",
-						Username: "test",
-						Email:    "test@example.com",
-						Token:    "test",
-						Message:  "user login completed",
+						UserKey: "pRxN4QA9bt4p",
+						Name:    "test",
+						Email:   "test@example.com",
+						Token:   "test",
+						Message: "user login completed",
 					},
 				}
 
@@ -227,10 +227,10 @@ func TestUserE2E_Check(t *testing.T) {
 					Types: "user_check",
 					Status: 200,
 					Items: &output.UserCheck{
-						UserKey:  tc.userKey,
-						Username: "test",
-						Email:    "test@example.com",
-						Message:  "user check completed",
+						UserKey: tc.userKey,
+						Name:    "test",
+						Email:   "test@example.com",
+						Message: "user check completed",
 					},
 				}
 
