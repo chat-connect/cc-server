@@ -1,4 +1,7 @@
 version: '3.8'
+
+name: cc-server-local
+
 services:
 # DB
   db:
@@ -6,10 +9,10 @@ services:
     image: mysql:8.0
     platform: linux/x86_64
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: mysql_root
       MYSQL_DATABASE: cc_server
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: mysql_password
       TZ: 'Asia/Tokyo'
     volumes:
       - ./.docker/db/data:/var/lib/mysql  
@@ -27,7 +30,7 @@ services:
   api:
     container_name: cc-api
     env_file:
-      - .env
+      - .env.local
     build: 
       target: ${APP_ENV}
       context: .
@@ -45,7 +48,7 @@ services:
   batch:
     container_name: cc-batch
     env_file:
-      - .env
+      - .env.local
     build: 
       target: ${APP_ENV}
       context: .
@@ -61,7 +64,7 @@ services:
   swagger:
     container_name: cc-swagger
     env_file:
-      - .env    
+      - .env.local
     build:
       target: ${APP_ENV}
       context: .
