@@ -32,7 +32,7 @@ services:
     env_file:
       - .env.local
     build: 
-      target: ${APP_ENV}
+      target: development
       context: .
       dockerfile: .docker/api/Dockerfile
     volumes:
@@ -50,7 +50,7 @@ services:
     env_file:
       - .env.local
     build: 
-      target: ${APP_ENV}
+      target: development
       context: .
       dockerfile: .docker/batch/Dockerfile
     volumes:
@@ -66,7 +66,7 @@ services:
     env_file:
       - .env.local
     build:
-      target: ${APP_ENV}
+      target: development
       context: .
       dockerfile: .docker/swagger/Dockerfile
     volumes:
