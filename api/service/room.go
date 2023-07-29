@@ -63,7 +63,6 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 
 	roomModel := &model.Room{}
 	roomModel.RoomKey = roomKey
-	roomModel.UserKey = userKey
 	roomModel.UserID = userResult.ID
 	roomModel.Name = roomParam.Name
 	roomModel.Explanation = roomParam.Explanation

@@ -81,7 +81,6 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 					Status: 200,
 					Items: &output.RoomCreate{
 						RoomKey:     "test",
-						UserKey:     tc.userKey,
 						Name:        "test",
 						Explanation: "test",
 						ImagePath:   "",
