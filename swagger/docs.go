@@ -128,6 +128,60 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/{user_key}/room_create": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム作成",
+                "parameters": [
+                    {
+                        "description": "ルーム作成",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/parameter.RoomCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.RoomCreate"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output.Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/{user_key}/user_check": {
             "get": {
                 "security": [
@@ -332,6 +386,35 @@ const docTemplate = `{
                 }
             }
         },
+        "output.RoomCreate": {
+            "type": "object",
+            "properties": {
+                "explanation": {
+                    "type": "string"
+                },
+                "image_path": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user_count": {
+                    "type": "integer"
+                },
+                "user_key": {
+                    "type": "string"
+                }
+            }
+        },
         "output.UserCheck": {
             "type": "object",
             "properties": {
@@ -398,6 +481,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "parameter.RoomCreate": {
+            "type": "object",
+            "properties": {
+                "explanation": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }

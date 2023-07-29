@@ -26,6 +26,16 @@ func InitializeUserController() controller.UserController {
 	return userController
 }
 
+// room
+func InitializeRoomController() controller.RoomController {
+	db := database.NewDB()
+	roomRepository := dao.NewRoomRepository(db)
+	transactionRepository := dao.NewTransactionRepository(db)
+	roomService := service.NewRoomService(roomRepository, transactionRepository)
+	roomController := controller.NewRoomController(roomService)
+	return roomController
+}
+
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
 	db := database.NewDB()

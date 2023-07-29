@@ -5,6 +5,25 @@ definitions:
       message:
         type: string
     type: object
+  output.RoomCreate:
+    properties:
+      explanation:
+        type: string
+      image_path:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      room_key:
+        type: string
+      status:
+        type: string
+      user_count:
+        type: integer
+      user_key:
+        type: string
+    type: object
   output.UserCheck:
     properties:
       email:
@@ -48,6 +67,13 @@ definitions:
       name:
         type: string
       user_key:
+        type: string
+    type: object
+  parameter.RoomCreate:
+    properties:
+      explanation:
+        type: string
+      name:
         type: string
     type: object
   parameter.UserLogin:
@@ -148,6 +174,38 @@ paths:
       summary: ユーザー登録
       tags:
       - Auth
+  /user/{user_key}/room_create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ルーム作成
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/parameter.RoomCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.RoomCreate'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      summary: ルーム作成
+      tags:
+      - Room
   /user/{user_key}/user_check:
     get:
       consumes:
