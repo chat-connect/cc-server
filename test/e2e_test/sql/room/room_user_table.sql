@@ -1,5 +1,5 @@
 -- ルームのユーザー情報
-CREATE TABLE `room` (
+CREATE TABLE `room_user` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT "ルームID",
     `room_user_key` VARCHAR(12) NOT NULL UNIQUE KEY COMMENT "ルームユーザーKey",
     `room_id` INT NOT NULL COMMENT "ルームID",
