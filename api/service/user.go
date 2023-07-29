@@ -91,8 +91,6 @@ func (userService *userService) UserRegister(userModel *model.User) (userResult 
 		return nil, err
 	}
 
-	fmt.Println(userResult)
-
 	return userResult, nil
 }
 
