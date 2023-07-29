@@ -24,6 +24,18 @@ func InitializeUserController() controller.UserController {
     return nil
 }
 
+// room
+func InitializeRoomController() controller.RoomController {
+    wire.Build(
+        database.NewDB,
+        dao.NewRoomRepository,
+        dao.NewTransactionRepository,
+        service.NewRoomService,
+        controller.NewRoomController,
+    )
+    return nil
+}
+
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(

@@ -14,6 +14,7 @@ import (
 func Init() {
 	// di: wire ./api/di/wire.go
 	userController := di.InitializeUserController()
+	roomController := di.InitializeRoomController()
 	userMiddleware := di.InitializeUserMiddleware()
 
 	e := echo.New()
@@ -35,6 +36,9 @@ func Init() {
 	u.GET("/user_check", userController.UserCheck()) // user/:userKey/user_check
 	u.PUT("/user_logout", userController.UserLogout()) // user/:userKey/user_logout
 	u.DELETE("/user_delete", userController.UserDelete()) // user/:userKey/user_delete
+
+	// room: ルーム関連
+	u.POST("/room_create", roomController.RoomCreate()) // user/:userKey/room_register
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
