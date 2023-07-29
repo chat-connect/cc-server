@@ -11,6 +11,7 @@ type RoomUser struct {
 	RoomUserKey string    `json:"room_user_key"`
 	RoomID      int64     `json:"room_id"`
 	UserID      int64     `json:"user_id"`
+	Host        bool      `json:"host"`
  	Status      string    `json:"status"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
@@ -26,5 +27,6 @@ func (roomUser *RoomUser) IsEmpty() bool {
 		roomUser.RoomUserKey == "" &&
 		roomUser.RoomID == 0 &&
 		roomUser.UserID == 0 &&
+		roomUser.Host == false &&
 		roomUser.Status == "")
 }
