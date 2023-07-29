@@ -29,7 +29,7 @@ func Init() {
 	a.POST("/user_register", userController.UserRegister()) // auth/user_register
 	a.POST("/user_login", userController.UserLogin()) // auth/user_register
 
-		// user: 認証済ユーザーのみアクセス可能
+	// user: 認証済ユーザーのみアクセス可能
 	u := e.Group("/user")
 	u.Use(userMiddleware.UserMiddleware)
 	u.GET("/:userKey/user_check", userController.UserCheck()) // user/user_check
