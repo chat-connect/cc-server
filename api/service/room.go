@@ -15,22 +15,26 @@ type RoomService interface {
 
 type roomService struct {
 	roomRepository        repository.RoomRepository
+	roomUserRepository    repository.RoomUserRepository
 	userRepository        repository.UserRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewRoomService(
-		roomRepository repository.RoomRepository,
-		userRepository repository.UserRepository,
+		roomRepository        repository.RoomRepository,
+		roomUserRepository    repository.RoomUserRepository,
+		userRepository        repository.UserRepository,
 		transactionRepository repository.TransactionRepository,
 	) RoomService {
 	return &roomService{
 		roomRepository:        roomRepository,
+		roomUserRepository:    roomUserRepository,
 		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
 }
 
+// RoomCreate ルームを作成する
 func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, userKey string) (roomResult *model.Room, err error) {
 	// transaction
 	tx, err := roomService.transactionRepository.Begin()
@@ -71,6 +75,24 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 	roomModel.Status = "public"
 
 	roomResult, err = roomService.roomRepository.Insert(roomModel, tx)
+	if err != nil {
+		return nil, err
+	}
+
+	// ホストユーザーの登録
+	roomUserKey, err := key.GenerateKey()
+	if err != nil {
+		return nil, err
+	}
+
+	roomUserModel := &model.RoomUser{}
+	roomUserModel.RoomUserKey = roomUserKey
+	roomUserModel.RoomID = roomResult.ID
+	roomUserModel.UserID = userResult.ID
+	roomUserModel.Host = true
+	roomUserModel.Status = "online"
+
+	_, err = roomService.roomUserRepository.Insert(roomUserModel, tx)
 	if err != nil {
 		return nil, err
 	}

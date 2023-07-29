@@ -13,12 +13,12 @@ func TestRoomModel_EmptyRoom(t *testing.T) {
 		expected bool
 	}{
 		{
-			name:     "Empty User",
+			name:     "Empty Room",
 			room:     model.EmptyRoom(),
 			expected: true,
 		},
 		{
-			name: "Not Empty User",
+			name: "Not Empty Room",
 			room: &model.Room{
 				ID:          1,
 				RoomKey:     "test_key",
