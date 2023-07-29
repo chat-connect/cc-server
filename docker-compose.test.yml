@@ -7,7 +7,6 @@ services:
   testdb:
     container_name: cc-testdb
     image: mysql:8.0
-    platform: linux/x86_64
     environment:
       MYSQL_ROOT_PASSWORD: mysql_root
       MYSQL_DATABASE: cc_server_test
