@@ -15,15 +15,18 @@ type RoomService interface {
 
 type roomService struct {
 	roomRepository        repository.RoomRepository
+	userRepository        repository.UserRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewRoomService(
 		roomRepository repository.RoomRepository,
+		userRepository repository.UserRepository,
 		transactionRepository repository.TransactionRepository,
 	) RoomService {
 	return &roomService{
 		roomRepository:        roomRepository,
+		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
 }
@@ -48,6 +51,11 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 		}
 	}()
 
+	userResult, err := roomService.userRepository.FindByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
 	roomKey, err := key.GenerateKey()
 	if err != nil {
 		return nil, err
@@ -56,6 +64,7 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 	roomModel := &model.Room{}
 	roomModel.RoomKey = roomKey
 	roomModel.UserKey = userKey
+	roomModel.UserID = userResult.ID
 	roomModel.Name = roomParam.Name
 	roomModel.Explanation = roomParam.Explanation
 	roomModel.ImagePath = ""

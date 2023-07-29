@@ -21,6 +21,7 @@ func (roomRepository *roomRepository) Insert(roomModel *model.Room, tx *gorm.DB)
 	entity = &model.Room{
 		RoomKey:     roomModel.RoomKey,
 		UserKey:     roomModel.UserKey,
+		UserID:      roomModel.UserID,
 		Name:        roomModel.Name,
 		Explanation: roomModel.Explanation,
 		ImagePath:   roomModel.ImagePath,
