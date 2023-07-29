@@ -32,9 +32,9 @@ func Init() {
 	// user: 認証済ユーザーのみアクセス可能
 	u := e.Group("/user/:userKey")
 	u.Use(userMiddleware.UserMiddleware)
-	u.GET("/user_check", userController.UserCheck()) // user/user_check
-	u.PUT("/user_logout", userController.UserLogout()) // user/user_logout
-	u.DELETE("/user_delete", userController.UserDelete()) // user/user_delete
+	u.GET("/user_check", userController.UserCheck()) // user/:userKey/user_check
+	u.PUT("/user_logout", userController.UserLogout()) // user/:userKey/user_logout
+	u.DELETE("/user_delete", userController.UserDelete()) // user/:userKey/user_delete
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
