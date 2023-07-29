@@ -29,6 +29,7 @@ func InitializeRoomController() controller.RoomController {
     wire.Build(
         database.NewDB,
         dao.NewRoomRepository,
+        dao.NewRoomUserRepository,
         dao.NewUserRepository,
         dao.NewTransactionRepository,
         service.NewRoomService,

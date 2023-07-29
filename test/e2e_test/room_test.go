@@ -19,6 +19,7 @@ import (
 func TestRoomE2E_RoomCreate(t *testing.T) {
 	files := []File{
 		"sql/room/room_table.sql",
+		"sql/room/user_user_table.sql",
 		"sql/room/user_table.sql",
 		"sql/room/user_insert.sql",
 	}
