@@ -25,7 +25,7 @@ func TestRoomRepository_Insert(t *testing.T) {
         {
             name: "Successful",
             mockParam: &model.Room{
-                UserKey:     "test_key",
+                RoomKey:     "test_key",
                 UserID:      1,
                 Name:        "test",
 				Explanation: "test",
@@ -38,7 +38,7 @@ func TestRoomRepository_Insert(t *testing.T) {
             mockError:        nil,
             expectedRoom: &model.Room{
                 ID:          1,
-                UserKey:     "test_key",
+                RoomKey:     "test_key",
                 UserID:      1,
                 Name:        "test",
 				Explanation: "test",

@@ -7,7 +7,6 @@ import (
 // user_register
 type RoomCreate struct {
 	RoomKey     string `json:"room_key"`
-	UserKey     string `json:"user_key"`
 	Name        string `json:"name"`
 	Explanation string `json:"explanation"`
 	ImagePath   string `json:"image_path"`
@@ -23,7 +22,6 @@ func ToRoomCreate(r *model.Room) *RoomCreate {
 
 	return &RoomCreate{
 		RoomKey:     r.RoomKey,
-		UserKey:     r.UserKey,
 		Name:        r.Name,
 		Explanation: r.Explanation,
 		UserCount:   r.UserCount,

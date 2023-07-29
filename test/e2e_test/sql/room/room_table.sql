@@ -1,7 +1,6 @@
 CREATE TABLE `room` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT "ルームID",
     `room_key` VARCHAR(12) NOT NULL UNIQUE KEY COMMENT "ルームKey",
-    `user_key` VARCHAR(12) NOT NULL COMMENT "ユーザーキー",
     `user_id` INT NOT NULL COMMENT "ユーザーID",
     `name` VARCHAR(50) NOT NULL COMMENT "ルーム名",
     `explanation` VARCHAR(50) NOT NULL COMMENT "説明",
