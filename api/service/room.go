@@ -31,6 +31,7 @@ func NewRoomService(
 	}
 }
 
+// RoomCreate ルームを作成する
 func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, userKey string) (roomResult *model.Room, err error) {
 	// transaction
 	tx, err := roomService.transactionRepository.Begin()
