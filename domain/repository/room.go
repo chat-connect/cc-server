@@ -7,5 +7,6 @@ import (
 )
 
 type RoomRepository interface {
+	FindByRoomKey(roomKey string) (entity *model.Room, err error)
 	Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error)
 }

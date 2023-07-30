@@ -17,6 +17,16 @@ func NewRoomRepository(conn *gorm.DB) repository.RoomRepository {
 	}
 }
 
+func (roomRepository *roomRepository) FindByRoomKey(roomKey string) (entity *model.Room, err error) {
+	entity = &model.Room{}
+	res := roomRepository.Conn.Where("room_key = ?", roomKey).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (roomRepository *roomRepository) Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error) {
 	entity = &model.Room{
 		RoomKey:     roomModel.RoomKey,
