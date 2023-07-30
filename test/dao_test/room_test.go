@@ -12,6 +12,58 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
+func TestRoomRepository_FindByRoomKey(t *testing.T) {
+	testCases := []struct {
+		name           string
+		mockRows       *sqlmock.Rows
+		mockError      error
+		expectedRoom   *model.Room
+		expectedError  error
+	}{
+		{
+			name: "Successful: Room found",
+			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "explanation", "image_path", "user_count", "status", "created_at", "updated_at"}).
+				AddRow(1, "test_key", "test", "test", "/", 1, "public",
+					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
+			mockError: nil,
+			expectedRoom: &model.Room{
+				ID:          1,
+				RoomKey:     "test_key",
+				Name:        "test",
+                Explanation: "test",
+                ImagePath:   "/",
+                UserCount:   1,
+				Status:      "public",
+				CreatedAt:   time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC),
+				UpdatedAt:   time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC),
+			},
+			expectedError: nil,
+		},
+		{
+			name: "Successful: Room not found",
+			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "explanation", "image_path", "user_count", "status", "created_at", "updated_at"}),
+			mockError: nil,
+			expectedRoom: (*model.Room)(nil),
+			expectedError: gorm.ErrRecordNotFound,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			db, mock, _ := sqlmock.New()
+			defer db.Close()
+
+			gormDB, _ := gorm.Open("mysql", db)
+			repo := dao.NewRoomRepository(gormDB)
+			mock.ExpectQuery("SELECT").WithArgs("test_key").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
+
+			user, err := repo.FindByRoomKey("test_key")
+			assert.Equal(t, tc.expectedRoom, user)
+			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
 func TestRoomRepository_Insert(t *testing.T) {
     testCases := []struct {
         name             string
