@@ -28,7 +28,7 @@ func Init() {
 	// auth: 認証API
 	a := e.Group("/auth")
 	a.POST("/user_register", userController.UserRegister()) // auth/user_register
-	a.POST("/user_login", userController.UserLogin()) // auth/user_register
+	a.POST("/user_login", userController.UserLogin()) // auth/user_login
 
 	// user: 認証済ユーザーのみアクセス可能
 	u := e.Group("/user/:userKey")
