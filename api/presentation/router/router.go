@@ -38,7 +38,7 @@ func Init() {
 	u.DELETE("/user_delete", userController.UserDelete()) // user/:userKey/user_delete
 
 	// room: ルーム関連
-	u.POST("/room_create", roomController.RoomCreate()) // user/:userKey/room_register
+	u.POST("/room_create", roomController.RoomCreate()) // user/:userKey/room_create
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
