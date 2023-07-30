@@ -42,7 +42,13 @@ func (userController *userController) UserRegister() echo.HandlerFunc {
 		c.Bind(userModel)
 
 		// 登録済のメールアドレスを検索
-		check, _ := userController.userService.FindByEmail(userModel.Email)
+		check, err := userController.userService.FindByEmail(userModel.Email)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("user_register", 500, out)
+
+			return c.JSON(500, response)
+		}
 		if check.Email == userModel.Email {
 			response := response.ErrorWith("user_register", 400, "email already exists")
 
