@@ -128,6 +128,49 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/{userKey}/room_join/{roomKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム参加",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.RoomJoin"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output.Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/{user_key}/room_create": {
             "post": {
                 "consumes": [
@@ -409,8 +452,19 @@ const docTemplate = `{
                 },
                 "user_count": {
                     "type": "integer"
+                }
+            }
+        },
+        "output.RoomJoin": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
                 },
-                "user_key": {
+                "room_user_key": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "string"
                 }
             }
