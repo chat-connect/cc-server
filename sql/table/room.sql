@@ -1,8 +1,8 @@
 -- ルーム情報
 CREATE TABLE `room` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT "ルームID",
-    `room_key` VARCHAR(12) NOT NULL UNIQUE KEY COMMENT "ルームKey",
-    `user_id` INT NOT NULL COMMENT "ユーザーID",
+    `room_key` VARCHAR(20) NOT NULL UNIQUE KEY COMMENT "ルームKEY",
+    `user_key` VARCHAR(20) NOT NULL COMMENT "ユーザーKEY",
     `name` VARCHAR(50) NOT NULL COMMENT "ルーム名",
     `explanation` VARCHAR(50) NOT NULL COMMENT "説明",
     `image_path` VARCHAR(50) NOT NULL COMMENT "画像パス",

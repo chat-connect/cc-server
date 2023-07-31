@@ -55,11 +55,6 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 		}
 	}()
 
-	userResult, err := roomService.userRepository.FindByUserKey(userKey)
-	if err != nil {
-		return nil, err
-	}
-
 	roomKey, err := key.GenerateKey()
 	if err != nil {
 		return nil, err
@@ -67,7 +62,7 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 
 	roomModel := &model.Room{}
 	roomModel.RoomKey = roomKey
-	roomModel.UserID = userResult.ID
+	roomModel.UserKey = userKey
 	roomModel.Name = roomParam.Name
 	roomModel.Explanation = roomParam.Explanation
 	roomModel.ImagePath = ""
@@ -87,8 +82,8 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 
 	roomUserModel := &model.RoomUser{}
 	roomUserModel.RoomUserKey = roomUserKey
-	roomUserModel.RoomID = roomResult.ID
-	roomUserModel.UserID = userResult.ID
+	roomUserModel.RoomKey = roomKey
+	roomUserModel.UserKey = userKey
 	roomUserModel.Host = true
 	roomUserModel.Status = "online"
 

@@ -20,8 +20,8 @@ func NewRoomUserRepository(conn *gorm.DB) repository.RoomUserRepository {
 func (roomUserRepository *roomUserRepository) Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error) {
 	entity = &model.RoomUser{
 		RoomUserKey: roomUserModel.RoomUserKey,
-		RoomID:      roomUserModel.RoomID,
-		UserID:      roomUserModel.UserID,
+		RoomKey:     roomUserModel.RoomKey,
+		UserKey:     roomUserModel.UserKey,
 		Host:        roomUserModel.Host,
 		Status:      roomUserModel.Status,
 	}
