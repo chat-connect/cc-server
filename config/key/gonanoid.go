@@ -5,7 +5,7 @@ import (
 )
 
 func GenerateKey() (key string, err error) {
-	key, err = gonanoid.New(12)
+	key, err = gonanoid.New(20)
 	if err != nil {
 		return "", err
 	}

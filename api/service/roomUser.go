@@ -54,16 +54,6 @@ func (roomUserService *roomUserService) RoomJoin(roomKey string, userKey string)
 		}
 	}()
 
-	roomResult, err := roomUserService.roomRepository.FindByRoomKey(roomKey)
-	if err != nil {
-		return nil, err
-	}
-
-	userResult, err := roomUserService.userRepository.FindByUserKey(userKey)
-	if err != nil {
-		return nil, err
-	}
-
 	roomUserKey, err := key.GenerateKey()
 	if err != nil {
 		return nil, err
@@ -71,8 +61,8 @@ func (roomUserService *roomUserService) RoomJoin(roomKey string, userKey string)
 
 	roomUserModel := &model.RoomUser{}
 	roomUserModel.RoomUserKey = roomUserKey
-	roomUserModel.RoomID = roomResult.ID
-	roomUserModel.UserID = userResult.ID
+	roomUserModel.RoomKey = roomKey
+	roomUserModel.UserKey = userKey
 	roomUserModel.Host = false
 	roomUserModel.Status = "online"
 

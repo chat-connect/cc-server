@@ -26,8 +26,8 @@ func TestRoomUserRepository_Insert(t *testing.T) {
             name: "Successful",
             mockParam: &model.RoomUser{
                 RoomUserKey: "test_key",
-                RoomID:      1,
-                UserID:      1,
+                RoomKey:     "test_key",
+                UserKey:     "test_key",
                 Host:        false,
 				Status:      "online",
             },
@@ -37,8 +37,8 @@ func TestRoomUserRepository_Insert(t *testing.T) {
             expectedRoomUser: &model.RoomUser{
                 ID:          1,
                 RoomUserKey: "test_key",
-                RoomID:      1,
-                UserID:      1,
+                RoomKey:     "test_key",
+                UserKey:     "test_key",
                 Host:        false,
 				Status:      "online",
 				CreatedAt: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),

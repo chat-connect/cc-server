@@ -78,7 +78,7 @@ func TestRoomRepository_Insert(t *testing.T) {
             name: "Successful",
             mockParam: &model.Room{
                 RoomKey:     "test_key",
-                UserID:      1,
+                UserKey:     "test_key",
                 Name:        "test",
 				Explanation: "test",
 				ImagePath:   "/test",
@@ -91,7 +91,7 @@ func TestRoomRepository_Insert(t *testing.T) {
             expectedRoom: &model.Room{
                 ID:          1,
                 RoomKey:     "test_key",
-                UserID:      1,
+                UserKey:     "test_key",
                 Name:        "test",
 				Explanation: "test",
 				ImagePath:   "/test",

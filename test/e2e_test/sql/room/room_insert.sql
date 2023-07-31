@@ -1,6 +1,6 @@
 INSERT INTO room (
     room_key,
-    user_id,
+    user_key,
     name,
     explanation,
     image_path,
@@ -9,8 +9,8 @@ INSERT INTO room (
     created_at,
     updated_at
 ) VALUES (
-    'pRxN4QA9bt4p',
-    1,
+    'pRxN4QA9bt4ppRxN4QA9',
+    'pRxN4QA9bt4ppRxN4QA9',
     'test',
     'test',
     '/test',

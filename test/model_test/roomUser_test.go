@@ -22,8 +22,8 @@ func TestRoomUserModel_EmptyRoom(t *testing.T) {
 			roomUser: &model.RoomUser{
 				ID:          1,
 				RoomUserKey: "test_key",
-				RoomID:      1,
-				UserID:      1,
+				RoomKey:     "test_key",
+				UserKey:     "test_key",
 				Host:        false,
 				Status:      "online",
 			},

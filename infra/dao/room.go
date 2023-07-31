@@ -30,7 +30,7 @@ func (roomRepository *roomRepository) FindByRoomKey(roomKey string) (entity *mod
 func (roomRepository *roomRepository) Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error) {
 	entity = &model.Room{
 		RoomKey:     roomModel.RoomKey,
-		UserID:      roomModel.UserID,
+		UserKey:     roomModel.UserKey,
 		Name:        roomModel.Name,
 		Explanation: roomModel.Explanation,
 		ImagePath:   roomModel.ImagePath,

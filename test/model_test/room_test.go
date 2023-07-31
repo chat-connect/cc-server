@@ -22,7 +22,7 @@ func TestRoomModel_EmptyRoom(t *testing.T) {
 			room: &model.Room{
 				ID:          1,
 				RoomKey:     "test_key",
-				UserID:       1,
+				UserKey:     "test_key",
 				Name:        "test",
 				Explanation: "test",
 				ImagePath:   "/test",
