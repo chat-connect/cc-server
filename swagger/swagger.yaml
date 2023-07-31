@@ -21,7 +21,14 @@ definitions:
         type: string
       user_count:
         type: integer
-      user_key:
+    type: object
+  output.RoomJoin:
+    properties:
+      message:
+        type: string
+      room_user_key:
+        type: string
+      status:
         type: string
     type: object
   output.UserCheck:
@@ -322,4 +329,29 @@ paths:
       summary: ログアウト
       tags:
       - User
+  /user/{userKey}/room_join/{roomKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.RoomJoin'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      summary: ルーム参加
+      tags:
+      - Room
 swagger: "2.0"
