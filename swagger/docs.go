@@ -128,7 +128,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/{userKey}/room_join/{roomKey}": {
+        "/room/{userKey}/room_join/{roomKey}": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -153,6 +153,49 @@ const docTemplate = `{
                                     "properties": {
                                         "Items": {
                                             "$ref": "#/definitions/output.RoomJoin"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output.Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/room/{userKey}/room_out/{roomKey}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム退出",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "Items": {
+                                            "$ref": "#/definitions/output.RoomOut"
                                         }
                                     }
                                 }
@@ -465,6 +508,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.RoomOut": {
+            "type": "object",
+            "properties": {
+                "message": {
                     "type": "string"
                 }
             }

@@ -31,6 +31,11 @@ definitions:
       status:
         type: string
     type: object
+  output.RoomOut:
+    properties:
+      message:
+        type: string
+    type: object
   output.UserCheck:
     properties:
       email:
@@ -181,6 +186,56 @@ paths:
       summary: ユーザー登録
       tags:
       - Auth
+  /room/{userKey}/room_join/{roomKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.RoomJoin'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      summary: ルーム参加
+      tags:
+      - Room
+  /room/{userKey}/room_out/{roomKey}:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.RoomOut'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      summary: ルーム退出
+      tags:
+      - Room
   /user/{user_key}/room_create:
     post:
       consumes:
@@ -329,29 +384,4 @@ paths:
       summary: ログアウト
       tags:
       - User
-  /user/{userKey}/room_join/{roomKey}:
-    post:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                Items:
-                  $ref: '#/definitions/output.RoomJoin'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
-      summary: ルーム参加
-      tags:
-      - Room
 swagger: "2.0"
