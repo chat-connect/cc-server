@@ -189,3 +189,76 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 		})
 	}
 }
+
+func TestRoomE2E_RoomOut(t *testing.T) {
+	files := []File{
+		"sql/room/room_table.sql",
+		"sql/room/room_insert.sql",
+		"sql/room/room_user_table.sql",
+		"sql/room/user_table.sql",
+		"sql/room/user_insert.sql",
+	}
+
+	db := LoadTestSql(files...)
+	defer ClearTestSql(db)
+
+	testCases := []struct {
+		name         string
+		email        string // 認証
+		password     string // 認証
+		roomKey      string
+		userKey      string
+		expectedCode int
+	}{
+		{
+			name:         "Successful: Room Out",
+			email:        "test@example.com",
+			password:     "test",
+			roomKey:  "pRxN4QA9bt4p",
+			userKey:  "pRxN4QA9bt4p",
+			expectedCode: http.StatusOK,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/room/%s/room_out/%s", os.Getenv("TEST_API_URL"), tc.userKey, tc.roomKey), nil)
+			if err != nil {
+				t.Fatalf("Failed to create request: %v", err)
+			}
+
+			token := AuthUserLogin(tc.email, tc.password)
+			req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+			req.Header.Set("Content-Type", "application/json")
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				t.Fatalf("Failed to send request: %v", err)
+			}
+			defer resp.Body.Close()
+
+			if resp.StatusCode != tc.expectedCode {
+				t.Fatalf("Expected status code %v, but got %v", tc.expectedCode, resp.StatusCode)
+			}
+
+			if tc.expectedCode == http.StatusOK {
+				actual := &response.Success{
+					Items: &output.RoomOut{},
+				}
+				expect := &response.Success{
+					Types: "room_out",
+					Status: 200,
+					Items: &output.RoomOut{
+						Message:  "room out completed",					
+					},
+				}
+
+				err = json.NewDecoder(resp.Body).Decode(actual)
+				if err != nil {
+					t.Fatalf("Failed to parse response: %v", err)
+				}
+				
+				assert.Equal(t, expect, actual)
+			}
+		})
+	}
+}
