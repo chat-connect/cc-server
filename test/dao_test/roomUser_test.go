@@ -75,3 +75,41 @@ func TestRoomUserRepository_Insert(t *testing.T) {
         })
     }
 }
+
+func TestRoomUserRepository_DeleteByRoomKeyAndUserKey(t *testing.T) {
+    testCases := []struct {
+        name            string
+        roomKey         string
+        userKey         string
+        mockRowsAffected int64
+        mockError       error
+        expectedError   error
+    }{
+        {
+            name:            "Successful",
+            roomKey:         "test_key",
+            userKey:         "test_key",
+            mockRowsAffected: 1,
+            mockError:        nil,
+            expectedError:    nil,
+        },
+    }
+
+    for _, tc := range testCases {
+        t.Run(tc.name, func(t *testing.T) {
+            db, mock, _ := sqlmock.New()
+            defer db.Close()
+
+            gormDB, _ := gorm.Open("mysql", db)
+            repo := dao.NewRoomUserRepository(gormDB)
+            mock.ExpectBegin()
+            mock.ExpectExec("DELETE").WithArgs(tc.userKey).
+                WillReturnResult(sqlmock.NewResult(tc.mockRowsAffected, tc.mockRowsAffected)).
+                WillReturnError(tc.mockError)
+            mock.ExpectCommit()
+
+            err := repo.DeleteByRoomKeyAndUserKey(tc.roomKey, tc.userKey, gormDB)
+            assert.Equal(t, tc.expectedError, err)
+        })
+    }
+}
