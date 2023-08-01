@@ -31,15 +31,16 @@ func Init() {
 	a.POST("/user_register", userController.UserRegister()) // auth/user_register
 	a.POST("/user_login", userController.UserLogin()) // auth/user_login
 
-	// user: 認証済ユーザーのみアクセス可能
-	u := e.Group("/user/:userKey")
-	u.Use(userMiddleware.UserMiddleware)
-	u.GET("/user_check", userController.UserCheck()) // user/:userKey/user_check
-	u.PUT("/user_logout", userController.UserLogout()) // user/:userKey/user_logout
-	u.DELETE("/user_delete", userController.UserDelete()) // user/:userKey/user_delete
+	// auth: 認証済ユーザーのみアクセス可能
+	a.Use(userMiddleware.UserMiddleware)
+	a.GET("/user_check/:userKey", userController.UserCheck()) // auth/user_check/:userKey
+	a.PUT("/user_logout/:userKey", userController.UserLogout()) // auth/user_logout/:userKey
+	a.DELETE("/user_delete/:userKey", userController.UserDelete()) // auth/user_delete/:userKey
 
-	u.POST("/room_create", roomController.RoomCreate()) // user/:userKey/room_create
-	u.POST("/room_join/:roomKey", roomUserController.RoomJoin()) // user/:userKey/room_join/:roomKey
+	// room: 部屋関連
+	r := e.Group("/room")
+	r.POST("/:userKey/room_create", roomController.RoomCreate()) // room/:userKey/room_create
+	r.POST("/:userKey/room_join/:roomKey", roomUserController.RoomJoin()) // room/:userKey/room_join/:roomKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

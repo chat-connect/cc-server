@@ -201,7 +201,7 @@ func TestUserE2E_Check(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest("GET", fmt.Sprintf("%s/user/%s/user_check", os.Getenv("TEST_API_URL"), tc.userKey), nil)
+			req, err := http.NewRequest("GET", fmt.Sprintf("%s/auth/user_check/%s", os.Getenv("TEST_API_URL"), tc.userKey), nil)
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
@@ -272,7 +272,7 @@ func TestUserE2E_Delete(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/user/%s/user_delete", os.Getenv("TEST_API_URL"), tc.userKey), nil)
+			req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/auth/user_delete/%s", os.Getenv("TEST_API_URL"), tc.userKey), nil)
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}

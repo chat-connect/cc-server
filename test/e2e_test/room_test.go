@@ -55,7 +55,7 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 				t.Fatalf("JSON encoding error: %v", err)
 			}
 
-			req, err := http.NewRequest("POST", fmt.Sprintf("%s/user/%s/room_create", os.Getenv("TEST_API_URL"), tc.userKey), bytes.NewBuffer(jsonData))
+			req, err := http.NewRequest("POST", fmt.Sprintf("%s/room/%s/room_create", os.Getenv("TEST_API_URL"), tc.userKey), bytes.NewBuffer(jsonData))
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
@@ -143,7 +143,7 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest("POST", fmt.Sprintf("%s/user/%s/room_join/%s", os.Getenv("TEST_API_URL"), tc.userKey, tc.roomKey), nil)
+			req, err := http.NewRequest("POST", fmt.Sprintf("%s/room/%s/room_join/%s", os.Getenv("TEST_API_URL"), tc.userKey, tc.roomKey), nil)
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
