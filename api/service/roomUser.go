@@ -9,7 +9,8 @@ import (
 )
 
 type RoomUserService interface {
-	RoomJoin(roomKey string, userKey string) (*model.RoomUser, error)
+	RoomJoin(roomKey string, userKey string) (roomUserResult *model.RoomUser, err error)
+	RoomOut(roomKey string, userKey string) (err error)
 }
 
 type roomUserService struct {
@@ -72,4 +73,33 @@ func (roomUserService *roomUserService) RoomJoin(roomKey string, userKey string)
 	}
 
 	return roomUserResult, nil
+}
+
+// RoomOut ルームから退出する
+func (roomUserService *roomUserService) RoomOut(roomKey string, userKey string) (err error) {
+	// transaction
+	tx, err := roomUserService.transactionRepository.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			err := roomUserService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := roomUserService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	err = roomUserService.roomUserRepository.DeleteByRoomKeyAndUserKey(roomKey, userKey, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

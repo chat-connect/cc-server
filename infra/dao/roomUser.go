@@ -40,3 +40,21 @@ func (roomUserRepository *roomUserRepository) Insert(roomUserModel *model.RoomUs
 
 	return entity, nil
 }
+
+func (roomUserRepository *roomUserRepository) DeleteByRoomKeyAndUserKey(roomKey string, userKey string, tx *gorm.DB) (err error) {
+	entity := &model.RoomUser{}
+
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = roomUserRepository.Conn
+	}
+
+	res := conn.Model(entity).Where("room_key = ?", roomKey).Where("user_key = ?", userKey).Delete(entity)
+	if err := res.Error; err != nil {
+		return err
+	}
+	
+	return err
+}

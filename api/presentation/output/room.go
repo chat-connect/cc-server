@@ -48,3 +48,14 @@ func ToRoomJoin(ru *model.RoomUser) *RoomJoin {
 		Message: "room join completed",
 	}
 }
+
+// room_out
+type RoomOut struct {
+	Message string `json:"message"`
+}
+
+func ToRoomOut() *RoomOut {
+	return &RoomOut{
+		Message: "room out completed",
+	}
+}

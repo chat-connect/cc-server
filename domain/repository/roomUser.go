@@ -8,4 +8,5 @@ import (
 
 type RoomUserRepository interface {
 	Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error)
+	DeleteByRoomKeyAndUserKey(roomKey string, userKey string, tx *gorm.DB) (err error)
 }
