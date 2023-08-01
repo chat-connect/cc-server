@@ -103,7 +103,7 @@ func (userController *userController) UserLogin() echo.HandlerFunc {
 // @Param       user_key path string true "user_key" maxlength(12)
 // @Success     200  {object} response.Success{Items=output.UserCheck}
 // @Failure     500  {array}  output.Error
-// @Router      /user/{user_key}/user_check [get]
+// @Router      /auth/user_check/{user_key} [get]
 func (userController *userController) UserCheck() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		baseToken := c.Request().Header.Get("Authorization")
@@ -132,7 +132,7 @@ func (userController *userController) UserCheck() echo.HandlerFunc {
 // @Param       user_key path string true "user_key" maxlength(12)
 // @Success     200  {object} response.Success{Items=output.UserLogout}
 // @Failure     500  {array}  output.Error
-// @Router      /user/{user_key}/user_logout [put]
+// @Router      /auth/user_logout/{user_key} [put]
 func (userController *userController) UserLogout() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userModel := &model.User{}
@@ -167,7 +167,7 @@ func (userController *userController) UserLogout() echo.HandlerFunc {
 // @Param       user_key path string true "ユーザーキー"
 // @Success     200  {object} response.Success{Items=output.UserDelete}
 // @Failure     500  {array}  output.Error
-// @Router      /user/{user_key}/user_delete [delete]
+// @Router      /auth/user_delete/{user_key} [delete]
 func (userController *userController) UserDelete() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userKey := c.Param("userKey")

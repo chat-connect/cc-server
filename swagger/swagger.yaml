@@ -122,6 +122,83 @@ info:
   title: Chat Connect
   version: "1.0"
 paths:
+  /auth/user_check/{user_key}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: user_key
+        in: path
+        maxLength: 12
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserCheck'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー取得
+      tags:
+      - User
+  /auth/user_delete/{user_key}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ユーザーキー
+        in: path
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserDelete'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー削除
+      tags:
+      - User
   /auth/user_login:
     post:
       consumes:
@@ -154,6 +231,45 @@ paths:
       summary: ユーザーログイン
       tags:
       - Auth
+  /auth/user_logout/{user_key}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: user_key
+        in: path
+        maxLength: 12
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                Items:
+                  $ref: '#/definitions/output.UserLogout'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      security:
+      - ApiKeyAuth: []
+      summary: ログアウト
+      tags:
+      - User
   /auth/user_register:
     post:
       consumes:
@@ -268,120 +384,4 @@ paths:
       summary: ルーム作成
       tags:
       - Room
-  /user/{user_key}/user_check:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: user_key
-        in: path
-        maxLength: 12
-        name: user_key
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                Items:
-                  $ref: '#/definitions/output.UserCheck'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
-      security:
-      - ApiKeyAuth: []
-      summary: ユーザー取得
-      tags:
-      - User
-  /user/{user_key}/user_delete:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: ユーザーキー
-        in: path
-        name: user_key
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                Items:
-                  $ref: '#/definitions/output.UserDelete'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
-      security:
-      - ApiKeyAuth: []
-      summary: ユーザー削除
-      tags:
-      - User
-  /user/{user_key}/user_logout:
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: user_key
-        in: path
-        maxLength: 12
-        name: user_key
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                Items:
-                  $ref: '#/definitions/output.UserLogout'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
-      security:
-      - ApiKeyAuth: []
-      summary: ログアウト
-      tags:
-      - User
 swagger: "2.0"
