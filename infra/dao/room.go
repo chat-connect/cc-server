@@ -7,19 +7,19 @@ import (
 	"github.com/chat-connect/cc-server/domain/repository"
 )
 
-type roomRepository struct {
+type roomDao struct {
 	Conn *gorm.DB
 }
 
-func NewRoomRepository(conn *gorm.DB) repository.RoomRepository {
-	return &roomRepository{
+func NewRoomDao(conn *gorm.DB) repository.RoomRepository {
+	return &roomDao{
 		Conn: conn,
 	}
 }
 
-func (roomRepository *roomRepository) FindByRoomKey(roomKey string) (entity *model.Room, err error) {
+func (roomDao *roomDao) FindByRoomKey(roomKey string) (entity *model.Room, err error) {
 	entity = &model.Room{}
-	res := roomRepository.Conn.Where("room_key = ?", roomKey).Find(entity)
+	res := roomDao.Conn.Where("room_key = ?", roomKey).Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func (roomRepository *roomRepository) FindByRoomKey(roomKey string) (entity *mod
 	return entity, nil
 }
 
-func (roomRepository *roomRepository) Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error) {
+func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error) {
 	entity = &model.Room{
 		RoomKey:     roomModel.RoomKey,
 		UserKey:     roomModel.UserKey,
@@ -42,7 +42,7 @@ func (roomRepository *roomRepository) Insert(roomModel *model.Room, tx *gorm.DB)
 	if tx != nil {
 		conn = tx
 	} else {
-		conn = roomRepository.Conn
+		conn = roomDao.Conn
 	}
 
 	res := conn.Model(&model.Room{}).Create(entity)

@@ -19,8 +19,8 @@ import (
 // user
 func InitializeUserController() controller.UserController {
 	db := database.NewDB()
-	userRepository := dao.NewUserRepository(db)
-	transactionRepository := dao.NewTransactionRepository(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
 	userService := service.NewUserService(userRepository, transactionRepository)
 	userController := controller.NewUserController(userService)
 	return userController
@@ -29,10 +29,10 @@ func InitializeUserController() controller.UserController {
 // room
 func InitializeRoomController() controller.RoomController {
 	db := database.NewDB()
-	roomRepository := dao.NewRoomRepository(db)
-	roomUserRepository := dao.NewRoomUserRepository(db)
-	userRepository := dao.NewUserRepository(db)
-	transactionRepository := dao.NewTransactionRepository(db)
+	roomRepository := dao.NewRoomDao(db)
+	roomUserRepository := dao.NewRoomUserDao(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
 	roomService := service.NewRoomService(roomRepository, roomUserRepository, userRepository, transactionRepository)
 	roomController := controller.NewRoomController(roomService)
 	return roomController
@@ -41,10 +41,10 @@ func InitializeRoomController() controller.RoomController {
 // room_user
 func InitializeRoomUserController() controller.RoomUserController {
 	db := database.NewDB()
-	roomRepository := dao.NewRoomRepository(db)
-	roomUserRepository := dao.NewRoomUserRepository(db)
-	userRepository := dao.NewUserRepository(db)
-	transactionRepository := dao.NewTransactionRepository(db)
+	roomRepository := dao.NewRoomDao(db)
+	roomUserRepository := dao.NewRoomUserDao(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
 	roomUserService := service.NewRoomUserService(roomRepository, roomUserRepository, userRepository, transactionRepository)
 	roomUserController := controller.NewRoomUserController(roomUserService)
 	return roomUserController
@@ -53,8 +53,8 @@ func InitializeRoomUserController() controller.RoomUserController {
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
 	db := database.NewDB()
-	userRepository := dao.NewUserRepository(db)
-	transactionRepository := dao.NewTransactionRepository(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
 	userService := service.NewUserService(userRepository, transactionRepository)
 	userMiddleware := middleware.NewUserMiddleware(userService)
 	return userMiddleware

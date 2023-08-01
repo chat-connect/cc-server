@@ -16,8 +16,8 @@ import (
 func InitializeUserController() controller.UserController {
     wire.Build(
         database.NewDB,
-        dao.NewUserRepository,
-        dao.NewTransactionRepository,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
         service.NewUserService,
         controller.NewUserController,
     )
@@ -28,10 +28,10 @@ func InitializeUserController() controller.UserController {
 func InitializeRoomController() controller.RoomController {
     wire.Build(
         database.NewDB,
-        dao.NewRoomRepository,
-        dao.NewRoomUserRepository,
-        dao.NewUserRepository,
-        dao.NewTransactionRepository,
+        dao.NewRoomDao,
+        dao.NewRoomUserDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
         service.NewRoomService,
         controller.NewRoomController,
     )
@@ -42,10 +42,10 @@ func InitializeRoomController() controller.RoomController {
 func InitializeRoomUserController() controller.RoomUserController {
     wire.Build(
         database.NewDB,
-        dao.NewRoomRepository,
-        dao.NewRoomUserRepository,
-        dao.NewUserRepository,
-        dao.NewTransactionRepository,
+        dao.NewRoomDao,
+        dao.NewRoomUserDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
         service.NewRoomUserService,
         controller.NewRoomUserController,
     )
@@ -56,8 +56,8 @@ func InitializeRoomUserController() controller.RoomUserController {
 func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(
         database.NewDB,
-        dao.NewUserRepository,
-        dao.NewTransactionRepository,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
         service.NewUserService,
 		middleware.NewUserMiddleware,
     )

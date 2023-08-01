@@ -7,17 +7,17 @@ import (
 	"github.com/chat-connect/cc-server/domain/repository"
 )
 
-type roomUserRepository struct {
+type roomUserDao struct {
 	Conn *gorm.DB
 }
 
-func NewRoomUserRepository(conn *gorm.DB) repository.RoomUserRepository {
-	return &roomUserRepository{
+func NewRoomUserDao(conn *gorm.DB) repository.RoomUserRepository {
+	return &roomUserDao{
 		Conn: conn,
 	}
 }
 
-func (roomUserRepository *roomUserRepository) Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error) {
+func (roomUserDao *roomUserDao) Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error) {
 	entity = &model.RoomUser{
 		RoomUserKey: roomUserModel.RoomUserKey,
 		RoomKey:     roomUserModel.RoomKey,
@@ -30,7 +30,7 @@ func (roomUserRepository *roomUserRepository) Insert(roomUserModel *model.RoomUs
 	if tx != nil {
 		conn = tx
 	} else {
-		conn = roomUserRepository.Conn
+		conn = roomUserDao.Conn
 	}
 
 	res := conn.Model(&model.RoomUser{}).Create(entity)
@@ -41,14 +41,14 @@ func (roomUserRepository *roomUserRepository) Insert(roomUserModel *model.RoomUs
 	return entity, nil
 }
 
-func (roomUserRepository *roomUserRepository) DeleteByRoomKeyAndUserKey(roomKey string, userKey string, tx *gorm.DB) (err error) {
+func (roomUserDao *roomUserDao) DeleteByRoomKeyAndUserKey(roomKey string, userKey string, tx *gorm.DB) (err error) {
 	entity := &model.RoomUser{}
 
 	var conn *gorm.DB
 	if tx != nil {
 		conn = tx
 	} else {
-		conn = roomUserRepository.Conn
+		conn = roomUserDao.Conn
 	}
 
 	res := conn.Model(entity).Where("room_key = ?", roomKey).Where("user_key = ?", userKey).Delete(entity)

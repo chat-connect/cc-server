@@ -6,18 +6,18 @@ import (
 	"github.com/chat-connect/cc-server/domain/repository"
 )
 
-type transactionRepository struct {
+type transactionDao struct {
 	Conn *gorm.DB
 }
 
-func NewTransactionRepository(conn *gorm.DB) repository.TransactionRepository {
-	return &transactionRepository{
+func NewTransactionDao(conn *gorm.DB) repository.TransactionRepository {
+	return &transactionDao{
 		Conn: conn,
 	}
 }
 
-func (transactionRepository *transactionRepository) Begin() (tx *gorm.DB, err error) {
-	tx = transactionRepository.Conn.Begin()
+func (transactionDao *transactionDao) Begin() (tx *gorm.DB, err error) {
+	tx = transactionDao.Conn.Begin()
 	if err := tx.Error; err != nil {
 		return tx, err
 	}
@@ -25,7 +25,7 @@ func (transactionRepository *transactionRepository) Begin() (tx *gorm.DB, err er
 	return tx, err
 }
 
-func (transactionRepository *transactionRepository) Commit(tx *gorm.DB) (err error) {
+func (transactionDao *transactionDao) Commit(tx *gorm.DB) (err error) {
 	tx.Commit()
 	if err := tx.Error; err != nil {
 		return err
@@ -34,7 +34,7 @@ func (transactionRepository *transactionRepository) Commit(tx *gorm.DB) (err err
 	return err
 }
 
-func (transactionRepository *transactionRepository) Rollback(tx *gorm.DB) (err error) {
+func (transactionDao *transactionDao) Rollback(tx *gorm.DB) (err error) {
 	tx.Rollback()
 	if err := tx.Error; err != nil {
 		return err

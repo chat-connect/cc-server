@@ -7,19 +7,19 @@ import (
 	"github.com/chat-connect/cc-server/domain/repository"
 )
 
-type userRepository struct {
+type userDao struct {
 	Conn *gorm.DB
 }
 
-func NewUserRepository(conn *gorm.DB) repository.UserRepository {
-	return &userRepository{
+func NewUserDao(conn *gorm.DB) repository.UserRepository {
+	return &userDao{
 		Conn: conn,
 	}
 }
 
-func (userRepository *userRepository) FindByEmail(email string) (entity *model.User, err error) {
+func (userDao *userDao) FindByEmail(email string) (entity *model.User, err error) {
 	entity = &model.User{}
-	res := userRepository.Conn.Where("email = ?", email).Find(entity)
+	res := userDao.Conn.Where("email = ?", email).Find(entity)
 	if err := res.Error; err != nil {
 		return entity, err
 	}
@@ -27,9 +27,9 @@ func (userRepository *userRepository) FindByEmail(email string) (entity *model.U
 	return entity, err
 }
 
-func (userRepository *userRepository) FindByUserKey(userKey string) (entity *model.User, err error) {
+func (userDao *userDao) FindByUserKey(userKey string) (entity *model.User, err error) {
 	entity = &model.User{}
-	res := userRepository.Conn.Where("user_key = ?", userKey).Find(entity)
+	res := userDao.Conn.Where("user_key = ?", userKey).Find(entity)
 	if err := res.Error; err != nil {
 		return entity, err
 	}
@@ -37,9 +37,9 @@ func (userRepository *userRepository) FindByUserKey(userKey string) (entity *mod
 	return entity, err
 }
 
-func (userRepository *userRepository) CountByStatus(status string) (count int64, err error) {
+func (userDao *userDao) CountByStatus(status string) (count int64, err error) {
 	entity := &model.User{}
-	res := userRepository.Conn.Model(entity).Where("status = ?", status).Count(&count)
+	res := userDao.Conn.Model(entity).Where("status = ?", status).Count(&count)
 	if err := res.Error; err != nil {
 		return count, err
 	}
@@ -47,7 +47,7 @@ func (userRepository *userRepository) CountByStatus(status string) (count int64,
 	return count, err
 }
 
-func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
+func (userDao *userDao) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
 		Name:     param.Name,
@@ -61,7 +61,7 @@ func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (en
 	if tx != nil {
 		conn = tx
 	} else {
-		conn = userRepository.Conn
+		conn = userDao.Conn
 	}
 	
 	res := conn.Model(&model.User{}).Create(entity)
@@ -72,7 +72,7 @@ func (userRepository *userRepository) Insert(param *model.User, tx *gorm.DB) (en
 	return entity, err
 }
 
-func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
+func (userDao *userDao) Update(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
 		UserKey:  param.UserKey,
 		Name:     param.Name,
@@ -86,7 +86,7 @@ func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (en
 	if tx != nil {
 		conn = tx
 	} else {
-		conn = userRepository.Conn
+		conn = userDao.Conn
 	}
 	
 	res := conn.Model(&model.User{}).Where("user_key = ?", entity.UserKey).Update(entity)
@@ -97,14 +97,14 @@ func (userRepository *userRepository) Update(param *model.User, tx *gorm.DB) (en
 	return entity, err
 }
 
-func (userRepository *userRepository) DeleteByUserKey(userKey string, tx *gorm.DB) (err error) {
+func (userDao *userDao) DeleteByUserKey(userKey string, tx *gorm.DB) (err error) {
 	entity := &model.User{}
 
 	var conn *gorm.DB
 	if tx != nil {
 		conn = tx
 	} else {
-		conn = userRepository.Conn
+		conn = userDao.Conn
 	}
 
 	res := conn.Model(&model.User{}).Where("user_key = ?", userKey).Delete(entity)
