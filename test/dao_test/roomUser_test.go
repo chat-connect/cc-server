@@ -12,7 +12,7 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-func TestRoomUserRepository_Insert(t *testing.T) {
+func TestRoomUserDao_Insert(t *testing.T) {
     testCases := []struct {
         name             string
         mockParam        *model.RoomUser
@@ -54,7 +54,7 @@ func TestRoomUserRepository_Insert(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := dao.NewRoomUserRepository(gormDB)
+            repo := dao.NewRoomUserDao(gormDB)
             mock.ExpectBegin()
             mock.ExpectExec("INSERT").
                 WillReturnResult(sqlmock.NewResult(tc.mockLastInsertID, tc.mockRowsAffected)).
@@ -76,7 +76,7 @@ func TestRoomUserRepository_Insert(t *testing.T) {
     }
 }
 
-func TestRoomUserRepository_DeleteByRoomKeyAndUserKey(t *testing.T) {
+func TestRoomUserDao_DeleteByRoomKeyAndUserKey(t *testing.T) {
     testCases := []struct {
         name            string
         roomKey         string
@@ -101,14 +101,14 @@ func TestRoomUserRepository_DeleteByRoomKeyAndUserKey(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := dao.NewRoomUserRepository(gormDB)
+            dao := dao.NewRoomUserDao(gormDB)
             mock.ExpectBegin()
-            mock.ExpectExec("DELETE").WithArgs(tc.userKey).
+            mock.ExpectExec("DELETE").WithArgs(tc.roomKey, tc.userKey).
                 WillReturnResult(sqlmock.NewResult(tc.mockRowsAffected, tc.mockRowsAffected)).
                 WillReturnError(tc.mockError)
             mock.ExpectCommit()
 
-            err := repo.DeleteByRoomKeyAndUserKey(tc.roomKey, tc.userKey, gormDB)
+            err := dao.DeleteByRoomKeyAndUserKey(tc.roomKey, tc.userKey, gormDB)
             assert.Equal(t, tc.expectedError, err)
         })
     }

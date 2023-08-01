@@ -12,7 +12,7 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-func TestRoomRepository_FindByRoomKey(t *testing.T) {
+func TestRoomDao_FindByRoomKey(t *testing.T) {
 	testCases := []struct {
 		name           string
 		mockRows       *sqlmock.Rows
@@ -54,7 +54,7 @@ func TestRoomRepository_FindByRoomKey(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := dao.NewRoomRepository(gormDB)
+			repo := dao.NewRoomDao(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs("test_key").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
 
 			user, err := repo.FindByRoomKey("test_key")
@@ -64,7 +64,7 @@ func TestRoomRepository_FindByRoomKey(t *testing.T) {
 	}
 }
 
-func TestRoomRepository_Insert(t *testing.T) {
+func TestRoomDao_Insert(t *testing.T) {
     testCases := []struct {
         name             string
         mockParam        *model.Room
@@ -110,7 +110,7 @@ func TestRoomRepository_Insert(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := dao.NewRoomRepository(gormDB)
+            repo := dao.NewRoomDao(gormDB)
             mock.ExpectBegin()
             mock.ExpectExec("INSERT").
                 WillReturnResult(sqlmock.NewResult(tc.mockLastInsertID, tc.mockRowsAffected)).

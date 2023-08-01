@@ -12,7 +12,7 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-func TestUserRepository_FindByEmail(t *testing.T) {
+func TestUserDao_FindByEmail(t *testing.T) {
 	testCases := []struct {
 		name           string
 		mockRows       *sqlmock.Rows
@@ -64,7 +64,7 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := dao.NewUserRepository(gormDB)
+			repo := dao.NewUserDao(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs("test@example.com").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
 
 			// run test
@@ -75,7 +75,7 @@ func TestUserRepository_FindByEmail(t *testing.T) {
 	}
 }
 
-func TestUserRepository_FindByUserKey(t *testing.T) {
+func TestUserDao_FindByUserKey(t *testing.T) {
 	testCases := []struct {
 		name           string
 		mockRows       *sqlmock.Rows
@@ -127,7 +127,7 @@ func TestUserRepository_FindByUserKey(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := dao.NewUserRepository(gormDB)
+			repo := dao.NewUserDao(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs("test_key").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
 
 			user, err := repo.FindByUserKey("test_key")
@@ -137,7 +137,7 @@ func TestUserRepository_FindByUserKey(t *testing.T) {
 	}
 }
 
-func TestUserRepository_CountByStatus(t *testing.T) {
+func TestUserDao_CountByStatus(t *testing.T) {
 	testCases := []struct {
 		name          string
 		mockResult    int64
@@ -162,7 +162,7 @@ func TestUserRepository_CountByStatus(t *testing.T) {
 			defer db.Close()
 
 			gormDB, _ := gorm.Open("mysql", db)
-			repo := dao.NewUserRepository(gormDB)
+			repo := dao.NewUserDao(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs(tc.status).WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(tc.mockResult)).WillReturnError(tc.mockError)
 
 			count, err := repo.CountByStatus(tc.status)
@@ -172,7 +172,7 @@ func TestUserRepository_CountByStatus(t *testing.T) {
 	}
 }
 
-func TestUserRepository_Insert(t *testing.T) {
+func TestUserDao_Insert(t *testing.T) {
     testCases := []struct {
         name            string
         mockParam       *model.User
@@ -216,7 +216,7 @@ func TestUserRepository_Insert(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := dao.NewUserRepository(gormDB)
+            repo := dao.NewUserDao(gormDB)
             mock.ExpectBegin()
             mock.ExpectExec("INSERT").
                 WillReturnResult(sqlmock.NewResult(tc.mockLastInsertID, tc.mockRowsAffected)).
@@ -238,7 +238,7 @@ func TestUserRepository_Insert(t *testing.T) {
     }
 }
 
-func TestUserRepository_Update(t *testing.T) {
+func TestUserDao_Update(t *testing.T) {
     testCases := []struct {
         name            string
         mockParam       *model.User
@@ -282,7 +282,7 @@ func TestUserRepository_Update(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := dao.NewUserRepository(gormDB)
+            repo := dao.NewUserDao(gormDB)
             mock.ExpectBegin()
 			mock.ExpectExec("UPDATE").
                 WillReturnResult(sqlmock.NewResult(tc.mockLastUpdateID, tc.mockRowsAffected)).
@@ -305,7 +305,7 @@ func TestUserRepository_Update(t *testing.T) {
     }
 }
 
-func TestUserRepository_DeleteByUserKey(t *testing.T) {
+func TestUserDao_DeleteByUserKey(t *testing.T) {
     testCases := []struct {
         name            string
         userKey         string
@@ -328,7 +328,7 @@ func TestUserRepository_DeleteByUserKey(t *testing.T) {
             defer db.Close()
 
             gormDB, _ := gorm.Open("mysql", db)
-            repo := dao.NewUserRepository(gormDB)
+            repo := dao.NewUserDao(gormDB)
             mock.ExpectBegin()
             mock.ExpectExec("DELETE").WithArgs(tc.userKey).
                 WillReturnResult(sqlmock.NewResult(tc.mockRowsAffected, tc.mockRowsAffected)).
