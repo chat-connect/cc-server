@@ -18,19 +18,19 @@ func NewRoomUserDao(conn *gorm.DB) repository.RoomUserRepository {
 }
 
 func (roomUserDao *roomUserDao) Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = roomUserDao.Conn
+	}
+
 	entity = &model.RoomUser{
 		RoomUserKey: roomUserModel.RoomUserKey,
 		RoomKey:     roomUserModel.RoomKey,
 		UserKey:     roomUserModel.UserKey,
 		Host:        roomUserModel.Host,
 		Status:      roomUserModel.Status,
-	}
-
-	var conn *gorm.DB
-	if tx != nil {
-		conn = tx
-	} else {
-		conn = roomUserDao.Conn
 	}
 
 	res := conn.Model(&model.RoomUser{}).Create(entity)
@@ -42,14 +42,14 @@ func (roomUserDao *roomUserDao) Insert(roomUserModel *model.RoomUser, tx *gorm.D
 }
 
 func (roomUserDao *roomUserDao) DeleteByRoomKeyAndUserKey(roomKey string, userKey string, tx *gorm.DB) (err error) {
-	entity := &model.RoomUser{}
-
 	var conn *gorm.DB
 	if tx != nil {
 		conn = tx
 	} else {
 		conn = roomUserDao.Conn
 	}
+	
+	entity := &model.RoomUser{}
 
 	res := conn.Model(entity).Where("room_key = ?", roomKey).Where("user_key = ?", userKey).Delete(entity)
 	if err := res.Error; err != nil {

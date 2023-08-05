@@ -73,6 +73,13 @@ func (userDao *userDao) Insert(param *model.User, tx *gorm.DB) (entity *model.Us
 }
 
 func (userDao *userDao) Update(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = userDao.Conn
+	}
+	
 	entity = &model.User{
 		UserKey:  param.UserKey,
 		Name:     param.Name,
@@ -82,13 +89,6 @@ func (userDao *userDao) Update(param *model.User, tx *gorm.DB) (entity *model.Us
 		Status:   param.Status,
 	}
 
-	var conn *gorm.DB
-	if tx != nil {
-		conn = tx
-	} else {
-		conn = userDao.Conn
-	}
-	
 	res := conn.Model(&model.User{}).Where("user_key = ?", entity.UserKey).Update(entity)
 	if err := res.Error; err != nil {
 		return entity, err
@@ -98,14 +98,14 @@ func (userDao *userDao) Update(param *model.User, tx *gorm.DB) (entity *model.Us
 }
 
 func (userDao *userDao) DeleteByUserKey(userKey string, tx *gorm.DB) (err error) {
-	entity := &model.User{}
-
 	var conn *gorm.DB
 	if tx != nil {
 		conn = tx
 	} else {
 		conn = userDao.Conn
 	}
+	
+	entity := &model.User{}
 
 	res := conn.Model(&model.User{}).Where("user_key = ?", userKey).Delete(entity)
 	if err := res.Error; err != nil {

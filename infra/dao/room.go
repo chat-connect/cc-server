@@ -28,6 +28,13 @@ func (roomDao *roomDao) FindByRoomKey(roomKey string) (entity *model.Room, err e
 }
 
 func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = roomDao.Conn
+	}
+	
 	entity = &model.Room{
 		RoomKey:     roomModel.RoomKey,
 		UserKey:     roomModel.UserKey,
@@ -36,13 +43,6 @@ func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *mode
 		ImagePath:   roomModel.ImagePath,
 		UserCount:   roomModel.UserCount,
 		Status:      roomModel.Status,
-	}
-
-	var conn *gorm.DB
-	if tx != nil {
-		conn = tx
-	} else {
-		conn = roomDao.Conn
 	}
 
 	res := conn.Model(&model.Room{}).Create(entity)
