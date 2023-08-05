@@ -50,7 +50,7 @@ func Init() {
 	// channel: チャンネル関連
 	channel := e.Group("/channel")
 	channel.Use(userMiddleware.UserMiddleware)
-	channel.GET("/:userKey/channel_list/:roomKey", channelController.ChannelList()) // chat/:userKey/chat_list/:roomKey
+	channel.GET("/:userKey/channel_list/:roomKey", channelController.ChannelList()) // channel/:userKey/channel_list/:roomKey
 	channel.POST("/:userKey/channel_create/:roomKey", channelController.ChannelCreate()) // channel/:userKey/channel_create/:roomKey
 	
 	// chat: チャット関連
