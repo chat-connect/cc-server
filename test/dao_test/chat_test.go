@@ -12,7 +12,7 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-func TestChatDao_ListByRoomKey(t *testing.T) {
+func TestChatDao_ListByChannelKey(t *testing.T) {
 	testCases := []struct {
 		name           string
 		mockRows       *sqlmock.Rows
@@ -50,7 +50,7 @@ func TestChatDao_ListByRoomKey(t *testing.T) {
 			repo := dao.NewChatDao(gormDB)
 			mock.ExpectQuery("SELECT").WithArgs("test_key").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
 
-			chat, err := repo.ListByRoomKey("test_key")
+			chat, err := repo.ListByChannelKey("test_key")
 			assert.Equal(t, tc.expectedChats, chat)
 			assert.Equal(t, tc.expectedError, err)
 		})

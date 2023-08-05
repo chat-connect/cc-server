@@ -17,7 +17,7 @@ func NewChatDao(conn *gorm.DB) repository.ChatRepository {
 	}
 }
 
-func (chatDao *chatDao) ListByRoomKey(roomKey string) (entity *model.Chats, err error) {
+func (chatDao *chatDao) ListByChannelKey(roomKey string) (entity *model.Chats, err error) {
 	entity = &model.Chats{}
 
 	// 最新の100行目までを取得する

@@ -32,9 +32,9 @@ func NewChatService(
 	}
 }
 
-// ChatList
+// ChatList チャット一覧を取得する
 func (chatService *chatService) ChatList(channelKey string) (chatResult *model.Chats, err error) {
-	chatResult, err = chatService.chatRepository.ListByRoomKey(channelKey)
+	chatResult, err = chatService.chatRepository.ListByChannelKey(channelKey)
 	if err != nil {
 		return nil, err
 	}
