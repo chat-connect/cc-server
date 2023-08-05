@@ -17,13 +17,13 @@ definitions:
     type: object
   output.ChatCreate:
     properties:
+      channel_key:
+        type: string
       chat_key:
         type: string
       content:
         type: string
       message:
-        type: string
-      room_key:
         type: string
       user_key:
         type: string
@@ -400,7 +400,7 @@ paths:
       summary: チャンネル作成
       tags:
       - Channel
-  /chat/{userKey}/chat_create/{roomKey}:
+  /chat/{userKey}/chat_create/{channelKey}:
     post:
       consumes:
       - application/json
@@ -428,7 +428,7 @@ paths:
       summary: チャット作成
       tags:
       - Chat
-  /chat/{userKey}/chat_list/{roomKey}:
+  /chat/{userKey}/chat_list/{channelKey}:
     get:
       consumes:
       - application/json

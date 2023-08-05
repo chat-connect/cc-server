@@ -10,8 +10,8 @@ import (
 )
 
 type ChatService interface {
-	ChatCreate(roomKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error)
-	ChatList(roomKey string) (chatResult *model.Chats, err error)
+	ChatCreate(channelKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error)
+	ChatList(channelKey string) (chatResult *model.Chats, err error)
 }
 
 type chatService struct {
@@ -33,8 +33,8 @@ func NewChatService(
 }
 
 // ChatList
-func (chatService *chatService) ChatList(roomKey string) (chatResult *model.Chats, err error) {
-	chatResult, err = chatService.chatRepository.ListByRoomKey(roomKey)
+func (chatService *chatService) ChatList(channelKey string) (chatResult *model.Chats, err error) {
+	chatResult, err = chatService.chatRepository.ListByRoomKey(channelKey)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (chatService *chatService) ChatList(roomKey string) (chatResult *model.Chat
 }
 
 // ChatCreate チャットを作成する
-func (chatService *chatService) ChatCreate(roomKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error) {
+func (chatService *chatService) ChatCreate(channelKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error) {
 	// transaction
 	tx, err := chatService.transactionRepository.Begin()
 	if err != nil {
@@ -75,7 +75,7 @@ func (chatService *chatService) ChatCreate(roomKey string, userKey string, chatP
 
 	chatModel := &model.Chat{}
 	chatModel.ChatKey = chatKey
-	chatModel.RoomKey = roomKey
+	chatModel.ChannelKey = channelKey
 	chatModel.UserKey = userKey
 	chatModel.UserName = user.Name
 	chatModel.Content = chatParam.Content

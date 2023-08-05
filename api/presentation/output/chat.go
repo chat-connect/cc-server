@@ -6,7 +6,7 @@ import (
 
 // chat_list
 type ChatList struct {
-	RoomKey string            `json:"room_key"`
+	ChannelKey string         `json:"room_key"`
 	List    []ChatListContent `json:"list"`
 	Message string            `json:"message"`
 }
@@ -18,7 +18,7 @@ type ChatListContent struct {
 	Content string  `json:"content"`
 }
 
-func ToChatList(roomKey string, c *model.Chats) *ChatList {
+func ToChatList(channelKey string, c *model.Chats) *ChatList {
 	if c == nil {
 		return nil
 	}
@@ -35,19 +35,19 @@ func ToChatList(roomKey string, c *model.Chats) *ChatList {
 	}
 
 	return &ChatList{
-		RoomKey: roomKey,
-		List:    list,
-		Message: "chat list created",
+		ChannelKey: channelKey,
+		List:       list,
+		Message:    "chat list created",
 	}
 }
 
 // chat_create
 type ChatCreate struct {
-	ChatKey string `json:"chat_key"`
-	RoomKey string `json:"room_key"`
-	UserKey string `json:"user_key"`
-	Content string `json:"content"`
-	Message string `json:"message"`
+	ChatKey    string `json:"chat_key"`
+	ChannelKey string `json:"channel_key"`
+	UserKey    string `json:"user_key"`
+	Content    string `json:"content"`
+	Message    string `json:"message"`
 }
 
 func ToChatCreate(c *model.Chat) *ChatCreate {
@@ -56,10 +56,10 @@ func ToChatCreate(c *model.Chat) *ChatCreate {
 	}
 
 	return &ChatCreate{
-		ChatKey: c.ChatKey,
-		RoomKey: c.RoomKey,
-		UserKey: c.UserKey,
-		Content: c.Content,
-		Message: "chat create completed",
+		ChatKey:    c.ChatKey,
+		ChannelKey: c.ChannelKey,
+		UserKey:    c.UserKey,
+		Content:    c.Content,
+		Message:    "chat create completed",
 	}
 }

@@ -33,13 +33,13 @@ func NewChatController(
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ChatList}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /chat/{userKey}/chat_list/{roomKey} [get]
+// @Router      /chat/{userKey}/chat_list/{channelKey} [get]
 func (chatController *chatController) ChatList() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
-		roomKey := c.Param("roomKey")
+		channelKey := c.Param("channelKey")
 
-		chatResult, err := chatController.chatService.ChatList(roomKey)
+		chatResult, err := chatController.chatService.ChatList(channelKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("chat_list", 500, out)
@@ -47,7 +47,7 @@ func (chatController *chatController) ChatList() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToChatList(roomKey, chatResult)
+		out := output.ToChatList(channelKey, chatResult)
 		response := response.SuccessWith("chat_list", 200, out)
 
 		return c.JSON(200, response)
@@ -61,16 +61,16 @@ func (chatController *chatController) ChatList() echo.HandlerFunc {
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ChatCreate}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /chat/{userKey}/chat_create/{roomKey} [post]
+// @Router      /chat/{userKey}/chat_create/{channelKey} [post]
 func (chatController *chatController) ChatCreate() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
-		roomKey := c.Param("roomKey")
+		channelKey := c.Param("channelKey")
 		userKey := c.Param("userKey")
 		chatParam := &parameter.ChatCreate{}
 		c.Bind(chatParam)
 
-		chatResult, err := chatController.chatService.ChatCreate(roomKey, userKey, chatParam)
+		chatResult, err := chatController.chatService.ChatCreate(channelKey, userKey, chatParam)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("chat_create", 500, out)

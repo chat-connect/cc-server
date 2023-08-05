@@ -21,7 +21,7 @@ func (chatDao *chatDao) ListByRoomKey(roomKey string) (entity *model.Chats, err 
 	entity = &model.Chats{}
 
 	// 最新の100行目までを取得する
-	res := chatDao.Conn.Where("room_key = ?", roomKey).Order("created_at DESC").Limit(100).Find(entity)
+	res := chatDao.Conn.Where("channel_key = ?", roomKey).Order("created_at DESC").Limit(100).Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -38,11 +38,11 @@ func (chatDao *chatDao) Insert(chatModel *model.Chat, tx *gorm.DB) (entity *mode
 	}
 
 	entity = &model.Chat{
-		ChatKey:  chatModel.ChatKey,
-		RoomKey:  chatModel.RoomKey,
-		UserKey:  chatModel.UserKey,
-		UserName: chatModel.UserName,
-		Content:  chatModel.Content,
+		ChatKey:    chatModel.ChatKey,
+		ChannelKey: chatModel.ChannelKey,
+		UserKey:    chatModel.UserKey,
+		UserName:   chatModel.UserName,
+		Content:    chatModel.Content,
 	}
 
 	res := conn.Model(&model.Chat{}).Create(entity)

@@ -20,12 +20,12 @@ func TestChatModel_EmptyRoom(t *testing.T) {
 		{
 			name: "Not Empty Chat",
 			chat: &model.Chat{
-				ID:       1,
-				ChatKey:  "test_key",
-				RoomKey:  "test_key",
-				UserKey:  "test_key",
-				UserName: "test_name",
-				Content:  "content",
+				ID:         1,
+				ChatKey:    "test_key",
+				ChannelKey: "test_key",
+				UserKey:    "test_key",
+				UserName:   "test_name",
+				Content:    "content",
 			},
 			expected: false,
 		},

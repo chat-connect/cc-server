@@ -410,7 +410,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/chat/{userKey}/chat_create/{roomKey}": {
+        "/chat/{userKey}/chat_create/{channelKey}": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -462,7 +462,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/chat/{userKey}/chat_list/{roomKey}": {
+        "/chat/{userKey}/chat_list/{channelKey}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -709,6 +709,9 @@ const docTemplate = `{
         "output.ChatCreate": {
             "type": "object",
             "properties": {
+                "channel_key": {
+                    "type": "string"
+                },
                 "chat_key": {
                     "type": "string"
                 },
@@ -716,9 +719,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "message": {
-                    "type": "string"
-                },
-                "room_key": {
                     "type": "string"
                 },
                 "user_key": {
