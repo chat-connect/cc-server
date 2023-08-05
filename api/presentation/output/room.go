@@ -4,6 +4,39 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
+// room_list
+type RoomList struct {
+	List    []RoomListContent `json:"list"`
+	Message string            `json:"message"`
+}
+
+type RoomListContent struct {
+	RoomKey     string  `json:"chat_key"`
+	Name        string `json:"name"`
+	Explanation string `json:"explanation"`
+}
+
+func ToRoomList(r *model.Rooms) *RoomList {
+	if r == nil {
+		return nil
+	}
+
+	var list []RoomListContent
+	for _, room := range *r {
+		roomContent := RoomListContent{
+			RoomKey:     room.RoomKey,
+			Name:        room.Name,
+			Explanation: room.Explanation,
+		}
+		list = append(list, roomContent)
+	}
+
+	return &RoomList{
+		List:    list,
+		Message: "room list created",
+	}
+}
+
 // room_create
 type RoomCreate struct {
 	RoomKey     string `json:"room_key"`

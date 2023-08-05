@@ -10,6 +10,7 @@ import (
 )
 
 type RoomController interface {
+	RoomList() echo.HandlerFunc
 	RoomCreate() echo.HandlerFunc
 }
 
@@ -21,6 +22,34 @@ func NewRoomController(roomService service.RoomService) RoomController {
     return &roomController{
         roomService: roomService,
     }
+}
+
+// List
+// @Summary     ルーム一覧取得
+// @tags        Room
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.RoomList}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /room/{userKey}/room_list [get]
+func (roomController *roomController) RoomList() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		userKey := c.Param("userKey")
+
+		roomResult, err := roomController.roomService.RoomList(userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("room_list", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToRoomList(roomResult)
+		response := response.SuccessWith("room_list", 200, out)
+
+		return c.JSON(200, response)
+	}
 }
 
 // Create

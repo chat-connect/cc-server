@@ -27,6 +27,17 @@ func (roomDao *roomDao) FindByRoomKey(roomKey string) (entity *model.Room, err e
 	return entity, nil
 }
 
+func (roomDao *roomDao) ListByRoomKeyList(roomKeyList []string) (entity *model.Rooms, err error) {
+	entity = &model.Rooms{}
+	
+	res := roomDao.Conn.Where("room_key IN (?)", roomKeyList).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *model.Room, err error) {
 	var conn *gorm.DB
 	if tx != nil {

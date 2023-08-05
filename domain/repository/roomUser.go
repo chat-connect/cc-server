@@ -7,6 +7,7 @@ import (
 )
 
 type RoomUserRepository interface {
+	ListByUserKey(userKey string) (entity *model.RoomUsers, err error)
 	Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error)
 	DeleteByRoomKeyAndUserKey(roomKey string, userKey string, tx *gorm.DB) (err error)
 }

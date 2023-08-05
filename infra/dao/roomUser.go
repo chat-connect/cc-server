@@ -17,6 +17,17 @@ func NewRoomUserDao(conn *gorm.DB) repository.RoomUserRepository {
 	}
 }
 
+func (roomUserDao *roomUserDao) ListByUserKey(userKey string) (entity *model.RoomUsers, err error) {
+	entity = &model.RoomUsers{}
+	
+	res := roomUserDao.Conn.Where("user_key = ?", userKey).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (roomUserDao *roomUserDao) Insert(roomUserModel *model.RoomUser, tx *gorm.DB) (entity *model.RoomUser, err error) {
 	var conn *gorm.DB
 	if tx != nil {

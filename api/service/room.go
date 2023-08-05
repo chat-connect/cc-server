@@ -10,6 +10,7 @@ import (
 )
 
 type RoomService interface {
+	RoomList(userKey string) (roomResult *model.Rooms, err error)
 	RoomCreate(roomParam *parameter.RoomCreate, userKey string) (*model.Room, error)
 }
 
@@ -32,6 +33,27 @@ func NewRoomService(
 		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// RoomList ルーム一覧を取得する
+func (roomService *roomService) RoomList(userKey string) (roomResult *model.Rooms, err error) {
+	// 参加中のルームを検索
+	roomUsers, err := roomService.roomUserRepository.ListByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	var roomKeyList []string
+	for _, roomUser := range *roomUsers {
+		roomKeyList = append(roomKeyList, roomUser.RoomKey)
+	}	
+
+	roomResult, err = roomService.roomRepository.ListByRoomKeyList(roomKeyList)
+	if err != nil {
+		return nil, err
+	}
+
+	return roomResult, nil
 }
 
 // RoomCreate ルームを作成する

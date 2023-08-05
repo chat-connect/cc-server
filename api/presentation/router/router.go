@@ -43,6 +43,7 @@ func Init() {
 	// room: 部屋関連
 	room := e.Group("/room")
 	room.Use(userMiddleware.UserMiddleware)
+	room.GET("/:userKey/room_list", roomController.RoomList()) // room/:userKey/room_list
 	room.POST("/:userKey/room_create", roomController.RoomCreate()) // room/:userKey/room_create
 	room.POST("/:userKey/room_join/:roomKey", roomUserController.RoomJoin()) // room/:userKey/room_join/:roomKey
 	room.DELETE("/:userKey/room_out/:roomKey", roomUserController.RoomOut()) // room/:userKey/room_out/:roomKey
