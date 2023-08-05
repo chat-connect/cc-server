@@ -1,6 +1,6 @@
 -- チャット情報
 CREATE TABLE `chat` (
-    `id`         BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ルームID",
+    `id`         BIGINT       NOT NULL AUTO_INCREMENT COMMENT "チャットID",
     `chat_key`   VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "チャットKEY",
     `room_key`   VARCHAR(20)  NOT NULL                COMMENT "ルームKEY",
     `user_key`   VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",

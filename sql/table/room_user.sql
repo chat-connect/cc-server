@@ -1,6 +1,6 @@
 -- ルームのユーザー情報
 CREATE TABLE `room_user` (
-    `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ルームID",
+    `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ルームユーザーID",
     `room_user_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ルームユーザーKEY",
     `room_key`      VARCHAR(20)  NOT NULL                COMMENT "ルームKEY",
     `user_key`      VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
