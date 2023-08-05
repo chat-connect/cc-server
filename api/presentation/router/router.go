@@ -28,28 +28,28 @@ func Init() {
 	e.Use(middleware.Recover())
 
 	// auth: 認証API
-	a := e.Group("/auth")
-	a.POST("/user_register", userController.UserRegister()) // auth/user_register
-	a.POST("/user_login", userController.UserLogin()) // auth/user_login
+	auth := e.Group("/auth")
+	auth.POST("/user_register", userController.UserRegister()) // auth/user_register
+	auth.POST("/user_login", userController.UserLogin()) // auth/user_login
 
 	// auth: 認証済ユーザーのみアクセス可能
-	a.Use(userMiddleware.UserMiddleware)
-	a.GET("/user_check/:userKey", userController.UserCheck()) // auth/user_check/:userKey
-	a.PUT("/user_logout/:userKey", userController.UserLogout()) // auth/user_logout/:userKey
-	a.DELETE("/user_delete/:userKey", userController.UserDelete()) // auth/user_delete/:userKey
+	auth.Use(userMiddleware.UserMiddleware)
+	auth.GET("/user_check/:userKey", userController.UserCheck()) // auth/user_check/:userKey
+	auth.PUT("/user_logout/:userKey", userController.UserLogout()) // auth/user_logout/:userKey
+	auth.DELETE("/user_delete/:userKey", userController.UserDelete()) // auth/user_delete/:userKey
 
 	// room: 部屋関連
-	r := e.Group("/room")
-	r.Use(userMiddleware.UserMiddleware)
-	r.POST("/:userKey/room_create", roomController.RoomCreate()) // room/:userKey/room_create
-	r.POST("/:userKey/room_join/:roomKey", roomUserController.RoomJoin()) // room/:userKey/room_join/:roomKey
-	r.DELETE("/:userKey/room_out/:roomKey", roomUserController.RoomOut()) // room/:userKey/room_out/:roomKey
-
+	room := e.Group("/room")
+	room.Use(userMiddleware.UserMiddleware)
+	room.POST("/:userKey/room_create", roomController.RoomCreate()) // room/:userKey/room_create
+	room.POST("/:userKey/room_join/:roomKey", roomUserController.RoomJoin()) // room/:userKey/room_join/:roomKey
+	room.DELETE("/:userKey/room_out/:roomKey", roomUserController.RoomOut()) // room/:userKey/room_out/:roomKey
+	
 	// chat: チャット関連
-	c := e.Group("/chat")
-	c.Use(userMiddleware.UserMiddleware)
-	c.GET("/:userKey/chat_list/:roomKey", chatController.ChatList()) // chat/:userKey/chat_list/:roomKey
-	c.POST("/:userKey/chat_create/:roomKey", chatController.ChatCreate()) // chat/:userKey/chat_create/:roomKey
+	chat := e.Group("/chat")
+	chat.Use(userMiddleware.UserMiddleware)
+	chat.GET("/:userKey/chat_list/:roomKey", chatController.ChatList()) // chat/:userKey/chat_list/:roomKey
+	chat.POST("/:userKey/chat_create/:roomKey", chatController.ChatCreate()) // chat/:userKey/chat_create/:roomKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
