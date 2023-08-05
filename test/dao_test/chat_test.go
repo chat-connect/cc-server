@@ -25,10 +25,11 @@ func TestChatDao_Insert(t *testing.T) {
         {
             name: "Successful",
             mockParam: &model.Chat{
-				ChatKey: "test_key",
-                RoomKey: "test_key",
-                UserKey: "test_key",
-				Content: "content",
+				ChatKey:  "test_key",
+                RoomKey:  "test_key",
+                UserKey:  "test_key",
+                UserName: "test_name",
+				Content:  "content",
             },
             mockRowsAffected: 1,
             mockLastInsertID: 1,
@@ -38,6 +39,7 @@ func TestChatDao_Insert(t *testing.T) {
 				ChatKey: "test_key",
                 RoomKey: "test_key",
                 UserKey: "test_key",
+                UserName: "test_name",
 				Content: "content",
 				CreatedAt: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
 				UpdatedAt: time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),

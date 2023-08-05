@@ -4,6 +4,7 @@ CREATE TABLE `chat` (
     `chat_key`   VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "チャットKEY",
     `room_key`   VARCHAR(20)  NOT NULL                COMMENT "ルームKEY",
     `user_key`   VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
+    `user_name`  VARCHAR(50)  NOT NULL                COMMENT "ユーザー名",
     `content`    VARCHAR(191) NOT NULL                COMMENT "コンテンツ",
     `created_at` TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at` TIMESTAMP    NOT NULL                COMMENT "更新日時",

@@ -11,6 +11,7 @@ type Chat struct {
 	ChatKey   string    `json:"chat_key"`
 	RoomKey   string    `json:"room_key"`
 	UserKey   string    `json:"user_key"`
+	UserName  string    `json:"user_name"`
  	Content   string    `json:"content"`
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
@@ -26,5 +27,6 @@ func (chat *Chat) IsEmpty() bool {
 		chat.ChatKey == "" &&
 		chat.RoomKey == "" &&
 		chat.UserKey == "" &&
+		chat.UserName == "" &&
 		chat.Content == "")
 }
