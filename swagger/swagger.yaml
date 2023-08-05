@@ -103,6 +103,24 @@ definitions:
       status:
         type: string
     type: object
+  output.RoomList:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.RoomListContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.RoomListContent:
+    properties:
+      chat_key:
+        type: string
+      explanation:
+        type: string
+      name:
+        type: string
+    type: object
   output.RoomOut:
     properties:
       message:
@@ -532,6 +550,34 @@ paths:
                   $ref: '#/definitions/output.Error'
               type: object
       summary: ルーム参加
+      tags:
+      - Room
+  /room/{userKey}/room_list:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.RoomList'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ルーム一覧取得
       tags:
       - Room
   /room/{userKey}/room_out/{roomKey}:

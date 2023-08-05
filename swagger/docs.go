@@ -618,6 +618,58 @@ const docTemplate = `{
                 }
             }
         },
+        "/room/{userKey}/room_list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.RoomList"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/room/{userKey}/room_out/{roomKey}": {
             "delete": {
                 "consumes": [
@@ -890,6 +942,34 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.RoomList": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.RoomListContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.RoomListContent": {
+            "type": "object",
+            "properties": {
+                "chat_key": {
+                    "type": "string"
+                },
+                "explanation": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }
