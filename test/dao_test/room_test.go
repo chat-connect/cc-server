@@ -23,8 +23,7 @@ func TestRoomDao_FindByRoomKey(t *testing.T) {
 		{
 			name: "Successful: Room found",
 			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "explanation", "image_path", "user_count", "status", "created_at", "updated_at"}).
-				AddRow(1, "test_key", "test", "test", "/", 1, "public",
-					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				AddRow(1, "test_key", "test", "test", "/", 1, "public", time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedRoom: &model.Room{
 				ID:          1,

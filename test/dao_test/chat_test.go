@@ -23,8 +23,7 @@ func TestChatDao_ListByRoomKey(t *testing.T) {
 		{
 			name: "Successful: Chats found",
 			mockRows: sqlmock.NewRows([]string{"id", "chat_key",  "channel_key", "user_key",  "user_name", "content", "created_at", "updated_at"}).
-				AddRow(1, "test_key", "test_key", "test_key", "test_user", "test_content",
-					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				AddRow(1, "test_key", "test_key", "test_key", "test_user", "test_content", time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedChats: &model.Chats{
                 {

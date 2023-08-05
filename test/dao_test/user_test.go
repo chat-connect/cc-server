@@ -23,8 +23,7 @@ func TestUserDao_FindByEmail(t *testing.T) {
 		{
 			name: "Successful: User found",
 			mockRows: sqlmock.NewRows([]string{"id", "user_key", "name", "email", "password", "token", "status", "created_at", "updated_at"}).
-				AddRow(1, "test_key", "test", "test@example.com", "test_password", "test_token", "login",
-					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				AddRow(1, "test_key", "test", "test@example.com", "test_password", "test_token", "login", time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedUser: &model.User{
 				ID:        1,
@@ -86,8 +85,7 @@ func TestUserDao_FindByUserKey(t *testing.T) {
 		{
 			name: "Successful: User found",
 			mockRows: sqlmock.NewRows([]string{"id", "user_key", "name", "email", "password", "token", "status", "created_at", "updated_at"}).
-				AddRow(1, "test_key", "test", "test@example.com", "test_password", "test_token", "login",
-					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
+				AddRow(1, "test_key", "test", "test@example.com", "test_password", "test_token", "login", time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedUser: &model.User{
 				ID:        1,
