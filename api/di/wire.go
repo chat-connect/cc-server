@@ -57,6 +57,7 @@ func InitializeChatController() controller.ChatController {
     wire.Build(
         database.NewDB,
         dao.NewChatDao,
+        dao.NewUserDao,
         dao.NewTransactionDao,
         service.NewChatService,
         controller.NewChatController,

@@ -54,8 +54,9 @@ func InitializeRoomUserController() controller.RoomUserController {
 func InitializeChatController() controller.ChatController {
 	db := database.NewDB()
 	chatRepository := dao.NewChatDao(db)
+	userRepository := dao.NewUserDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	chatService := service.NewChatService(chatRepository, transactionRepository)
+	chatService := service.NewChatService(chatRepository, userRepository, transactionRepository)
 	chatController := controller.NewChatController(chatService)
 	return chatController
 }
