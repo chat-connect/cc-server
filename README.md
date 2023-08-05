@@ -38,7 +38,7 @@ docker compose -f docker-compose.local.yml exec swagger prism mock ./swagger/swa
 ## DI
 1.API
 ```
-docker compose -f docker-compose.local.yml exec exec api wire api/di/wire.go
+docker compose -f docker-compose.local.yml exec api wire api/di/wire.go
 ```
 
 2.Batch
