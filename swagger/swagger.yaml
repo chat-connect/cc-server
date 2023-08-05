@@ -1,5 +1,20 @@
 basePath: /
 definitions:
+  output.ChannelCreate:
+    properties:
+      channel_key:
+        type: string
+      explanation:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      room_key:
+        type: string
+      type:
+        type: string
+    type: object
   output.ChatCreate:
     properties:
       chat_key:
@@ -11,6 +26,28 @@ definitions:
       room_key:
         type: string
       user_key:
+        type: string
+    type: object
+  output.ChatList:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ChatListContent'
+        type: array
+      message:
+        type: string
+      room_key:
+        type: string
+    type: object
+  output.ChatListContent:
+    properties:
+      chat_key:
+        type: string
+      content:
+        type: string
+      user_key:
+        type: string
+      user_name:
         type: string
     type: object
   output.Error:
@@ -335,6 +372,34 @@ paths:
       summary: ユーザー登録
       tags:
       - Auth
+  /channel/{userKey}/channel_create/{roomKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ChannelCreate'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャンネル作成
+      tags:
+      - Channel
   /chat/{userKey}/chat_create/{roomKey}:
     post:
       consumes:
@@ -361,6 +426,34 @@ paths:
                   $ref: '#/definitions/output.Error'
               type: object
       summary: チャット作成
+      tags:
+      - Chat
+  /chat/{userKey}/chat_list/{roomKey}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ChatList'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット一覧取得
       tags:
       - Chat
   /room/{userKey}/room_join/{roomKey}:

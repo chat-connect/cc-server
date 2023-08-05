@@ -31,7 +31,7 @@ func NewChatController(
 // @tags        Chat
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.ChatCreate}
+// @Success     200  {object} response.Success{items=output.ChatList}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /chat/{userKey}/chat_list/{roomKey} [get]
 func (chatController *chatController) ChatList() echo.HandlerFunc {

@@ -358,6 +358,58 @@ const docTemplate = `{
                 }
             }
         },
+        "/channel/{userKey}/channel_create/{roomKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Channel"
+                ],
+                "summary": "チャンネル作成",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ChannelCreate"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/chat/{userKey}/chat_create/{roomKey}": {
             "post": {
                 "consumes": [
@@ -383,6 +435,58 @@ const docTemplate = `{
                                     "properties": {
                                         "items": {
                                             "$ref": "#/definitions/output.ChatCreate"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/{userKey}/chat_list/{roomKey}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "チャット一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ChatList"
                                         }
                                     }
                                 }
@@ -579,6 +683,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "output.ChannelCreate": {
+            "type": "object",
+            "properties": {
+                "channel_key": {
+                    "type": "string"
+                },
+                "explanation": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "output.ChatCreate": {
             "type": "object",
             "properties": {
@@ -595,6 +722,40 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ChatList": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ChatListContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ChatListContent": {
+            "type": "object",
+            "properties": {
+                "chat_key": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }
