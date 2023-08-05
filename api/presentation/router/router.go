@@ -16,7 +16,9 @@ func Init() {
 	userController := di.InitializeUserController()
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
+	channelController := di.InitializeChannelController()
 	chatController := di.InitializeChatController()
+
 	userMiddleware := di.InitializeUserMiddleware()
 
 	e := echo.New()
@@ -44,6 +46,11 @@ func Init() {
 	room.POST("/:userKey/room_create", roomController.RoomCreate()) // room/:userKey/room_create
 	room.POST("/:userKey/room_join/:roomKey", roomUserController.RoomJoin()) // room/:userKey/room_join/:roomKey
 	room.DELETE("/:userKey/room_out/:roomKey", roomUserController.RoomOut()) // room/:userKey/room_out/:roomKey
+
+	// channel: チャンネル関連
+	channel := e.Group("/channel")
+	channel.Use(userMiddleware.UserMiddleware)
+	channel.POST("/:userKey/channel_create/:roomKey", channelController.ChannelCreate()) // channel/:userKey/channel_create/:roomKey
 	
 	// chat: チャット関連
 	chat := e.Group("/chat")

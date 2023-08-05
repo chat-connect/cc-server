@@ -52,6 +52,18 @@ func InitializeRoomUserController() controller.RoomUserController {
     return nil
 }
 
+// channel
+func InitializeChannelController() controller.ChannelController {
+    wire.Build(
+        database.NewDB,
+        dao.NewChannelDao,
+        dao.NewTransactionDao,
+        service.NewChannelService,
+        controller.NewChannelController,
+    )
+    return nil
+}
+
 // chat
 func InitializeChatController() controller.ChatController {
     wire.Build(
