@@ -410,6 +410,58 @@ const docTemplate = `{
                 }
             }
         },
+        "/channel/{userKey}/channel_list/{roomKey}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Channel"
+                ],
+                "summary": "チャンネル一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ChannelList"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/chat/{userKey}/chat_create/{channelKey}": {
             "post": {
                 "consumes": [
@@ -706,6 +758,40 @@ const docTemplate = `{
                 }
             }
         },
+        "output.ChannelList": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ChannelListContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ChannelListContent": {
+            "type": "object",
+            "properties": {
+                "channel_key": {
+                    "type": "string"
+                },
+                "explanation": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "output.ChatCreate": {
             "type": "object",
             "properties": {
@@ -729,6 +815,9 @@ const docTemplate = `{
         "output.ChatList": {
             "type": "object",
             "properties": {
+                "channel_key": {
+                    "type": "string"
+                },
                 "list": {
                     "type": "array",
                     "items": {
@@ -736,9 +825,6 @@ const docTemplate = `{
                     }
                 },
                 "message": {
-                    "type": "string"
-                },
-                "room_key": {
                     "type": "string"
                 }
             }

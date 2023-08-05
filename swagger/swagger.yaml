@@ -15,6 +15,28 @@ definitions:
       type:
         type: string
     type: object
+  output.ChannelList:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ChannelListContent'
+        type: array
+      message:
+        type: string
+      room_key:
+        type: string
+    type: object
+  output.ChannelListContent:
+    properties:
+      channel_key:
+        type: string
+      explanation:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+    type: object
   output.ChatCreate:
     properties:
       channel_key:
@@ -30,13 +52,13 @@ definitions:
     type: object
   output.ChatList:
     properties:
+      channel_key:
+        type: string
       list:
         items:
           $ref: '#/definitions/output.ChatListContent'
         type: array
       message:
-        type: string
-      room_key:
         type: string
     type: object
   output.ChatListContent:
@@ -398,6 +420,34 @@ paths:
                   $ref: '#/definitions/output.Error'
               type: object
       summary: チャンネル作成
+      tags:
+      - Channel
+  /channel/{userKey}/channel_list/{roomKey}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ChannelList'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャンネル一覧取得
       tags:
       - Channel
   /chat/{userKey}/chat_create/{channelKey}:
