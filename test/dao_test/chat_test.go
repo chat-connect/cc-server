@@ -12,6 +12,52 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
+func TestChatDao_ListByRoomKey(t *testing.T) {
+	testCases := []struct {
+		name           string
+		mockRows       *sqlmock.Rows
+		mockError      error
+		expectedChats  *model.Chats
+		expectedError  error
+	}{
+		{
+			name: "Successful: Chats found",
+			mockRows: sqlmock.NewRows([]string{"id", "chat_key",  "room_key", "user_key",  "user_name", "content", "created_at", "updated_at"}).
+				AddRow(1, "test_key", "test_key", "test_key", "test_user", "test_content",
+					time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
+			mockError: nil,
+			expectedChats: &model.Chats{
+                {
+                    ID:        1,
+                    ChatKey:   "test_key",
+                    RoomKey:   "test_key",
+                    UserKey:   "test_key",
+                    UserName:  "test_user",
+                    Content:   "test_content",
+                    CreatedAt: time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC),
+                    UpdatedAt: time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC),                    
+                },
+            },
+			expectedError: nil,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			db, mock, _ := sqlmock.New()
+			defer db.Close()
+
+			gormDB, _ := gorm.Open("mysql", db)
+			repo := dao.NewChatDao(gormDB)
+			mock.ExpectQuery("SELECT").WithArgs("test_key").WillReturnRows(tc.mockRows).WillReturnError(tc.mockError)
+
+			chat, err := repo.ListByRoomKey("test_key")
+			assert.Equal(t, tc.expectedChats, chat)
+			assert.Equal(t, tc.expectedError, err)
+		})
+	}
+}
+
 func TestChatDao_Insert(t *testing.T) {
     testCases := []struct {
         name             string

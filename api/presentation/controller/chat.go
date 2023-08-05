@@ -10,6 +10,7 @@ import (
 )
 
 type ChatController interface {
+	ChatList() echo.HandlerFunc
 	ChatCreate() echo.HandlerFunc
 }
 
@@ -23,6 +24,34 @@ func NewChatController(
     return &chatController{
 		chatService: chatService,
     }
+}
+
+// List
+// @Summary     チャット一覧取得
+// @tags        Chat
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ChatCreate}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /chat/{userKey}/chat_list/{roomKey} [get]
+func (chatController *chatController) ChatList() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		roomKey := c.Param("roomKey")
+
+		chatResult, err := chatController.chatService.ChatList(roomKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("chat_list", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToChatList(roomKey, chatResult)
+		response := response.SuccessWith("chat_list", 200, out)
+
+		return c.JSON(200, response)
+	}
 }
 
 // Create

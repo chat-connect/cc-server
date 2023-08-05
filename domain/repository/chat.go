@@ -8,4 +8,5 @@ import (
 
 type ChatRepository interface {
 	Insert(chatModel *model.Chat, tx *gorm.DB) (entity *model.Chat, err error)
+	ListByRoomKey(roomKey string) (entity *model.Chats, err error)
 }

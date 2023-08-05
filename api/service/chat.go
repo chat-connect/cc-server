@@ -11,21 +11,35 @@ import (
 
 type ChatService interface {
 	ChatCreate(roomKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error)
+	ChatList(roomKey string) (chatResult *model.Chats, err error)
 }
 
 type chatService struct {
 	chatRepository        repository.ChatRepository
+	userRepository        repository.UserRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewChatService(
 		chatRepository        repository.ChatRepository,
+		userRepository repository.UserRepository,
 		transactionRepository repository.TransactionRepository,
 	) ChatService {
 	return &chatService{
 		chatRepository:        chatRepository,
+		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// ChatList
+func (chatService *chatService) ChatList(roomKey string) (chatResult *model.Chats, err error) {
+	chatResult, err = chatService.chatRepository.ListByRoomKey(roomKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return chatResult, nil
 }
 
 // ChatCreate チャットを作成する
@@ -54,10 +68,16 @@ func (chatService *chatService) ChatCreate(roomKey string, userKey string, chatP
 		return nil, err
 	}
 
+	user, err := chatService.userRepository.FindByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
 	chatModel := &model.Chat{}
 	chatModel.ChatKey = chatKey
 	chatModel.RoomKey = roomKey
 	chatModel.UserKey = userKey
+	chatModel.UserName = user.Name
 	chatModel.Content = chatParam.Content
 
 	chatResult, err = chatService.chatRepository.Insert(chatModel, tx)
