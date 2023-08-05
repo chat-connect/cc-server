@@ -10,8 +10,8 @@ import (
 )
 
 type ChatService interface {
-	ChatCreate(channelKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error)
 	ChatList(channelKey string) (chatResult *model.Chats, err error)
+	ChatCreate(channelKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error)
 }
 
 type chatService struct {
