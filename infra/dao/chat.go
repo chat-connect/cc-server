@@ -20,7 +20,8 @@ func NewChatDao(conn *gorm.DB) repository.ChatRepository {
 func (chatDao *chatDao) ListByRoomKey(roomKey string) (entity *model.Chats, err error) {
 	entity = &model.Chats{}
 
-	res := chatDao.Conn.Where("room_key = ?", roomKey).Find(entity)
+	// 最新の100行目までを取得する
+	res := chatDao.Conn.Where("room_key = ?", roomKey).Order("created_at DESC").Limit(100).Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
