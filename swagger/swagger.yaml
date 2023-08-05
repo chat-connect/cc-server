@@ -1,5 +1,18 @@
 basePath: /
 definitions:
+  output.ChatCreate:
+    properties:
+      chat_key:
+        type: string
+      content:
+        type: string
+      message:
+        type: string
+      room_key:
+        type: string
+      user_key:
+        type: string
+    type: object
   output.Error:
     properties:
       message:
@@ -102,6 +115,14 @@ definitions:
       name:
         type: string
       password:
+        type: string
+    type: object
+  response.Error:
+    properties:
+      items: {}
+      status:
+        type: integer
+      types:
         type: string
     type: object
   response.Success:
@@ -302,6 +323,34 @@ paths:
       summary: ユーザー登録
       tags:
       - Auth
+  /chat/{userKey}/chat_create/{roomKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ChatCreate'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット作成
+      tags:
+      - Chat
   /room/{userKey}/room_join/{roomKey}:
     post:
       consumes:

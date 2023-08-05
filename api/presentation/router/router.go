@@ -16,6 +16,7 @@ func Init() {
 	userController := di.InitializeUserController()
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
+	chatController := di.InitializeChatController()
 	userMiddleware := di.InitializeUserMiddleware()
 
 	e := echo.New()
@@ -39,9 +40,15 @@ func Init() {
 
 	// room: 部屋関連
 	r := e.Group("/room")
+	r.Use(userMiddleware.UserMiddleware)
 	r.POST("/:userKey/room_create", roomController.RoomCreate()) // room/:userKey/room_create
 	r.POST("/:userKey/room_join/:roomKey", roomUserController.RoomJoin()) // room/:userKey/room_join/:roomKey
 	r.DELETE("/:userKey/room_out/:roomKey", roomUserController.RoomOut()) // room/:userKey/room_out/:roomKey
+
+	// chat: チャット関連
+	c := e.Group("/chat")
+	c.Use(userMiddleware.UserMiddleware)
+	c.POST("/:userKey/chat_create/:roomKey", chatController.ChatCreate()) // chat/:userKey/chat_create/:roomKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

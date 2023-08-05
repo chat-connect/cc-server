@@ -1,6 +1,5 @@
 package response
 
-// user_register
 type Success struct {
 	Types  string      `json:"types"`
 	Status  int        `json:"status"`

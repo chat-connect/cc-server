@@ -50,6 +50,16 @@ func InitializeRoomUserController() controller.RoomUserController {
 	return roomUserController
 }
 
+// chat
+func InitializeChatController() controller.ChatController {
+	db := database.NewDB()
+	chatRepository := dao.NewChatDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	chatService := service.NewChatService(chatRepository, transactionRepository)
+	chatController := controller.NewChatController(chatService)
+	return chatController
+}
+
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
 	db := database.NewDB()
