@@ -30,8 +30,8 @@ func NewRoomUserController(
 // @tags        Room
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{Items=output.RoomJoin}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.RoomJoin}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /room/{userKey}/room_join/{roomKey}  [post]
 func (roomUserController *roomUserController) RoomJoin() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -59,8 +59,8 @@ func (roomUserController *roomUserController) RoomJoin() echo.HandlerFunc {
 // @tags        Room
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{Items=output.RoomOut}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.RoomOut}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /room/{userKey}/room_out/{roomKey}  [delete]
 func (roomUserController *roomUserController) RoomOut() echo.HandlerFunc {
 	return func(c echo.Context) error {

@@ -65,7 +65,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserCheck"
                                         }
                                     }
@@ -76,10 +76,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -129,7 +138,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserDelete"
                                         }
                                     }
@@ -140,10 +149,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -183,7 +201,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserLogin"
                                         }
                                     }
@@ -194,10 +212,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -248,7 +275,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserLogout"
                                         }
                                     }
@@ -259,10 +286,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -302,7 +338,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserRegister"
                                         }
                                     }
@@ -397,7 +433,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.RoomJoin"
                                         }
                                     }
@@ -408,10 +444,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -440,7 +485,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.RoomOut"
                                         }
                                     }
@@ -451,10 +496,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -494,7 +548,7 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.RoomCreate"
                                         }
                                     }
@@ -505,10 +559,19 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }

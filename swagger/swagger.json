@@ -58,7 +58,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserCheck"
                                         }
                                     }
@@ -69,10 +69,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -122,7 +131,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserDelete"
                                         }
                                     }
@@ -133,10 +142,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -176,7 +194,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserLogin"
                                         }
                                     }
@@ -187,10 +205,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -241,7 +268,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserLogout"
                                         }
                                     }
@@ -252,10 +279,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -295,7 +331,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.UserRegister"
                                         }
                                     }
@@ -390,7 +426,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.RoomJoin"
                                         }
                                     }
@@ -401,10 +437,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -433,7 +478,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.RoomOut"
                                         }
                                     }
@@ -444,10 +489,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -487,7 +541,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "Items": {
+                                        "items": {
                                             "$ref": "#/definitions/output.RoomCreate"
                                         }
                                     }
@@ -498,10 +552,19 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/output.Error"
-                            }
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
