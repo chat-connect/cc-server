@@ -33,7 +33,7 @@ func NewUserController(userService service.UserService) UserController {
 // @Accept      json
 // @Produce     json
 // @Param       body body parameter.UserRegister true "ユーザー登録"
-// @Success     200  {object} response.Success{Items=output.UserRegister}
+// @Success     200  {object} response.Success{items=output.UserRegister}
 // @Failure     500  {array}  output.Error
 // @Router      /auth/user_register [post]
 func (userController *userController) UserRegister() echo.HandlerFunc {
@@ -70,8 +70,8 @@ func (userController *userController) UserRegister() echo.HandlerFunc {
 // @Accept      json
 // @Produce     json
 // @Param       body body parameter.UserLogin true "ユーザーログイン"
-// @Success     200  {object} response.Success{Items=output.UserLogin}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.UserLogin}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_login [post]
 func (userController *userController) UserLogin() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -101,8 +101,8 @@ func (userController *userController) UserLogin() echo.HandlerFunc {
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "user_key" maxlength(12)
-// @Success     200  {object} response.Success{Items=output.UserCheck}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.UserCheck}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_check/{user_key} [get]
 func (userController *userController) UserCheck() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -130,8 +130,8 @@ func (userController *userController) UserCheck() echo.HandlerFunc {
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "user_key" maxlength(12)
-// @Success     200  {object} response.Success{Items=output.UserLogout}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.UserLogout}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_logout/{user_key} [put]
 func (userController *userController) UserLogout() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -165,8 +165,8 @@ func (userController *userController) UserLogout() echo.HandlerFunc {
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "ユーザーキー"
-// @Success     200  {object} response.Success{Items=output.UserDelete}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.UserDelete}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_delete/{user_key} [delete]
 func (userController *userController) UserDelete() echo.HandlerFunc {
 	return func(c echo.Context) error {

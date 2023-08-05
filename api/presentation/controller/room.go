@@ -29,8 +29,8 @@ func NewRoomController(roomService service.RoomService) RoomController {
 // @Accept      json
 // @Produce     json
 // @Param       body body parameter.RoomCreate true "ルーム作成"
-// @Success     200  {object} response.Success{Items=output.RoomCreate}
-// @Failure     500  {array}  output.Error
+// @Success     200  {object} response.Success{items=output.RoomCreate}
+// @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /user/{user_key}/room_create  [post]
 func (roomController *roomController) RoomCreate() echo.HandlerFunc {
 	return func(c echo.Context) error {

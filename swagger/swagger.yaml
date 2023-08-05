@@ -168,15 +168,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.UserCheck'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       security:
       - ApiKeyAuth: []
       summary: ユーザー取得
@@ -206,15 +209,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.UserDelete'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       security:
       - ApiKeyAuth: []
       summary: ユーザー削除
@@ -240,15 +246,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.UserLogin'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       summary: ユーザーログイン
       tags:
       - Auth
@@ -277,15 +286,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.UserLogout'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       security:
       - ApiKeyAuth: []
       summary: ログアウト
@@ -311,7 +323,7 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.UserRegister'
               type: object
         "500":
@@ -364,15 +376,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.RoomJoin'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       summary: ルーム参加
       tags:
       - Room
@@ -389,15 +404,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.RoomOut'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       summary: ルーム退出
       tags:
       - Room
@@ -421,15 +439,18 @@ paths:
             allOf:
             - $ref: '#/definitions/response.Success'
             - properties:
-                Items:
+                items:
                   $ref: '#/definitions/output.RoomCreate'
               type: object
         "500":
           description: Internal Server Error
           schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
       summary: ルーム作成
       tags:
       - Room
