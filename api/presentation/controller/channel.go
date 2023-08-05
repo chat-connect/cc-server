@@ -10,6 +10,7 @@ import (
 )
 
 type ChannelController interface {
+	ChannelList() echo.HandlerFunc
 	ChannelCreate() echo.HandlerFunc
 }
 
@@ -23,6 +24,34 @@ func NewChannelController(
     return &channelController{
 		channelService: channelService,
     }
+}
+
+// List
+// @Summary     チャンネル一覧取得
+// @tags        Channel
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ChannelList}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /channel/{userKey}/channel_list/{roomKey} [get]
+func (channelController *channelController) ChannelList() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		roomKey := c.Param("roomKey")
+
+		channelResult, err := channelController.channelService.ChannelList(roomKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("channel_list", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToChannelList(roomKey, channelResult)
+		response := response.SuccessWith("channel_list", 200, out)
+
+		return c.JSON(200, response)
+	}
 }
 
 // Create

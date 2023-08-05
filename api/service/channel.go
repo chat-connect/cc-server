@@ -10,6 +10,7 @@ import (
 )
 
 type ChannelService interface {
+	ChannelList(roomKey string) (channelResult *model.Channels, err error)
 	ChannelCreate(roomKey string, userKey string, channelParam *parameter.ChannelCreate) (channelResult *model.Channel, err error)
 }
 
@@ -26,6 +27,16 @@ func NewChannelService(
 		channelRepository:     channelRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// ChannelList チャンネル一覧を取得する
+func (channelService *channelService) ChannelList(roomKey string) (channelResult *model.Channels, err error) {
+	channelResult, err = channelService.channelRepository.ListByRoomKey(roomKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return channelResult, nil
 }
 
 // ChannelCreate チャンネルを作成する

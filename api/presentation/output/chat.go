@@ -6,9 +6,9 @@ import (
 
 // chat_list
 type ChatList struct {
-	ChannelKey string         `json:"room_key"`
-	List    []ChatListContent `json:"list"`
-	Message string            `json:"message"`
+	ChannelKey string         `json:"channel_key"`
+	List       []ChatListContent `json:"list"`
+	Message    string            `json:"message"`
 }
 
 type ChatListContent struct {

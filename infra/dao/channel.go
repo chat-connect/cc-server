@@ -17,6 +17,17 @@ func NewChannelDao(conn *gorm.DB) repository.ChannelRepository {
 	}
 }
 
+func (channelDao *channelDao) ListByRoomKey(roomKey string) (entity *model.Channels, err error) {
+	entity = &model.Channels{}
+
+	res := channelDao.Conn.Where("room_key = ?", roomKey).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (channelDao *channelDao) Insert(channelModel *model.Channel, tx *gorm.DB) (entity *model.Channel, err error) {
 	var conn *gorm.DB
 	if tx != nil {
