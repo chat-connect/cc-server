@@ -322,6 +322,58 @@ const docTemplate = `{
                 }
             }
         },
+        "/chat/{userKey}/chat_create/{roomKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "チャット作成",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ChatCreate"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/room/{userKey}/room_join/{roomKey}": {
             "post": {
                 "consumes": [
@@ -464,6 +516,26 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "output.ChatCreate": {
+            "type": "object",
+            "properties": {
+                "chat_key": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                }
+            }
+        },
         "output.Error": {
             "type": "object",
             "properties": {
@@ -622,6 +694,18 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.Error": {
+            "type": "object",
+            "properties": {
+                "items": {},
+                "status": {
+                    "type": "integer"
+                },
+                "types": {
                     "type": "string"
                 }
             }
