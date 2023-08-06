@@ -11,7 +11,7 @@ type RoomList struct {
 }
 
 type RoomListContent struct {
-	RoomKey     string  `json:"chat_key"`
+	RoomKey     string  `json:"room_key"`
 	Name        string `json:"name"`
 	Explanation string `json:"explanation"`
 }
