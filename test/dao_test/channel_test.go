@@ -118,3 +118,39 @@ func TestChannelkDao_Insert(t *testing.T) {
         })
     }
 }
+
+func TestChannelDao_DeleteByChannelKey(t *testing.T) {
+    testCases := []struct {
+        name             string
+        channelKey       string
+        mockRowsAffected int64
+        mockError        error
+        expectedError    error
+    }{
+        {
+            name:            "Successful",
+            channelKey:      "test_key",
+            mockRowsAffected: 1,
+            mockError:        nil,
+            expectedError:    nil,
+        },
+    }
+
+    for _, tc := range testCases {
+        t.Run(tc.name, func(t *testing.T) {
+            db, mock, _ := sqlmock.New()
+            defer db.Close()
+
+            gormDB, _ := gorm.Open("mysql", db)
+            repo := dao.NewChannelDao(gormDB)
+            mock.ExpectBegin()
+            mock.ExpectExec("DELETE").WithArgs(tc.channelKey).
+                WillReturnResult(sqlmock.NewResult(tc.mockRowsAffected, tc.mockRowsAffected)).
+                WillReturnError(tc.mockError)
+            mock.ExpectCommit()
+
+            err := repo.DeleteByChannelKey(tc.channelKey, gormDB)
+            assert.Equal(t, tc.expectedError, err)
+        })
+    }
+}

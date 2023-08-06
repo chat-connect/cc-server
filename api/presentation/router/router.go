@@ -53,7 +53,8 @@ func Init() {
 	channel.Use(userMiddleware.UserMiddleware)
 	channel.GET("/:userKey/channel_list/:roomKey", channelController.ChannelList()) // channel/:userKey/channel_list/:roomKey
 	channel.POST("/:userKey/channel_create/:roomKey", channelController.ChannelCreate()) // channel/:userKey/channel_create/:roomKey
-	
+	channel.DELETE("/:userKey/channel_delete/:channelKey", channelController.ChannelDelete()) // channel/:userKey/channel_delete/:channelKey
+
 	// chat: チャット関連
 	chat := e.Group("/chat")
 	chat.Use(userMiddleware.UserMiddleware)

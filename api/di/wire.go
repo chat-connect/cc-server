@@ -57,6 +57,7 @@ func InitializeChannelController() controller.ChannelController {
     wire.Build(
         database.NewDB,
         dao.NewChannelDao,
+        dao.NewChatDao,
         dao.NewTransactionDao,
         service.NewChannelService,
         controller.NewChannelController,

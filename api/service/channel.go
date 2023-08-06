@@ -12,19 +12,23 @@ import (
 type ChannelService interface {
 	ChannelList(roomKey string) (channelResult *model.Channels, err error)
 	ChannelCreate(roomKey string, userKey string, channelParam *parameter.ChannelCreate) (channelResult *model.Channel, err error)
+	ChannelDelete(channelKey string) (err error)
 }
 
 type channelService struct {
 	channelRepository     repository.ChannelRepository
+	chatRepository        repository.ChatRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewChannelService(
 		channelRepository     repository.ChannelRepository,
+		chatRepository        repository.ChatRepository,
 		transactionRepository repository.TransactionRepository,
 	) ChannelService {
 	return &channelService{
 		channelRepository:     channelRepository,
+		chatRepository:        chatRepository,
 		transactionRepository: transactionRepository,
 	}
 }
@@ -78,4 +82,38 @@ func (channelService *channelService) ChannelCreate(roomKey string, userKey stri
 	}
 
 	return channelResult, nil
+}
+
+// ChannnelDelete チャンネルを削除する
+func (channelService *channelService) ChannelDelete(channelKey string) (err error) {
+	// transaction
+	tx, err := channelService.transactionRepository.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			err := channelService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := channelService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	err = channelService.channelRepository.DeleteByChannelKey(channelKey, tx)
+	if err != nil {
+		return err
+	}
+
+	err = channelService.chatRepository.DeleteByChannelKey(channelKey, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

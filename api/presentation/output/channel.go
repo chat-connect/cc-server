@@ -65,3 +65,14 @@ func ToChannelCreate(c *model.Channel) *ChannelCreate {
 		Message:     "channel create completed",
 	}
 }
+
+// channel_delete
+type ChannelDelete struct {
+	Message  string `json:"message"`
+}
+
+func ToChannelDelete() *ChannelDelete {
+	return &ChannelDelete{
+		Message: "channel delete completed",
+	}
+}

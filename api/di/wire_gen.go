@@ -54,8 +54,9 @@ func InitializeRoomUserController() controller.RoomUserController {
 func InitializeChannelController() controller.ChannelController {
 	db := database.NewDB()
 	channelRepository := dao.NewChannelDao(db)
+	chatRepository := dao.NewChatDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	channelService := service.NewChannelService(channelRepository, transactionRepository)
+	channelService := service.NewChannelService(channelRepository, chatRepository, transactionRepository)
 	channelController := controller.NewChannelController(channelService)
 	return channelController
 }

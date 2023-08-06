@@ -51,3 +51,21 @@ func (channelDao *channelDao) Insert(channelModel *model.Channel, tx *gorm.DB) (
 
 	return entity, nil
 }
+
+func (channelDao *channelDao) DeleteByChannelKey(channelKey string, tx *gorm.DB) (err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = channelDao.Conn
+	}
+	
+	entity := &model.Channel{}
+
+	res := conn.Model(&model.Channel{}).Where("channel_key IN (?)", channelKey).Delete(entity)
+	if err := res.Error; err != nil {
+		return err
+	}
+	
+	return err
+}

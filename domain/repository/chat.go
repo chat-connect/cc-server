@@ -9,4 +9,5 @@ import (
 type ChatRepository interface {
 	ListByChannelKey(channelKey string) (entity *model.Chats, err error)
 	Insert(chatModel *model.Chat, tx *gorm.DB) (entity *model.Chat, err error)
+	DeleteByChannelKey(channelKey string, tx *gorm.DB) (err error)
 }
