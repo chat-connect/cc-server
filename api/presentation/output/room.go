@@ -92,3 +92,14 @@ func ToRoomOut() *RoomOut {
 		Message: "room out completed",
 	}
 }
+
+// room_delete
+type RoomDelete struct {
+	Message string `json:"message"`
+}
+
+func ToRoomDelete() *RoomOut {
+	return &RoomOut{
+		Message: "room delete completed",
+	}
+}

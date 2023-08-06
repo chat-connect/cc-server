@@ -63,3 +63,21 @@ func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *mode
 
 	return entity, nil
 }
+
+func (roomDao *roomDao) DeleteByRoomKey(roomKey string, tx *gorm.DB) (err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = roomDao.Conn
+	}
+	
+	entity := &model.Room{}
+
+	res := conn.Model(&model.Room{}).Where("room_key = ?", roomKey).Delete(entity)
+	if err := res.Error; err != nil {
+		return err
+	}
+	
+	return err
+}

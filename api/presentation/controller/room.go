@@ -12,6 +12,7 @@ import (
 type RoomController interface {
 	RoomList() echo.HandlerFunc
 	RoomCreate() echo.HandlerFunc
+	RoomDelete() echo.HandlerFunc
 }
 
 type roomController struct {
@@ -79,6 +80,35 @@ func (roomController *roomController) RoomCreate() echo.HandlerFunc {
 		out := output.ToRoomCreate(roomResult)
 		response := response.SuccessWith("room_create", 200, out)
 
+		return c.JSON(200, response)
+	}
+}
+
+// Delete
+// @Summary     ルーム削除
+// @tags        Room
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.RoomDelete}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /room/{user_key}/room_delete/{roomKey}  [delete]
+func (roomController *roomController) RoomDelete() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		userKey := c.Param("userKey")
+		roomKey := c.Param("roomKey")
+
+		err := roomController.roomService.RoomDelete(roomKey, userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("room_delete", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToRoomDelete()
+		response := response.SuccessWith("room_delete", 200, out)
+		
 		return c.JSON(200, response)
 	}
 }

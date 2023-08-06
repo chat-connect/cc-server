@@ -2,6 +2,7 @@ package service
 
 import (
 	"log"
+	"fmt"
 
 	"github.com/chat-connect/cc-server/domain/model"
 	"github.com/chat-connect/cc-server/domain/repository"
@@ -12,6 +13,7 @@ import (
 type RoomService interface {
 	RoomList(userKey string) (roomResult *model.Rooms, err error)
 	RoomCreate(roomParam *parameter.RoomCreate, userKey string) (*model.Room, error)
+	RoomDelete(roomKey string, userKey string) (err error)
 }
 
 type roomService struct {
@@ -115,4 +117,48 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 	}
 
 	return roomResult, nil
+}
+
+// RoomDelete ルームを削除する
+func (roomService *roomService) RoomDelete(roomKey string, userKey string) (err error) {
+	// transaction
+	tx, err := roomService.transactionRepository.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			err := roomService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := roomService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	roomUser, err := roomService.roomUserRepository.FindByRoomKeyAndUserKey(roomKey, userKey)
+	if err != nil {
+		return err
+	}
+
+	if !roomUser.Host {
+		return fmt.Errorf("user is not host")
+	}
+
+
+	err = roomService.roomUserRepository.DeleteByRoomKey(roomKey, tx)
+	if err != nil {
+		return err
+	}
+
+	err = roomService.roomRepository.DeleteByRoomKey(roomKey, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
