@@ -10,8 +10,8 @@ import (
 )
 
 type ChatService interface {
-	ChatList(channelKey string) (chatResult *model.Chats, err error)
-	ChatCreate(channelKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error)
+	ListChat(channelKey string) (chatResult *model.Chats, err error)
+	CreateChat(channelKey string, userKey string, chatParam *parameter.CreateChat) (chatResult *model.Chat, err error)
 }
 
 type chatService struct {
@@ -32,8 +32,8 @@ func NewChatService(
 	}
 }
 
-// ChatList チャット一覧を取得する
-func (chatService *chatService) ChatList(channelKey string) (chatResult *model.Chats, err error) {
+// ListChat チャット一覧を取得する
+func (chatService *chatService) ListChat(channelKey string) (chatResult *model.Chats, err error) {
 	chatResult, err = chatService.chatRepository.ListByChannelKey(channelKey)
 	if err != nil {
 		return nil, err
@@ -42,8 +42,8 @@ func (chatService *chatService) ChatList(channelKey string) (chatResult *model.C
 	return chatResult, nil
 }
 
-// ChatCreate チャットを作成する
-func (chatService *chatService) ChatCreate(channelKey string, userKey string, chatParam *parameter.ChatCreate) (chatResult *model.Chat, err error) {
+// CreateChat チャットを作成する
+func (chatService *chatService) CreateChat(channelKey string, userKey string, chatParam *parameter.CreateChat) (chatResult *model.Chat, err error) {
 	// transaction
 	tx, err := chatService.transactionRepository.Begin()
 	if err != nil {

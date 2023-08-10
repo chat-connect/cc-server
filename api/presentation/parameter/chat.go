@@ -1,6 +1,5 @@
 package parameter
 
-// chat_create
-type ChatCreate struct {
+type CreateChat struct {
 	Content string `json:"content"`
 }

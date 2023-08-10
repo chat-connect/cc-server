@@ -60,8 +60,8 @@ func Init() {
 	// chat: チャット関連
 	chat := e.Group("/chat")
 	chat.Use(userMiddleware.UserMiddleware)
-	chat.GET("/:userKey/chat_list/:channelKey", chatController.ChatList()) // chat/:userKey/chat_list/:channelKey
-	chat.POST("/:userKey/chat_create/:channelKey", chatController.ChatCreate()) // chat/:userKey/chat_create/:channelKey
+	chat.GET("/:userKey/chat_list/:channelKey", chatController.ListChat()) // chat/:userKey/chat_list/:channelKey
+	chat.POST("/:userKey/chat_create/:channelKey", chatController.CreateChat()) // chat/:userKey/chat_create/:channelKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
