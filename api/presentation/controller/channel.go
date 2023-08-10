@@ -10,9 +10,9 @@ import (
 )
 
 type ChannelController interface {
-	ChannelList() echo.HandlerFunc
-	ChannelCreate() echo.HandlerFunc
-	ChannelDelete() echo.HandlerFunc
+	ListChannel() echo.HandlerFunc
+	CreateChannel() echo.HandlerFunc
+	DeleteChannel() echo.HandlerFunc
 }
 
 type channelController struct {
@@ -32,15 +32,15 @@ func NewChannelController(
 // @tags        Channel
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.ChannelList}
+// @Success     200  {object} response.Success{items=output.ListChannel}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /channel/{userKey}/channel_list/{roomKey} [get]
-func (channelController *channelController) ChannelList() echo.HandlerFunc {
+func (channelController *channelController) ListChannel() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
 		roomKey := c.Param("roomKey")
 
-		channelResult, err := channelController.channelService.ChannelList(roomKey)
+		channelResult, err := channelController.channelService.ListChannel(roomKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("channel_list", 500, out)
@@ -48,7 +48,7 @@ func (channelController *channelController) ChannelList() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToChannelList(roomKey, channelResult)
+		out := output.ToListChannel(roomKey, channelResult)
 		response := response.SuccessWith("channel_list", 200, out)
 
 		return c.JSON(200, response)
@@ -60,18 +60,18 @@ func (channelController *channelController) ChannelList() echo.HandlerFunc {
 // @tags        Channel
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.ChannelCreate}
+// @Success     200  {object} response.Success{items=output.CreateChannel}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /channel/{userKey}/channel_create/{roomKey} [post]
-func (channelController *channelController) ChannelCreate() echo.HandlerFunc {
+func (channelController *channelController) CreateChannel() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
 		roomKey := c.Param("roomKey")
 		userKey := c.Param("userKey")
-		channelParam := &parameter.ChannelCreate{}
+		channelParam := &parameter.CreateChannel{}
 		c.Bind(channelParam)
 
-		channelResult, err := channelController.channelService.ChannelCreate(roomKey, userKey, channelParam)
+		channelResult, err := channelController.channelService.CreateChannel(roomKey, userKey, channelParam)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("channel_create", 500, out)
@@ -79,7 +79,7 @@ func (channelController *channelController) ChannelCreate() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToChannelCreate(channelResult)
+		out := output.ToCreateChannel(channelResult)
 		response := response.SuccessWith("channel_create", 200, out)
 
 		return c.JSON(200, response)
@@ -91,15 +91,15 @@ func (channelController *channelController) ChannelCreate() echo.HandlerFunc {
 // @tags        Channel
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.ChannelDelete}
+// @Success     200  {object} response.Success{items=output.DeleteChannel}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /channel/{userKey}/channel_delete/{channelKey} [post]
-func (channelController *channelController) ChannelDelete() echo.HandlerFunc {
+func (channelController *channelController) DeleteChannel() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
 		channelKey := c.Param("channelKey")
 
-		err := channelController.channelService.ChannelDelete(channelKey)
+		err := channelController.channelService.DeleteChannel(channelKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("channel_delete", 500, out)
@@ -107,7 +107,7 @@ func (channelController *channelController) ChannelDelete() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToChannelDelete()
+		out := output.ToDeleteChannel()
 		response := response.SuccessWith("channel_delete", 200, out)
 
 		return c.JSON(200, response)

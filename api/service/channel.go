@@ -10,9 +10,9 @@ import (
 )
 
 type ChannelService interface {
-	ChannelList(roomKey string) (channelResult *model.Channels, err error)
-	ChannelCreate(roomKey string, userKey string, channelParam *parameter.ChannelCreate) (channelResult *model.Channel, err error)
-	ChannelDelete(channelKey string) (err error)
+	ListChannel(roomKey string) (channelResult *model.Channels, err error)
+	CreateChannel(roomKey string, userKey string, channelParam *parameter.CreateChannel) (channelResult *model.Channel, err error)
+	DeleteChannel(channelKey string) (err error)
 }
 
 type channelService struct {
@@ -33,8 +33,8 @@ func NewChannelService(
 	}
 }
 
-// ChannelList チャンネル一覧を取得する
-func (channelService *channelService) ChannelList(roomKey string) (channelResult *model.Channels, err error) {
+// ListChannel チャンネル一覧を取得する
+func (channelService *channelService) ListChannel(roomKey string) (channelResult *model.Channels, err error) {
 	channelResult, err = channelService.channelRepository.ListByRoomKey(roomKey)
 	if err != nil {
 		return nil, err
@@ -43,8 +43,8 @@ func (channelService *channelService) ChannelList(roomKey string) (channelResult
 	return channelResult, nil
 }
 
-// ChannelCreate チャンネルを作成する
-func (channelService *channelService) ChannelCreate(roomKey string, userKey string, channelParam *parameter.ChannelCreate) (channelResult *model.Channel, err error) {
+// CreateChannel チャンネルを作成する
+func (channelService *channelService) CreateChannel(roomKey string, userKey string, channelParam *parameter.CreateChannel) (channelResult *model.Channel, err error) {
 	// transaction
 	tx, err := channelService.transactionRepository.Begin()
 	if err != nil {
@@ -84,8 +84,8 @@ func (channelService *channelService) ChannelCreate(roomKey string, userKey stri
 	return channelResult, nil
 }
 
-// ChannnelDelete チャンネルを削除する
-func (channelService *channelService) ChannelDelete(channelKey string) (err error) {
+// DeleteChannel チャンネルを削除する
+func (channelService *channelService) DeleteChannel(channelKey string) (err error) {
 	// transaction
 	tx, err := channelService.transactionRepository.Begin()
 	if err != nil {
