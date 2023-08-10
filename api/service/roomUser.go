@@ -9,8 +9,8 @@ import (
 )
 
 type RoomUserService interface {
-	RoomJoin(roomKey string, userKey string) (roomUserResult *model.RoomUser, err error)
-	RoomOut(roomKey string, userKey string) (err error)
+	JoinRoom(roomKey string, userKey string) (roomUserResult *model.RoomUser, err error)
+	OutRoom(roomKey string, userKey string) (err error)
 }
 
 type roomUserService struct {
@@ -34,8 +34,8 @@ func NewRoomUserService(
 	}
 }
 
-// RoomJoin ルームに参加する
-func (roomUserService *roomUserService) RoomJoin(roomKey string, userKey string) (roomUserResult *model.RoomUser, err error) {
+// JoinRoom ルームに参加する
+func (roomUserService *roomUserService) JoinRoom(roomKey string, userKey string) (roomUserResult *model.RoomUser, err error) {
 	// transaction
 	tx, err := roomUserService.transactionRepository.Begin()
 	if err != nil {
@@ -75,8 +75,8 @@ func (roomUserService *roomUserService) RoomJoin(roomKey string, userKey string)
 	return roomUserResult, nil
 }
 
-// RoomOut ルームから退出する
-func (roomUserService *roomUserService) RoomOut(roomKey string, userKey string) (err error) {
+// OutRoom ルームから退出する
+func (roomUserService *roomUserService) OutRoom(roomKey string, userKey string) (err error) {
 	// transaction
 	tx, err := roomUserService.transactionRepository.Begin()
 	if err != nil {

@@ -30,7 +30,7 @@ func NewRoomUserController(
 // @tags        Room
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.RoomJoin}
+// @Success     200  {object} response.Success{items=output.JoinRoom}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /room/{userKey}/room_join/{roomKey}  [post]
 func (roomUserController *roomUserController) JoinRoom() echo.HandlerFunc {
@@ -39,7 +39,7 @@ func (roomUserController *roomUserController) JoinRoom() echo.HandlerFunc {
 		roomKey := c.Param("roomKey")
 		userKey := c.Param("userKey")
 
-		roomResult, err := roomUserController.roomUserService.RoomJoin(roomKey, userKey)
+		roomResult, err := roomUserController.roomUserService.JoinRoom(roomKey, userKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("room_join", 500, out)
@@ -59,7 +59,7 @@ func (roomUserController *roomUserController) JoinRoom() echo.HandlerFunc {
 // @tags        Room
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.RoomOut}
+// @Success     200  {object} response.Success{items=output.OutRoom}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /room/{userKey}/room_out/{roomKey}  [delete]
 func (roomUserController *roomUserController) OutRoom() echo.HandlerFunc {
@@ -68,7 +68,7 @@ func (roomUserController *roomUserController) OutRoom() echo.HandlerFunc {
 		roomKey := c.Param("roomKey")
 		userKey := c.Param("userKey")
 
-		err := roomUserController.roomUserService.RoomOut(roomKey, userKey)
+		err := roomUserController.roomUserService.OutRoom(roomKey, userKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("room_out", 500, out)
