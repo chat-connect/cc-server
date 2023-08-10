@@ -78,7 +78,7 @@ func ToCheckUser(userKey string, name string, email string) *CheckUser {
 	}
 }
 
-type UserLogout struct {
+type LogoutUser struct {
 	Message  string `json:"message"`
 }
 
