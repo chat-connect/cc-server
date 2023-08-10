@@ -31,37 +31,37 @@ func Init() {
 
 	// auth: 認証API
 	auth := e.Group("/auth")
-	auth.POST("/user_register", userController.RegisterUser()) // auth/user_register
-	auth.POST("/user_login", userController.LoginUser()) // auth/user_login
+	auth.POST("/register_user", userController.RegisterUser()) // auth/user_register
+	auth.POST("/login_user", userController.LoginUser()) // auth/user_login
 
 	// auth: 認証済ユーザーのみアクセス可能
 	auth.Use(userMiddleware.UserMiddleware)
-	auth.GET("/user_check/:userKey", userController.CheckUser()) // auth/user_check/:userKey
-	auth.PUT("/user_logout/:userKey", userController.LogoutUser()) // auth/user_logout/:userKey
-	auth.DELETE("/user_delete/:userKey", userController.DeleteUser()) // auth/user_delete/:userKey
+	auth.GET("/check_user/:userKey", userController.CheckUser()) // auth/user_check/:userKey
+	auth.PUT("/logout_user/:userKey", userController.LogoutUser()) // auth/user_logout/:userKey
+	auth.DELETE("/delete_user/:userKey", userController.DeleteUser()) // auth/user_delete/:userKey
 
 	// room: 部屋関連
 	room := e.Group("/room")
 	room.Use(userMiddleware.UserMiddleware)
-	room.GET("/:userKey/room_list", roomController.ListRoom()) // room/:userKey/room_list
-	room.POST("/:userKey/room_create", roomController.CreateRoom()) // room/:userKey/room_create
-	room.DELETE("/:userKey/room_delete/:roomKey", roomController.DeleteRoom()) // room/:userKey/room_delete/:roomKey
+	room.GET("/:userKey/list_room", roomController.ListRoom()) // room/:userKey/room_list
+	room.POST("/:userKey/create_room", roomController.CreateRoom()) // room/:userKey/room_create
+	room.DELETE("/:userKey/delete_room/:roomKey", roomController.DeleteRoom()) // room/:userKey/room_delete/:roomKey
 
-	room.POST("/:userKey/room_join/:roomKey", roomUserController.JoinRoom()) // room/:userKey/room_join/:roomKey
-	room.DELETE("/:userKey/room_out/:roomKey", roomUserController.OutRoom()) // room/:userKey/room_out/:roomKey
+	room.POST("/:userKey/join_room/:roomKey", roomUserController.JoinRoom()) // room/:userKey/room_join/:roomKey
+	room.DELETE("/:userKey/out_room/:roomKey", roomUserController.OutRoom()) // room/:userKey/room_out/:roomKey
 
 	// channel: チャンネル関連
 	channel := e.Group("/channel")
 	channel.Use(userMiddleware.UserMiddleware)
-	channel.GET("/:userKey/channel_list/:roomKey", channelController.ListChannel()) // channel/:userKey/channel_list/:roomKey
-	channel.POST("/:userKey/channel_create/:roomKey", channelController.CreateChannel()) // channel/:userKey/channel_create/:roomKey
-	channel.DELETE("/:userKey/channel_delete/:channelKey", channelController.DeleteChannel()) // channel/:userKey/channel_delete/:channelKey
+	channel.GET("/:userKey/list_channel/:roomKey", channelController.ListChannel()) // channel/:userKey/channel_list/:roomKey
+	channel.POST("/:userKey/create_channel/:roomKey", channelController.CreateChannel()) // channel/:userKey/channel_create/:roomKey
+	channel.DELETE("/:userKey/delete_channel/:channelKey", channelController.DeleteChannel()) // channel/:userKey/channel_delete/:channelKey
 
 	// chat: チャット関連
 	chat := e.Group("/chat")
 	chat.Use(userMiddleware.UserMiddleware)
-	chat.GET("/:userKey/chat_list/:channelKey", chatController.ListChat()) // chat/:userKey/chat_list/:channelKey
-	chat.POST("/:userKey/chat_create/:channelKey", chatController.CreateChat()) // chat/:userKey/chat_create/:channelKey
+	chat.GET("/:userKey/list_chat/:channelKey", chatController.ListChat()) // chat/:userKey/chat_list/:channelKey
+	chat.POST("/:userKey/create_chat/:channelKey", chatController.CreateChat()) // chat/:userKey/chat_create/:channelKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
