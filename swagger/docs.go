@@ -66,7 +66,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.UserCheck"
+                                            "$ref": "#/definitions/output.CheckUser"
                                         }
                                     }
                                 }
@@ -139,7 +139,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.UserDelete"
+                                            "$ref": "#/definitions/output.DeleteUser"
                                         }
                                     }
                                 }
@@ -186,7 +186,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/parameter.UserLogin"
+                            "$ref": "#/definitions/parameter.LoginUser"
                         }
                     }
                 ],
@@ -202,7 +202,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.UserLogin"
+                                            "$ref": "#/definitions/output.LoginUser"
                                         }
                                     }
                                 }
@@ -276,7 +276,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.UserLogout"
+                                            "$ref": "#/definitions/output.LogoutUser"
                                         }
                                     }
                                 }
@@ -323,7 +323,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/parameter.UserRegister"
+                            "$ref": "#/definitions/parameter.RegisterUser"
                         }
                     }
                 ],
@@ -339,7 +339,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.UserRegister"
+                                            "$ref": "#/definitions/output.RegisterUser"
                                         }
                                     }
                                 }
@@ -382,7 +382,59 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.ChannelCreate"
+                                            "$ref": "#/definitions/output.CreateChannel"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/channel/{userKey}/channel_delete/{channelKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Channel"
+                ],
+                "summary": "チャンネル削除",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.DeleteChannel"
                                         }
                                     }
                                 }
@@ -434,7 +486,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.ChannelList"
+                                            "$ref": "#/definitions/output.ListChannel"
                                         }
                                     }
                                 }
@@ -486,7 +538,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.ChatCreate"
+                                            "$ref": "#/definitions/output.CreateChat"
                                         }
                                     }
                                 }
@@ -538,7 +590,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.ChatList"
+                                            "$ref": "#/definitions/output.ListChat"
                                         }
                                     }
                                 }
@@ -590,7 +642,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.RoomJoin"
+                                            "$ref": "#/definitions/output.JoinRoom"
                                         }
                                     }
                                 }
@@ -642,7 +694,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.RoomList"
+                                            "$ref": "#/definitions/output.ListRoom"
                                         }
                                     }
                                 }
@@ -694,7 +746,59 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.RoomOut"
+                                            "$ref": "#/definitions/output.OutRoom"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/room/{user_key}/room_delete/{roomKey}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム削除",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.DeleteRoom"
                                         }
                                     }
                                 }
@@ -741,7 +845,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/parameter.RoomCreate"
+                            "$ref": "#/definitions/parameter.CreateRoom"
                         }
                     }
                 ],
@@ -757,7 +861,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.RoomCreate"
+                                            "$ref": "#/definitions/output.CreateRoom"
                                         }
                                     }
                                 }
@@ -787,7 +891,24 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "output.ChannelCreate": {
+        "output.CheckUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.CreateChannel": {
             "type": "object",
             "properties": {
                 "channel_key": {
@@ -810,41 +931,7 @@ const docTemplate = `{
                 }
             }
         },
-        "output.ChannelList": {
-            "type": "object",
-            "properties": {
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/output.ChannelListContent"
-                    }
-                },
-                "message": {
-                    "type": "string"
-                },
-                "room_key": {
-                    "type": "string"
-                }
-            }
-        },
-        "output.ChannelListContent": {
-            "type": "object",
-            "properties": {
-                "channel_key": {
-                    "type": "string"
-                },
-                "explanation": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
-        "output.ChatCreate": {
+        "output.CreateChat": {
             "type": "object",
             "properties": {
                 "channel_key": {
@@ -864,49 +951,7 @@ const docTemplate = `{
                 }
             }
         },
-        "output.ChatList": {
-            "type": "object",
-            "properties": {
-                "channel_key": {
-                    "type": "string"
-                },
-                "list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/output.ChatListContent"
-                    }
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "output.ChatListContent": {
-            "type": "object",
-            "properties": {
-                "chat_key": {
-                    "type": "string"
-                },
-                "content": {
-                    "type": "string"
-                },
-                "user_key": {
-                    "type": "string"
-                },
-                "user_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "output.Error": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "output.RoomCreate": {
+        "output.CreateRoom": {
             "type": "object",
             "properties": {
                 "explanation": {
@@ -932,7 +977,39 @@ const docTemplate = `{
                 }
             }
         },
-        "output.RoomJoin": {
+        "output.DeleteChannel": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.DeleteRoom": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.DeleteUser": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.JoinRoom": {
             "type": "object",
             "properties": {
                 "message": {
@@ -946,24 +1023,27 @@ const docTemplate = `{
                 }
             }
         },
-        "output.RoomList": {
+        "output.ListChannel": {
             "type": "object",
             "properties": {
                 "list": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/output.RoomListContent"
+                        "$ref": "#/definitions/output.ListChannelContent"
                     }
                 },
                 "message": {
                     "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
                 }
             }
         },
-        "output.RoomListContent": {
+        "output.ListChannelContent": {
             "type": "object",
             "properties": {
-                "chat_key": {
+                "channel_key": {
                     "type": "string"
                 },
                 "explanation": {
@@ -971,43 +1051,75 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
-                }
-            }
-        },
-        "output.RoomOut": {
-            "type": "object",
-            "properties": {
-                "message": {
+                },
+                "type": {
                     "type": "string"
                 }
             }
         },
-        "output.UserCheck": {
+        "output.ListChat": {
             "type": "object",
             "properties": {
-                "email": {
+                "channel_key": {
                     "type": "string"
                 },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListChatContent"
+                    }
+                },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListChatContent": {
+            "type": "object",
+            "properties": {
+                "chat_key": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListRoom": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListRoomContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListRoomContent": {
+            "type": "object",
+            "properties": {
+                "explanation": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
-                "user_key": {
+                "room_key": {
                     "type": "string"
                 }
             }
         },
-        "output.UserDelete": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "output.UserLogin": {
+        "output.LoginUser": {
             "type": "object",
             "properties": {
                 "email": {
@@ -1027,7 +1139,7 @@ const docTemplate = `{
                 }
             }
         },
-        "output.UserLogout": {
+        "output.LogoutUser": {
             "type": "object",
             "properties": {
                 "message": {
@@ -1035,7 +1147,15 @@ const docTemplate = `{
                 }
             }
         },
-        "output.UserRegister": {
+        "output.OutRoom": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.RegisterUser": {
             "type": "object",
             "properties": {
                 "email": {
@@ -1052,7 +1172,7 @@ const docTemplate = `{
                 }
             }
         },
-        "parameter.RoomCreate": {
+        "parameter.CreateRoom": {
             "type": "object",
             "properties": {
                 "explanation": {
@@ -1063,7 +1183,7 @@ const docTemplate = `{
                 }
             }
         },
-        "parameter.UserLogin": {
+        "parameter.LoginUser": {
             "type": "object",
             "properties": {
                 "email": {
@@ -1074,7 +1194,7 @@ const docTemplate = `{
                 }
             }
         },
-        "parameter.UserRegister": {
+        "parameter.RegisterUser": {
             "type": "object",
             "properties": {
                 "email": {
