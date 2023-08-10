@@ -32,7 +32,7 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 		password     string // 認証用
 		name         string
 		userKey      string
-		body         *parameter.RoomCreate
+		body         *parameter.CreateRoom
 		expectedCode int
 	}{
 		{
@@ -40,7 +40,7 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 			password: "test",
 			name:     "Successful: Room Create",
 			userKey:  "pRxN4QA9bt4p",
-			body: &parameter.RoomCreate{
+			body: &parameter.CreateRoom{
 				Name:        "test",
 				Explanation: "test",
 			},
@@ -75,12 +75,12 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.RoomCreate{},
+					Items: &output.CreateRoom{},
 				}
 				expect := &response.Success{
 					Types: "room_create",
 					Status: 200,
-					Items: &output.RoomCreate{
+					Items: &output.CreateRoom{
 						RoomKey:     "test",
 						Name:        "test",
 						Explanation: "test",
@@ -96,7 +96,7 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 					t.Fatalf("Failed to parse response: %v", err)
 				}
 
-				if roomCreate, ok := actual.Items.(*output.RoomCreate); ok {
+				if roomCreate, ok := actual.Items.(*output.CreateRoom); ok {
 					roomCreate.RoomKey = "test"
 				}
 				
@@ -124,7 +124,7 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 		name         string
 		userKey      string
 		roomKey      string
-		body         *parameter.RoomCreate
+		body         *parameter.CreateRoom
 		expectedCode int
 	}{
 		{
@@ -133,7 +133,7 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 			name:     "Successful: Room Join",
 			userKey:  "pRxN4QA9bt4p",
 			roomKey:  "pRxN4QA9bt4p",
-			body: &parameter.RoomCreate{
+			body: &parameter.CreateRoom{
 				Name:        "test",
 				Explanation: "test",
 			},
@@ -163,12 +163,12 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.RoomJoin{},
+					Items: &output.JoinRoom{},
 				}
 				expect := &response.Success{
 					Types: "room_join",
 					Status: 200,
-					Items: &output.RoomJoin{
+					Items: &output.JoinRoom{
 						RoomUserKey: "test",
 						Status:      "online",
 						Message:     "room join completed",
@@ -180,7 +180,7 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 					t.Fatalf("Failed to parse response: %v", err)
 				}
 
-				if roomJoin, ok := actual.Items.(*output.RoomJoin); ok {
+				if roomJoin, ok := actual.Items.(*output.JoinRoom); ok {
 					roomJoin.RoomUserKey = "test"
 				}
 				
@@ -242,12 +242,12 @@ func TestRoomE2E_RoomOut(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.RoomOut{},
+					Items: &output.OutRoom{},
 				}
 				expect := &response.Success{
 					Types: "room_out",
 					Status: 200,
-					Items: &output.RoomOut{
+					Items: &output.OutRoom{
 						Message:  "room out completed",					
 					},
 				}

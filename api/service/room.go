@@ -11,9 +11,9 @@ import (
 )
 
 type RoomService interface {
-	RoomList(userKey string) (roomResult *model.Rooms, err error)
-	RoomCreate(roomParam *parameter.RoomCreate, userKey string) (*model.Room, error)
-	RoomDelete(roomKey string, userKey string) (err error)
+	ListRoom(userKey string) (roomResult *model.Rooms, err error)
+	CreateRoom(roomParam *parameter.CreateRoom, userKey string) (*model.Room, error)
+	DeleteRoom(roomKey string, userKey string) (err error)
 }
 
 type roomService struct {
@@ -37,8 +37,8 @@ func NewRoomService(
 	}
 }
 
-// RoomList ルーム一覧を取得する
-func (roomService *roomService) RoomList(userKey string) (roomResult *model.Rooms, err error) {
+// ListRoom ルーム一覧を取得する
+func (roomService *roomService) ListRoom(userKey string) (roomResult *model.Rooms, err error) {
 	// 参加中のルームを検索
 	roomUsers, err := roomService.roomUserRepository.ListByUserKey(userKey)
 	if err != nil {
@@ -58,8 +58,8 @@ func (roomService *roomService) RoomList(userKey string) (roomResult *model.Room
 	return roomResult, nil
 }
 
-// RoomCreate ルームを作成する
-func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, userKey string) (roomResult *model.Room, err error) {
+// CreateRoom ルームを作成する
+func (roomService *roomService) CreateRoom(roomParam *parameter.CreateRoom, userKey string) (roomResult *model.Room, err error) {
 	// transaction
 	tx, err := roomService.transactionRepository.Begin()
 	if err != nil {
@@ -119,8 +119,8 @@ func (roomService *roomService) RoomCreate(roomParam *parameter.RoomCreate, user
 	return roomResult, nil
 }
 
-// RoomDelete ルームを削除する
-func (roomService *roomService) RoomDelete(roomKey string, userKey string) (err error) {
+// DeleteRoom ルームを削除する
+func (roomService *roomService) DeleteRoom(roomKey string, userKey string) (err error) {
 	// transaction
 	tx, err := roomService.transactionRepository.Begin()
 	if err != nil {

@@ -4,26 +4,25 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-// room_list
-type RoomList struct {
-	List    []RoomListContent `json:"list"`
+type ListRoom struct {
+	List    []ListRoomContent `json:"list"`
 	Message string            `json:"message"`
 }
 
-type RoomListContent struct {
+type ListRoomContent struct {
 	RoomKey     string  `json:"room_key"`
 	Name        string `json:"name"`
 	Explanation string `json:"explanation"`
 }
 
-func ToRoomList(r *model.Rooms) *RoomList {
+func ToListRoom(r *model.Rooms) *ListRoom {
 	if r == nil {
 		return nil
 	}
 
-	var list []RoomListContent
+	var list []ListRoomContent
 	for _, room := range *r {
-		roomContent := RoomListContent{
+		roomContent := ListRoomContent{
 			RoomKey:     room.RoomKey,
 			Name:        room.Name,
 			Explanation: room.Explanation,
@@ -31,14 +30,13 @@ func ToRoomList(r *model.Rooms) *RoomList {
 		list = append(list, roomContent)
 	}
 
-	return &RoomList{
+	return &ListRoom{
 		List:    list,
 		Message: "room list created",
 	}
 }
 
-// room_create
-type RoomCreate struct {
+type CreateRoom struct {
 	RoomKey     string `json:"room_key"`
 	Name        string `json:"name"`
 	Explanation string `json:"explanation"`
@@ -48,12 +46,12 @@ type RoomCreate struct {
 	Message     string `json:"message"`
 }
 
-func ToRoomCreate(r *model.Room) *RoomCreate {
+func ToCreateRoom(r *model.Room) *CreateRoom {
 	if r == nil {
 		return nil
 	}
 
-	return &RoomCreate{
+	return &CreateRoom{
 		RoomKey:     r.RoomKey,
 		Name:        r.Name,
 		Explanation: r.Explanation,
@@ -63,43 +61,40 @@ func ToRoomCreate(r *model.Room) *RoomCreate {
 	}
 }
 
-// room_join
-type RoomJoin struct {
+type JoinRoom struct {
 	RoomUserKey string `json:"room_user_key"`
 	Status      string `json:"status"`
 	Message     string `json:"message"`
 }
 
-func ToRoomJoin(ru *model.RoomUser) *RoomJoin {
+func ToJoinRoom(ru *model.RoomUser) *JoinRoom {
 	if ru == nil {
 		return nil
 	}
 
-	return &RoomJoin{
+	return &JoinRoom{
 		RoomUserKey: ru.RoomUserKey,
 		Status:      ru.Status,
 		Message: "room join completed",
 	}
 }
 
-// room_out
-type RoomOut struct {
+type OutRoom struct {
 	Message string `json:"message"`
 }
 
-func ToRoomOut() *RoomOut {
-	return &RoomOut{
+func ToOutRoom() *OutRoom {
+	return &OutRoom{
 		Message: "room out completed",
 	}
 }
 
-// room_delete
-type RoomDelete struct {
+type DeleteRoom struct {
 	Message string `json:"message"`
 }
 
-func ToRoomDelete() *RoomOut {
-	return &RoomOut{
+func ToDeleteRoom() *OutRoom {
+	return &OutRoom{
 		Message: "room delete completed",
 	}
 }

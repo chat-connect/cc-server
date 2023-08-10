@@ -9,8 +9,8 @@ import (
 )
 
 type RoomUserController interface {
-	RoomJoin() echo.HandlerFunc
-	RoomOut() echo.HandlerFunc
+	JoinRoom() echo.HandlerFunc
+	OutRoom() echo.HandlerFunc
 }
 
 type roomUserController struct {
@@ -33,7 +33,7 @@ func NewRoomUserController(
 // @Success     200  {object} response.Success{items=output.RoomJoin}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /room/{userKey}/room_join/{roomKey}  [post]
-func (roomUserController *roomUserController) RoomJoin() echo.HandlerFunc {
+func (roomUserController *roomUserController) JoinRoom() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
 		roomKey := c.Param("roomKey")
@@ -47,7 +47,7 @@ func (roomUserController *roomUserController) RoomJoin() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToRoomJoin(roomResult)
+		out := output.ToJoinRoom(roomResult)
 		response := response.SuccessWith("room_join", 200, out)
 
 		return c.JSON(200, response)
@@ -62,7 +62,7 @@ func (roomUserController *roomUserController) RoomJoin() echo.HandlerFunc {
 // @Success     200  {object} response.Success{items=output.RoomOut}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /room/{userKey}/room_out/{roomKey}  [delete]
-func (roomUserController *roomUserController) RoomOut() echo.HandlerFunc {
+func (roomUserController *roomUserController) OutRoom() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
 		roomKey := c.Param("roomKey")
@@ -76,7 +76,7 @@ func (roomUserController *roomUserController) RoomOut() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToRoomOut()
+		out := output.ToOutRoom()
 		response := response.SuccessWith("room_out", 200, out)
 
 		return c.JSON(200, response)
