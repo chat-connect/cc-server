@@ -31,14 +31,14 @@ func Init() {
 
 	// auth: 認証API
 	auth := e.Group("/auth")
-	auth.POST("/user_register", userController.UserRegister()) // auth/user_register
-	auth.POST("/user_login", userController.UserLogin()) // auth/user_login
+	auth.POST("/user_register", userController.RegisterUser()) // auth/user_register
+	auth.POST("/user_login", userController.LoginUser()) // auth/user_login
 
 	// auth: 認証済ユーザーのみアクセス可能
 	auth.Use(userMiddleware.UserMiddleware)
-	auth.GET("/user_check/:userKey", userController.UserCheck()) // auth/user_check/:userKey
-	auth.PUT("/user_logout/:userKey", userController.UserLogout()) // auth/user_logout/:userKey
-	auth.DELETE("/user_delete/:userKey", userController.UserDelete()) // auth/user_delete/:userKey
+	auth.GET("/user_check/:userKey", userController.CheckUser()) // auth/user_check/:userKey
+	auth.PUT("/user_logout/:userKey", userController.LogoutUser()) // auth/user_logout/:userKey
+	auth.DELETE("/user_delete/:userKey", userController.DeleteUser()) // auth/user_delete/:userKey
 
 	// room: 部屋関連
 	room := e.Group("/room")

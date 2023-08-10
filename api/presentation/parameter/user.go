@@ -1,19 +1,16 @@
 package parameter
 
-// user_register
-type UserRegister struct {
+type RegisterUser struct {
 	Name string     `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-// user_login
-type UserLogin struct {
+type LoginUser struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-// user_key
 type UserKey struct {
 	UserKey string
 }

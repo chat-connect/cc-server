@@ -15,11 +15,11 @@ import (
 type UserService interface {
 	FindByEmail(email string) (*model.User, error)
 	FindByUserKey(userKey string) (*model.User, error)
-	UserRegister(userModel *model.User) (*model.User, error)
-	UserLogin(userModel *model.User) (*model.User, error)
-	UserCheck(baseToken string) (string, string, string, error)
-	UserLogout(userModel *model.User) (*model.User, error)
-	UserDelete(userKey string) (error)
+	RegisterUser(userModel *model.User) (*model.User, error)
+	LoginUser(userModel *model.User) (*model.User, error)
+	CheckUser(baseToken string) (string, string, string, error)
+	LogoutUser(userModel *model.User) (*model.User, error)
+	DeleteUser(userKey string) (error)
 }
 
 type userService struct {
@@ -57,8 +57,8 @@ func (userService *userService) FindByUserKey(userKey string) (userResult *model
 	return userResult, nil
 }
 
-// UserRegister ユーザー登録
-func (userService *userService) UserRegister(userModel *model.User) (userResult *model.User, err error) {
+// RegisterUser ユーザー登録
+func (userService *userService) RegisterUser(userModel *model.User) (userResult *model.User, err error) {
 	// transaction
 	tx, err := userService.transactionRepository.Begin()
 	if err != nil {
@@ -97,8 +97,8 @@ func (userService *userService) UserRegister(userModel *model.User) (userResult 
 	return userResult, nil
 }
 
-// UserLogin ログイン
-func (userService *userService) UserLogin(userModel *model.User) (user *model.User, err error) {
+// LoginUser ログイン
+func (userService *userService) LoginUser(userModel *model.User) (user *model.User, err error) {
 	// transaction
 	tx, err := userService.transactionRepository.Begin()
 	if err != nil {
@@ -151,8 +151,8 @@ func (userService *userService) UserLogin(userModel *model.User) (user *model.Us
 	return user, nil
 }
 
-// UserCheck トークンとユーザーキーからユーザーを確認する
-func (userService *userService) UserCheck(baseToken string) (userKey string, name string, email string, err error) {
+// CheckUser トークンとユーザーキーからユーザーを確認する
+func (userService *userService) CheckUser(baseToken string) (userKey string, name string, email string, err error) {
 	token, err := jwt.Parse(baseToken[7:], func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Invalid token")
@@ -176,8 +176,8 @@ func (userService *userService) UserCheck(baseToken string) (userKey string, nam
 	return userKey, name, email, nil
 }
 
-// UserLogout ログアウト
-func (userService *userService) UserLogout(userModel *model.User) (user *model.User, err error) {
+// LogoutUser ログアウト
+func (userService *userService) LogoutUser(userModel *model.User) (user *model.User, err error) {
 	// transaction
 	tx, err := userService.transactionRepository.Begin()
 	if err != nil {
@@ -205,8 +205,8 @@ func (userService *userService) UserLogout(userModel *model.User) (user *model.U
 	return user, nil
 }
 
-// UserDelete ユーザーを削除する
-func (userService *userService) UserDelete(userKey string) (err error) {
+// DeleteUser ユーザーを削除する
+func (userService *userService) DeleteUser(userKey string) (err error) {
 	// transaction
 	tx, err := userService.transactionRepository.Begin()
 	if err != nil {

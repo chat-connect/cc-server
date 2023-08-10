@@ -13,7 +13,7 @@ import (
 )
 
 func AuthUserLogin(email string, password string) (token string) {
-	jsonData, err := json.Marshal(&parameter.UserLogin{
+	jsonData, err := json.Marshal(&parameter.LoginUser{
 		Email:     email,
 		Password:  password,
 	})
@@ -35,14 +35,14 @@ func AuthUserLogin(email string, password string) (token string) {
 	defer resp.Body.Close()
 
 	actual := &response.Success{
-		Items: &output.UserLogin{},
+		Items: &output.LoginUser{},
 	}
 	err = json.NewDecoder(resp.Body).Decode(actual)
 	if err != nil {
 		fmt.Println("Failed to parse response:", err)
 	}
 
-	if userLogin, ok := actual.Items.(*output.UserLogin); ok {
+	if userLogin, ok := actual.Items.(*output.LoginUser); ok {
 		token = userLogin.Token
 	}
 	

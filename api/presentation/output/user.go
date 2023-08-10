@@ -4,20 +4,19 @@ import (
 	"github.com/chat-connect/cc-server/domain/model"
 )
 
-// user_register
-type UserRegister struct {
+type RegisterUser struct {
 	UserKey string `json:"user_key"`
 	Name    string `json:"name"`
 	Email    string `json:"email"`
 	Message  string `json:"message"`
 }
 
-func ToUserRegister(u *model.User) *UserRegister {
+func ToRegisterUser(u *model.User) *RegisterUser {
 	if u == nil {
 		return nil
 	}
 
-	return &UserRegister{
+	return &RegisterUser{
 		UserKey: u.UserKey,
 		Name:    u.Name,
 		Email:   u.Email,
@@ -25,7 +24,6 @@ func ToUserRegister(u *model.User) *UserRegister {
 	}
 }
 
-// email validation
 type EmailValidation struct {
 	Message string `json:"message"`
 }
@@ -36,8 +34,7 @@ func ToEmailValidation() *EmailValidation {
 	}
 }
 
-// user_login
-type UserLogin struct {
+type LoginUser struct {
 	UserKey string `json:"user_key"`
 	Name    string `json:"name"`
 	Email    string `json:"email"`
@@ -45,8 +42,8 @@ type UserLogin struct {
 	Message  string `json:"message"`
 }
 
-func ToUserLogin(u *model.User) *UserLogin {
-	return &UserLogin{
+func ToLoginUser(u *model.User) *LoginUser {
+	return &LoginUser{
 		UserKey: u.UserKey,
 		Name:    u.Name,
 		Email:   u.Email,
@@ -55,27 +52,25 @@ func ToUserLogin(u *model.User) *UserLogin {
 	}
 }
 
-// user_delete
-type UserDelete struct {
+type DeleteUser struct {
 	Message  string `json:"message"`
 }
 
-func ToUserDelete() *UserDelete {
-	return &UserDelete{
+func ToDeleteUser() *DeleteUser {
+	return &DeleteUser{
 		Message: "user delete completed",
 	}
 }
 
-// user_check
-type UserCheck struct {
+type CheckUser struct {
 	UserKey string `json:"user_key"`
 	Name    string `json:"name"`
 	Email   string `json:"email"`
 	Message string `json:"message"`
 }
 
-func ToUserCheck(userKey string, name string, email string) *UserCheck {
-	return &UserCheck{
+func ToCheckUser(userKey string, name string, email string) *CheckUser {
+	return &CheckUser{
 		UserKey: userKey,
 		Name:    name,
 		Email:   email,
@@ -83,13 +78,12 @@ func ToUserCheck(userKey string, name string, email string) *UserCheck {
 	}
 }
 
-// user_logout
 type UserLogout struct {
 	Message  string `json:"message"`
 }
 
-func ToUserLogout() *UserDelete {
-	return &UserDelete{
+func ToLogoutUser() *DeleteUser {
+	return &DeleteUser{
 		Message: "user logout completed",
 	}
 }

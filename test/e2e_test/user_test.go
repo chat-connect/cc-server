@@ -26,13 +26,13 @@ func TestUserE2E_Register(t *testing.T) {
 
 	testCases := []struct {
 		name         string
-		body         *parameter.UserRegister
+		body         *parameter.RegisterUser
 		expectedCode int
 		expectedKey  string
 	}{
 		{
 			name: "Successful: User Register",
-			body: &parameter.UserRegister{
+			body: &parameter.RegisterUser{
 				Name:     "test",
 				Email:    "test@example.com",
 				Password: "test_password",
@@ -68,12 +68,12 @@ func TestUserE2E_Register(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.UserRegister{},
+					Items: &output.RegisterUser{},
 				}
 				expect := &response.Success{
 					Types: "user_register",
 					Status: 200,
-					Items: &output.UserRegister{
+					Items: &output.RegisterUser{
 						UserKey: "pRxN4QA9bt4p",
 						Name:    "test",
 						Email:   "test@example.com",
@@ -86,7 +86,7 @@ func TestUserE2E_Register(t *testing.T) {
 					t.Fatalf("Failed to parse response: %v", err)
 				}
 
-				if userRegister, ok := actual.Items.(*output.UserRegister); ok {
+				if userRegister, ok := actual.Items.(*output.RegisterUser); ok {
 					userRegister.UserKey = "pRxN4QA9bt4p"
 				}
 
@@ -107,12 +107,12 @@ func TestUserE2E_Login(t *testing.T) {
 
 	testCases := []struct {
 		name         string
-		body         *parameter.UserLogin
+		body         *parameter.LoginUser
 		expectedCode int
 	}{
 		{
 			name: "Successful: User Register",
-			body: &parameter.UserLogin{
+			body: &parameter.LoginUser{
 				Email:     "test@example.com",
 				Password:  "test",
 			},
@@ -145,12 +145,12 @@ func TestUserE2E_Login(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.UserLogin{},
+					Items: &output.LoginUser{},
 				}
 				expect := &response.Success{
 					Types: "user_login",
 					Status: 200,
-					Items: &output.UserLogin{
+					Items: &output.LoginUser{
 						UserKey: "pRxN4QA9bt4p",
 						Name:    "test",
 						Email:   "test@example.com",
@@ -164,7 +164,7 @@ func TestUserE2E_Login(t *testing.T) {
 					t.Fatalf("Failed to parse response: %v", err)
 				}
 
-				if userLogin, ok := actual.Items.(*output.UserLogin); ok {
+				if userLogin, ok := actual.Items.(*output.LoginUser); ok {
 					userLogin.Token = "test"
 				}
 				
@@ -221,12 +221,12 @@ func TestUserE2E_Check(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.UserCheck{},
+					Items: &output.CheckUser{},
 				}
 				expect := &response.Success{
 					Types: "user_check",
 					Status: 200,
-					Items: &output.UserCheck{
+					Items: &output.CheckUser{
 						UserKey: tc.userKey,
 						Name:    "test",
 						Email:   "test@example.com",
@@ -292,12 +292,12 @@ func TestUserE2E_Delete(t *testing.T) {
 
 			if tc.expectedCode == http.StatusOK {
 				actual := &response.Success{
-					Items: &output.UserDelete{},
+					Items: &output.DeleteUser{},
 				}
 				expect := &response.Success{
 					Types: "user_delete",
 					Status: 200,
-					Items: &output.UserDelete{
+					Items: &output.DeleteUser{
 						Message:  "user delete completed",					
 					},
 				}

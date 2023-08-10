@@ -10,11 +10,11 @@ import (
 )
 
 type UserController interface {
-	UserRegister() echo.HandlerFunc
-	UserLogin() echo.HandlerFunc
-	UserCheck() echo.HandlerFunc
-	UserLogout() echo.HandlerFunc
-	UserDelete() echo.HandlerFunc
+	RegisterUser() echo.HandlerFunc
+	LoginUser() echo.HandlerFunc
+	CheckUser() echo.HandlerFunc
+	LogoutUser() echo.HandlerFunc
+	DeleteUser() echo.HandlerFunc
 }
 
 type userController struct {
@@ -32,11 +32,11 @@ func NewUserController(userService service.UserService) UserController {
 // @tags        Auth
 // @Accept      json
 // @Produce     json
-// @Param       body body parameter.UserRegister true "ユーザー登録"
-// @Success     200  {object} response.Success{items=output.UserRegister}
+// @Param       body body parameter.RegisterUser true "ユーザー登録"
+// @Success     200  {object} response.Success{items=output.RegisterUser}
 // @Failure     500  {array}  output.Error
 // @Router      /auth/user_register [post]
-func (userController *userController) UserRegister() echo.HandlerFunc {
+func (userController *userController) RegisterUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userModel := &model.User{}
 		c.Bind(userModel)
@@ -49,7 +49,7 @@ func (userController *userController) UserRegister() echo.HandlerFunc {
 			return c.JSON(400, response)
 		}
 
-		userResult, err := userController.userService.UserRegister(userModel)
+		userResult, err := userController.userService.RegisterUser(userModel)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_register", 500, out)
@@ -57,7 +57,7 @@ func (userController *userController) UserRegister() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToUserRegister(userResult)
+		out := output.ToRegisterUser(userResult)
 		response := response.SuccessWith("user_register", 200, out)
 
 		return c.JSON(200, response)
@@ -69,16 +69,16 @@ func (userController *userController) UserRegister() echo.HandlerFunc {
 // @tags        Auth
 // @Accept      json
 // @Produce     json
-// @Param       body body parameter.UserLogin true "ユーザーログイン"
-// @Success     200  {object} response.Success{items=output.UserLogin}
+// @Param       body body parameter.LoginUser true "ユーザーログイン"
+// @Success     200  {object} response.Success{items=output.LoginUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_login [post]
-func (userController *userController) UserLogin() echo.HandlerFunc {
+func (userController *userController) LoginUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userModel := &model.User{}
 		c.Bind(userModel)
 
-		userResult, err := userController.userService.UserLogin(userModel)
+		userResult, err := userController.userService.LoginUser(userModel)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_login", 500, out)
@@ -86,7 +86,7 @@ func (userController *userController) UserLogin() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 	
-		out := output.ToUserLogin(userResult)
+		out := output.ToLoginUser(userResult)
 		response := response.SuccessWith("user_login", 200, out)
 		
 		return c.JSON(200, response)
@@ -101,13 +101,13 @@ func (userController *userController) UserLogin() echo.HandlerFunc {
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "user_key" maxlength(12)
-// @Success     200  {object} response.Success{items=output.UserCheck}
+// @Success     200  {object} response.Success{items=output.CheckUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_check/{user_key} [get]
-func (userController *userController) UserCheck() echo.HandlerFunc {
+func (userController *userController) CheckUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		baseToken := c.Request().Header.Get("Authorization")
-		userKey, name, email, err := userController.userService.UserCheck(baseToken)
+		userKey, name, email, err := userController.userService.CheckUser(baseToken)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_check", 500, out)
@@ -115,7 +115,7 @@ func (userController *userController) UserCheck() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 	
-		out := output.ToUserCheck(userKey, name, email)
+		out := output.ToCheckUser(userKey, name, email)
 		response := response.SuccessWith("user_check", 200, out)
 		
 		return c.JSON(200, response)
@@ -130,10 +130,10 @@ func (userController *userController) UserCheck() echo.HandlerFunc {
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "user_key" maxlength(12)
-// @Success     200  {object} response.Success{items=output.UserLogout}
+// @Success     200  {object} response.Success{items=output.LogoutUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_logout/{user_key} [put]
-func (userController *userController) UserLogout() echo.HandlerFunc {
+func (userController *userController) LogoutUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userModel := &model.User{}
 		c.Bind(userModel)
@@ -142,7 +142,7 @@ func (userController *userController) UserLogout() echo.HandlerFunc {
 		userModel.UserKey =  userKey 
 		userModel.Status = "logout"
 		userModel.Token = "nil"
-		_, err := userController.userService.UserLogout(userModel)
+		_, err := userController.userService.LogoutUser(userModel)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_logout", 500, out)
@@ -150,7 +150,7 @@ func (userController *userController) UserLogout() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToUserLogout()
+		out := output.ToLogoutUser()
 		response := response.SuccessWith("user_logout", 200, out)
 		
 		return c.JSON(200, response)
@@ -165,13 +165,13 @@ func (userController *userController) UserLogout() echo.HandlerFunc {
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "ユーザーキー"
-// @Success     200  {object} response.Success{items=output.UserDelete}
+// @Success     200  {object} response.Success{items=output.DeleteUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_delete/{user_key} [delete]
-func (userController *userController) UserDelete() echo.HandlerFunc {
+func (userController *userController) DeleteUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userKey := c.Param("userKey")
-		err := userController.userService.UserDelete(userKey)
+		err := userController.userService.DeleteUser(userKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_delete", 500, out)
@@ -179,7 +179,7 @@ func (userController *userController) UserDelete() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToUserDelete()
+		out := output.ToDeleteUser()
 		response := response.SuccessWith("user_delete", 200, out)
 		
 		return c.JSON(200, response)

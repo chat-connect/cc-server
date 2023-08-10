@@ -58,7 +58,8 @@ docker compose -f docker-compose.test.yml up -d --build
 ```
 2.model
 ```
-docker compose -f docker-compose.test.yml exec test go clean -testcache
+
+
 docker compose -f docker-compose.test.yml exec test go test -v ./test/model_test/...
 ```
 3.dao
