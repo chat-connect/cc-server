@@ -48,7 +48,7 @@ docker compose -f docker-compose.local.yml exec batch wire api/di/wire.go
 
 ## DB
 ```
-docker compose -f docker-compose.local.yml exec db mysql --host=localhost --user=mysql_user --password=mysql_password cc_server
+docker compose -f docker-compose.local.yml exec db mysql --host=localhost --user=mysql_user --password=mysql_password gc_server
 ```
 
 ## Test
