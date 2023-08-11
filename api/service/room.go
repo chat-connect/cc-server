@@ -11,6 +11,7 @@ import (
 )
 
 type RoomService interface {
+	FindByRoomKey(userKey string) (roomResult *model.Room, err error)
 	ListRoom(userKey string) (roomResult *model.Rooms, err error)
 	CreateRoom(roomParam *parameter.CreateRoom, userKey string) (*model.Room, error)
 	DeleteRoom(roomKey string, userKey string) (err error)
@@ -35,6 +36,16 @@ func NewRoomService(
 		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// FindByRoomKey ルームを取得する
+func (roomService *roomService) FindByRoomKey(userKey string) (roomResult *model.Room, err error) {
+	roomResult, err = roomService.roomRepository.FindByRoomKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return roomResult, nil
 }
 
 // ListRoom ルーム一覧を取得する

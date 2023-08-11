@@ -45,8 +45,9 @@ func InitializeRoomUserController() controller.RoomUserController {
 	roomUserRepository := dao.NewRoomUserDao(db)
 	userRepository := dao.NewUserDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
+	roomService := service.NewRoomService(roomRepository, roomUserRepository, userRepository, transactionRepository)
 	roomUserService := service.NewRoomUserService(roomRepository, roomUserRepository, userRepository, transactionRepository)
-	roomUserController := controller.NewRoomUserController(roomUserService)
+	roomUserController := controller.NewRoomUserController(roomService, roomUserService)
 	return roomUserController
 }
 
