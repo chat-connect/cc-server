@@ -10,9 +10,10 @@ type ListRoom struct {
 }
 
 type ListRoomContent struct {
-	RoomKey     string  `json:"room_key"`
+	RoomKey     string `json:"room_key"`
 	Name        string `json:"name"`
 	Explanation string `json:"explanation"`
+	Status      string `json:"status"`
 }
 
 func ToListRoom(r *model.Rooms) *ListRoom {
@@ -26,6 +27,7 @@ func ToListRoom(r *model.Rooms) *ListRoom {
 			RoomKey:     room.RoomKey,
 			Name:        room.Name,
 			Explanation: room.Explanation,
+			Status:      room.Status,
 		}
 		list = append(list, roomContent)
 	}

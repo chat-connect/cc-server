@@ -4,4 +4,5 @@ package parameter
 type CreateRoom struct {
 	Name        string `json:"name"`
 	Explanation string `json:"explanation"`
+	Status        string `json:"status"`
 }

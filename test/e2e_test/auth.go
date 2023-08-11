@@ -22,7 +22,7 @@ func AuthUserLogin(email string, password string) (token string) {
 		return
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/user_login", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/login_user", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("Failed to create request:", err)
 	}

@@ -50,7 +50,7 @@ func TestUserE2E_Register(t *testing.T) {
 				return
 			}
 
-			req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/user_register", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
+			req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/register_user", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
@@ -127,7 +127,7 @@ func TestUserE2E_Login(t *testing.T) {
 				t.Fatalf("JSON encoding error: %v", err)
 			}
 
-			req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/user_login", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
+			req, err := http.NewRequest("POST", fmt.Sprintf("%s/auth/login_user", os.Getenv("TEST_API_URL")), bytes.NewBuffer(jsonData))
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
@@ -201,7 +201,7 @@ func TestUserE2E_Check(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest("GET", fmt.Sprintf("%s/auth/user_check/%s", os.Getenv("TEST_API_URL"), tc.userKey), nil)
+			req, err := http.NewRequest("GET", fmt.Sprintf("%s/auth/check_user/%s", os.Getenv("TEST_API_URL"), tc.userKey), nil)
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
@@ -272,7 +272,7 @@ func TestUserE2E_Delete(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/auth/user_delete/%s", os.Getenv("TEST_API_URL"), tc.userKey), nil)
+			req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/auth/delete_user/%s", os.Getenv("TEST_API_URL"), tc.userKey), nil)
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
