@@ -41,6 +41,11 @@ docker compose -f docker-compose.local.yml exec swagger prism mock ./swagger/swa
 docker compose -f docker-compose.local.yml exec api wire api/di/wire.go
 ```
 
+2.WebSocket
+```
+docker compose -f docker-compose.local.yml exec batch wire api/di/wire.go
+```
+
 2.Batch
 ```
 docker compose -f docker-compose.local.yml exec batch wire api/di/wire.go
@@ -58,8 +63,7 @@ docker compose -f docker-compose.test.yml up -d --build
 ```
 2.model
 ```
-
-
+docker compose -f docker-compose.test.yml exec test go clean -testcache
 docker compose -f docker-compose.test.yml exec test go test -v ./test/model_test/...
 ```
 3.dao
