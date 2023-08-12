@@ -6,11 +6,12 @@ import (
 	"log"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/dgrijalva/jwt-go"
-
+	
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/repository"
 	"github.com/game-connect/gc-server/api/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
+	"github.com/game-connect/gc-server/infra/api"
 )
 
 type UserService interface {
@@ -84,14 +85,32 @@ func (userService *userService) RegisterUser(userParam *parameter.RegisterUser) 
 		return nil, err
 	}
 
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userParam.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
+	password := string(hashedPassword)
+
 	userModel := &model.User{}
+	userModel.UserKey = userKey
 	userModel.Email = userParam.Email
 	userModel.Name = userParam.Name
-	userModel.UserKey = userKey
+	userModel.Password = password
 	userModel.Status = "offline"
 	userModel.Token = "nil"
-	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(userModel.Password), bcrypt.DefaultCost)
-	userModel.Password = string(hashedPassword)
+	userModel.ImagePath = "/user/" + userKey + ".png"
+
+	// プロフィール画像をアップロード
+	if userParam.UserImage != nil {
+		err = api.UploadImage(*userParam.UserImage, userKey, "/user")
+		if err != nil {
+			return nil, err
+		}
+
+		userModel.ImagePath = "/user/" + userKey + ".png"
+	} else {
+		userModel.ImagePath = "/user/default_icon.png"
+	}
 
 	userResult, err = userService.userRepository.Insert(userModel, tx)
 	if err != nil {

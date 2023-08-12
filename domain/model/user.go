@@ -14,6 +14,7 @@ type User struct {
 	Password  string    `json:"password"`
 	Token     string    `json:"token"`
 	Status    string    `json:"status"`
+	ImagePath string    `json:"image_path"`
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }

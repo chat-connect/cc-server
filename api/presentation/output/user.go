@@ -35,20 +35,22 @@ func ToEmailValidation() *EmailValidation {
 }
 
 type LoginUser struct {
-	UserKey string `json:"user_key"`
-	Name    string `json:"name"`
-	Email    string `json:"email"`
-	Token    string `json:"token"`
-	Message  string `json:"message"`
+	UserKey   string `json:"user_key"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Token     string `json:"token"`
+	ImagePath string `json:"image_path"`
+	Message   string `json:"message"`
 }
 
 func ToLoginUser(u *model.User) *LoginUser {
 	return &LoginUser{
-		UserKey: u.UserKey,
-		Name:    u.Name,
-		Email:   u.Email,
-		Token:   u.Token,
-		Message: "user login completed",
+		UserKey:   u.UserKey,
+		Name:      u.Name,
+		Email:     u.Email,
+		Token:     u.Token,
+		ImagePath: u.ImagePath,
+		Message:   "user login completed",
 	}
 }
 

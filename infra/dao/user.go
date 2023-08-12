@@ -49,12 +49,13 @@ func (userDao *userDao) CountByStatus(status string) (count int64, err error) {
 
 func (userDao *userDao) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
-		UserKey:  param.UserKey,
-		Name:     param.Name,
-		Email:    param.Email,
-		Password: param.Password,
-		Token:    param.Token,
-		Status:   param.Status,
+		UserKey:   param.UserKey,
+		Name:      param.Name,
+		Email:     param.Email,
+		Password:  param.Password,
+		Token:     param.Token,
+		Status:    param.Status,
+		ImagePath: param.ImagePath,
 	}
 
 	var conn *gorm.DB

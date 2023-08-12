@@ -111,7 +111,7 @@ func TestUserE2E_Login(t *testing.T) {
 		expectedCode int
 	}{
 		{
-			name: "Successful: User Register",
+			name: "Successful: User Login",
 			body: &parameter.LoginUser{
 				Email:     "test@example.com",
 				Password:  "test",
@@ -155,6 +155,7 @@ func TestUserE2E_Login(t *testing.T) {
 						Name:    "test",
 						Email:   "test@example.com",
 						Token:   "test",
+						ImagePath: "/user/default_icon.png",
 						Message: "user login completed",
 					},
 				}
