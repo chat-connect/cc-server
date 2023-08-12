@@ -1,7 +1,7 @@
 package output
 
 import (
-	"github.com/chat-connect/cc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/model"
 )
 
 type ListChat struct {

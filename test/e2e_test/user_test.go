@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/chat-connect/cc-server/api/presentation/parameter"
-	"github.com/chat-connect/cc-server/api/presentation/output"
-	"github.com/chat-connect/cc-server/api/presentation/response"
+	"github.com/game-connect/gc-server/api/presentation/parameter"
+	"github.com/game-connect/gc-server/api/presentation/output"
+	"github.com/game-connect/gc-server/api/presentation/response"
 )
 
 func TestUserE2E_Register(t *testing.T) {

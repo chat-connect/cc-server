@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	_ "github.com/go-sql-driver/mysql"
 
-	"github.com/chat-connect/cc-server/api/presentation/parameter"
-	"github.com/chat-connect/cc-server/api/presentation/output"
-	"github.com/chat-connect/cc-server/api/presentation/response"
+	"github.com/game-connect/gc-server/api/presentation/parameter"
+	"github.com/game-connect/gc-server/api/presentation/output"
+	"github.com/game-connect/gc-server/api/presentation/response"
 )
 
 func TestRoomE2E_RoomCreate(t *testing.T) {
@@ -133,10 +133,11 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 			password: "test",
 			name:     "Successful: Room Join",
 			userKey:  "pRxN4QA9bt4p",
-			roomKey:  "pRxN4QA9bt4p",
+			roomKey:  "pRxN4QA9bt4ppRxN4QA9",
 			body: &parameter.CreateRoom{
 				Name:        "test",
 				Explanation: "test",
+				Status:      "public",
 			},
 			expectedCode: http.StatusOK,
 		},

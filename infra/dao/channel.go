@@ -3,8 +3,8 @@ package dao
 import (
 	"github.com/jinzhu/gorm"
 
-	"github.com/chat-connect/cc-server/domain/model"
-	"github.com/chat-connect/cc-server/domain/repository"
+	"github.com/game-connect/gc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/repository"
 )
 
 type channelDao struct {

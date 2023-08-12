@@ -7,10 +7,10 @@
 package di
 
 import (
-	"github.com/chat-connect/cc-server/batch/command"
-	"github.com/chat-connect/cc-server/batch/service"
-	"github.com/chat-connect/cc-server/config/database"
-	"github.com/chat-connect/cc-server/infra/dao"
+	"github.com/game-connect/gc-server/batch/command"
+	"github.com/game-connect/gc-server/batch/service"
+	"github.com/game-connect/gc-server/config/database"
+	"github.com/game-connect/gc-server/infra/dao"
 )
 
 // Injectors from wire.go:
@@ -18,7 +18,7 @@ import (
 // user
 func InitializeUserCommand() command.UserCommand {
 	db := database.NewDB()
-	userRepository := dao.NewUserRepository(db)
+	userRepository := dao.NewUserDao(db)
 	userService := service.NewUserService(userRepository)
 	userCommand := command.NewUserCommand(userService)
 	return userCommand

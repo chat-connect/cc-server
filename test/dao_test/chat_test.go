@@ -8,8 +8,8 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/chat-connect/cc-server/infra/dao"
-	"github.com/chat-connect/cc-server/domain/model"
+	"github.com/game-connect/gc-server/infra/dao"
+	"github.com/game-connect/gc-server/domain/model"
 )
 
 func TestChatDao_ListByChannelKey(t *testing.T) {

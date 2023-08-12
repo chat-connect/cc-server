@@ -5,8 +5,8 @@ import (
     "fmt"
     "log"
 
-    "github.com/chat-connect/cc-server/batch/di"
-    batchLog "github.com/chat-connect/cc-server/log"
+    "github.com/game-connect/gc-server/batch/di"
+    batchLog "github.com/game-connect/gc-server/log"
 )
 
 func main() {

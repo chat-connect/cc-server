@@ -1,4 +1,4 @@
-module github.com/chat-connect/cc-server
+module github.com/game-connect/gc-server
 
 go 1.18
 

@@ -7,11 +7,11 @@
 package di
 
 import (
-	"github.com/chat-connect/cc-server/api/presentation/controller"
-	"github.com/chat-connect/cc-server/api/presentation/middleware"
-	"github.com/chat-connect/cc-server/api/service"
-	"github.com/chat-connect/cc-server/config/database"
-	"github.com/chat-connect/cc-server/infra/dao"
+	"github.com/game-connect/gc-server/api/presentation/controller"
+	"github.com/game-connect/gc-server/api/presentation/middleware"
+	"github.com/game-connect/gc-server/api/service"
+	"github.com/game-connect/gc-server/config/database"
+	"github.com/game-connect/gc-server/infra/dao"
 )
 
 // Injectors from wire.go:

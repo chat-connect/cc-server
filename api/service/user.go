@@ -7,9 +7,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"github.com/dgrijalva/jwt-go"
 
-	"github.com/chat-connect/cc-server/domain/model"
-	"github.com/chat-connect/cc-server/domain/repository"
-	"github.com/chat-connect/cc-server/config/key"
+	"github.com/game-connect/gc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/repository"
+	"github.com/game-connect/gc-server/config/key"
 )
 
 type UserService interface {

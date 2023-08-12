@@ -3,7 +3,7 @@ package model_test
 import (
 	"testing"
 
-	"github.com/chat-connect/cc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/model"
 )
 
 func TestChannelModel_EmptyRoom(t *testing.T) {

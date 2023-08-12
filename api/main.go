@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/chat-connect/cc-server/api/presentation/router"
+	"github.com/game-connect/gc-server/api/presentation/router"
 )
 
 // @title Chat Connect

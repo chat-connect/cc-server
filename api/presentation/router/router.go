@@ -4,11 +4,11 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	_ "github.com/chat-connect/cc-server/swagger"
+	_ "github.com/game-connect/gc-server/swagger"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
-	"github.com/chat-connect/cc-server/log"
-	"github.com/chat-connect/cc-server/api/di"
+	"github.com/game-connect/gc-server/log"
+	"github.com/game-connect/gc-server/api/di"
 )
 
 func Init() {

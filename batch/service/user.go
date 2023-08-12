@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/chat-connect/cc-server/domain/repository"
+	"github.com/game-connect/gc-server/domain/repository"
 )
 
 type UserService interface {

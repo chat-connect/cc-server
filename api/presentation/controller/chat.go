@@ -3,10 +3,10 @@ package controller
 import (
 	"github.com/labstack/echo/v4"
 	
-	"github.com/chat-connect/cc-server/api/service"
-	"github.com/chat-connect/cc-server/api/presentation/output"
-	"github.com/chat-connect/cc-server/api/presentation/response"
-	"github.com/chat-connect/cc-server/api/presentation/parameter"
+	"github.com/game-connect/gc-server/api/service"
+	"github.com/game-connect/gc-server/api/presentation/output"
+	"github.com/game-connect/gc-server/api/presentation/response"
+	"github.com/game-connect/gc-server/api/presentation/parameter"
 )
 
 type ChatController interface {

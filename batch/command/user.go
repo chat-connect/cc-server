@@ -4,7 +4,7 @@ import (
 	"fmt"
     "strconv"
 
-	"github.com/chat-connect/cc-server/batch/service"
+	"github.com/game-connect/gc-server/batch/service"
 )
 
 type UserCommand interface {
