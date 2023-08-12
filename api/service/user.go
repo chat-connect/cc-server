@@ -9,13 +9,14 @@ import (
 
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/repository"
+	"github.com/game-connect/gc-server/api/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
 )
 
 type UserService interface {
 	FindByEmail(email string) (*model.User, error)
 	FindByUserKey(userKey string) (*model.User, error)
-	RegisterUser(userModel *model.User) (*model.User, error)
+	RegisterUser(userParam *parameter.RegisterUser) (*model.User, error)
 	LoginUser(userModel *model.User) (*model.User, error)
 	CheckUser(baseToken string) (string, string, string, error)
 	LogoutUser(userModel *model.User) (*model.User, error)
@@ -58,7 +59,7 @@ func (userService *userService) FindByUserKey(userKey string) (userResult *model
 }
 
 // RegisterUser ユーザー登録
-func (userService *userService) RegisterUser(userModel *model.User) (userResult *model.User, err error) {
+func (userService *userService) RegisterUser(userParam *parameter.RegisterUser) (userResult *model.User, err error) {
 	// transaction
 	tx, err := userService.transactionRepository.Begin()
 	if err != nil {
@@ -80,9 +81,12 @@ func (userService *userService) RegisterUser(userModel *model.User) (userResult 
 
 	userKey, err := key.GenerateKey()
 	if err != nil {
-		return userModel, err
+		return nil, err
 	}
 
+	userModel := &model.User{}
+	userModel.Email = userParam.Email
+	userModel.Name = userParam.Name
 	userModel.UserKey = userKey
 	userModel.Status = "offline"
 	userModel.Token = "nil"

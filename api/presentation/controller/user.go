@@ -7,6 +7,7 @@ import (
 	"github.com/game-connect/gc-server/api/service"
 	"github.com/game-connect/gc-server/api/presentation/output"
 	"github.com/game-connect/gc-server/api/presentation/response"
+	"github.com/game-connect/gc-server/api/presentation/parameter"
 )
 
 type UserController interface {
@@ -38,18 +39,18 @@ func NewUserController(userService service.UserService) UserController {
 // @Router      /auth/user_register [post]
 func (userController *userController) RegisterUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		userModel := &model.User{}
-		c.Bind(userModel)
+		userParam := &parameter.RegisterUser{}
+		c.Bind(userParam)
 
 		// 登録済のメールアドレスを検索
-		check, _ := userController.userService.FindByEmail(userModel.Email)
-		if check.Email == userModel.Email {
+		check, _ := userController.userService.FindByEmail(userParam.Email)
+		if check.Email == userParam.Email {
 			response := response.ErrorWith("user_register", 400, "email already exists")
 
 			return c.JSON(400, response)
 		}
 
-		userResult, err := userController.userService.RegisterUser(userModel)
+		userResult, err := userController.userService.RegisterUser(userParam)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("user_register", 500, out)
