@@ -3,6 +3,7 @@ chat-connectのサーバー。
 
 ## URL
 - APIサーバー：[http://localhost:8001]()
+- WebSocketサーバー：[http://localhost:8002]()
 - testサーバー: [http://localhost:8002]()
 - mockサーバー：[http://localhost:8003]()
 
