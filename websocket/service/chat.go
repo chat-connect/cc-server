@@ -6,12 +6,11 @@ import (
 
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/repository"
-	"github.com/game-connect/gc-server/api/presentation/parameter"
+	"github.com/game-connect/gc-server/websocket/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
 )
 
 type ChatService interface {
-	ListChat(channelKey string) (chatResult *model.Chats, err error)
 	CreateChat(channelKey string, userKey string, chatParam *parameter.CreateChat) (chatResult *model.Chat, err error)
 }
 
@@ -31,16 +30,6 @@ func NewChatService(
 		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
-}
-
-// ListChat チャット一覧を取得する
-func (chatService *chatService) ListChat(channelKey string) (chatResult *model.Chats, err error) {
-	chatResult, err = chatService.chatRepository.ListByChannelKey(channelKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return chatResult, nil
 }
 
 // CreateChat チャットを作成する

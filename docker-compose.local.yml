@@ -43,6 +43,24 @@ services:
       db:
         condition: service_healthy
 
+# WebSocket
+  websocket:
+    container_name: gc-websocket
+    env_file:
+      - .env.local
+    build: 
+      target: development
+      context: .
+      dockerfile: .docker/websocket/Dockerfile
+    volumes:
+      - ./:/go/src/app
+    ports:
+      - "8002:8000"
+    tty: true
+    depends_on:
+      db:
+        condition: service_healthy
+
 # Batch
   batch:
     container_name: gc-batch

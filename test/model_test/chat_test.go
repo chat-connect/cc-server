@@ -1,6 +1,7 @@
 package model_test
 
 import (
+	"time"
 	"testing"
 
 	"github.com/game-connect/gc-server/domain/model"
@@ -26,6 +27,7 @@ func TestChatModel_EmptyRoom(t *testing.T) {
 				UserKey:    "test_key",
 				UserName:   "test_name",
 				Content:    "content",
+				PostedAt:    time.Now(), 
 			},
 			expected: false,
 		},
