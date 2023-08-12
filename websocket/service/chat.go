@@ -8,6 +8,7 @@ import (
 	"github.com/game-connect/gc-server/domain/repository"
 	"github.com/game-connect/gc-server/websocket/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
+	"github.com/game-connect/gc-server/infra/api"
 )
 
 type ChatService interface {
@@ -70,6 +71,15 @@ func (chatService *chatService) CreateChat(channelKey string, userKey string, ch
 	chatModel.UserName = user.Name
 	chatModel.Content = chatParam.Content
 	chatModel.PostedAt = time.Now()
+
+	if chatParam.ChatImage != nil {
+		err = api.UploadImage(*chatParam.ChatImage, chatKey, "/create_chat")
+		if err != nil {
+			return nil, err
+		}
+
+		chatModel.ImagePath = "/create_chat/" + chatKey + ".png"
+	}
 
 	chatResult, err = chatService.chatRepository.Insert(chatModel, tx)
 	if err != nil {

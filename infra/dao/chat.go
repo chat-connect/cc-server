@@ -43,6 +43,7 @@ func (chatDao *chatDao) Insert(chatModel *model.Chat, tx *gorm.DB) (entity *mode
 		UserKey:    chatModel.UserKey,
 		UserName:   chatModel.UserName,
 		Content:    chatModel.Content,
+		ImagePath:  chatModel.ImagePath,
 		PostedAt:   chatModel.PostedAt,
 	}
 

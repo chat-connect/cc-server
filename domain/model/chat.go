@@ -13,6 +13,7 @@ type Chat struct {
 	UserKey    string    `json:"user_key"`
 	UserName   string    `json:"user_name"`
  	Content    string    `json:"content"`
+	ImagePath string     `json:"image_path"`
 	PostedAt   time.Time `json:"posted_at"`
 	CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt  time.Time `json:"updated_at" gorm:"autoUpdateTime"`
@@ -30,5 +31,6 @@ func (chat *Chat) IsEmpty() bool {
 		chat.UserKey == "" &&
 		chat.UserName == "" &&
 		chat.Content == "" &&
+		chat.ImagePath == "" &&
 		chat.PostedAt.IsZero())
 }

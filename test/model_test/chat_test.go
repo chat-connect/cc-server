@@ -27,6 +27,7 @@ func TestChatModel_EmptyRoom(t *testing.T) {
 				UserKey:    "test_key",
 				UserName:   "test_name",
 				Content:    "content",
+				ImagePath:  "/chat",
 				PostedAt:    time.Now(), 
 			},
 			expected: false,

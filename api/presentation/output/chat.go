@@ -17,6 +17,7 @@ type ListChatContent struct {
 	UserKey  string    `json:"user_key"`
 	UserName string    `json:"user_name"`
 	Content  string    `json:"content"`
+	ImagePath string   `json:"image_path"`
 	PostedAt time.Time `json:"posted_at"`
 }
 
@@ -28,11 +29,12 @@ func ToListChat(channelKey string, c *model.Chats) *ListChat {
 	var list []ListChatContent
 	for _, chat := range *c {
 		chatContent := ListChatContent{
-			ChatKey: chat.ChatKey,
-			UserKey: chat.UserKey,
-			UserName: chat.UserName,
-			Content: chat.Content,
-			PostedAt: chat.PostedAt,
+			ChatKey:   chat.ChatKey,
+			UserKey:   chat.UserKey,
+			UserName:  chat.UserName,
+			Content:   chat.Content,
+			ImagePath: chat.ImagePath,
+			PostedAt:  chat.PostedAt,
 		}
 		list = append(list, chatContent)
 	}
