@@ -26,6 +26,21 @@ definitions:
       type:
         type: string
     type: object
+  output.CreateChannelChat:
+    properties:
+      channel_chat_key:
+        type: string
+      channel_key:
+        type: string
+      content:
+        type: string
+      message:
+        type: string
+      posted_at:
+        type: string
+      user_key:
+        type: string
+    type: object
   output.CreateChat:
     properties:
       channel_key:
@@ -35,6 +50,21 @@ definitions:
       content:
         type: string
       message:
+        type: string
+      posted_at:
+        type: string
+      user_key:
+        type: string
+    type: object
+  output.CreateOpenChat:
+    properties:
+      content:
+        type: string
+      message:
+        type: string
+      open_chat_key:
+        type: string
+      posted_at:
         type: string
       user_key:
         type: string
@@ -55,6 +85,21 @@ definitions:
         type: string
       user_count:
         type: integer
+    type: object
+  output.CreateRoomChat:
+    properties:
+      content:
+        type: string
+      message:
+        type: string
+      posted_at:
+        type: string
+      room_chat_key:
+        type: string
+      room_key:
+        type: string
+      user_key:
+        type: string
     type: object
   output.DeleteChannel:
     properties:
@@ -96,6 +141,32 @@ definitions:
       room_key:
         type: string
     type: object
+  output.ListChannelChat:
+    properties:
+      channel_key:
+        type: string
+      list:
+        items:
+          $ref: '#/definitions/output.ListChannelChatContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListChannelChatContent:
+    properties:
+      channel_chat_key:
+        type: string
+      content:
+        type: string
+      image_path:
+        type: string
+      posted_at:
+        type: string
+      user_key:
+        type: string
+      user_name:
+        type: string
+    type: object
   output.ListChannelContent:
     properties:
       channel_key:
@@ -124,6 +195,34 @@ definitions:
         type: string
       content:
         type: string
+      image_path:
+        type: string
+      posted_at:
+        type: string
+      user_key:
+        type: string
+      user_name:
+        type: string
+    type: object
+  output.ListOpenChat:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListOpenChatContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListOpenChatContent:
+    properties:
+      content:
+        type: string
+      image_path:
+        type: string
+      open_chat_key:
+        type: string
+      posted_at:
+        type: string
       user_key:
         type: string
       user_name:
@@ -138,6 +237,32 @@ definitions:
       message:
         type: string
     type: object
+  output.ListRoomChat:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListRoomChatContent'
+        type: array
+      message:
+        type: string
+      room_key:
+        type: string
+    type: object
+  output.ListRoomChatContent:
+    properties:
+      content:
+        type: string
+      image_path:
+        type: string
+      posted_at:
+        type: string
+      room_chat_key:
+        type: string
+      user_key:
+        type: string
+      user_name:
+        type: string
+    type: object
   output.ListRoomContent:
     properties:
       explanation:
@@ -146,10 +271,14 @@ definitions:
         type: string
       room_key:
         type: string
+      status:
+        type: string
     type: object
   output.LoginUser:
     properties:
       email:
+        type: string
+      image_path:
         type: string
       message:
         type: string
@@ -187,6 +316,8 @@ definitions:
         type: string
       name:
         type: string
+      status:
+        type: string
     type: object
   parameter.LoginUser:
     properties:
@@ -202,6 +333,8 @@ definitions:
       name:
         type: string
       password:
+        type: string
+      user_image:
         type: string
     type: object
   response.Error:
@@ -562,6 +695,174 @@ paths:
       summary: チャット一覧取得
       tags:
       - Chat
+  /chat/{userKey}/create_channel_chat/{channelKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.CreateChannelChat'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット作成
+      tags:
+      - ChannelChat
+  /chat/{userKey}/create_open_chat/{channelKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.CreateOpenChat'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット作成
+      tags:
+      - OpenChat
+  /chat/{userKey}/create_room_chat/{roomKey}:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.CreateRoomChat'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット作成
+      tags:
+      - RoomChat
+  /chat/{userKey}/list_channel_chat/{channelKey}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListChannelChat'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット一覧取得
+      tags:
+      - ChannelChat
+  /chat/{userKey}/list_croom_chat/{roomKey}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListRoomChat'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット一覧取得
+      tags:
+      - RoomChat
+  /chat/{userKey}/list_open_chat/{channelKey}:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListOpenChat'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: チャット一覧取得
+      tags:
+      - OpenChat
   /room/{user_key}/room_delete/{roomKey}:
     delete:
       consumes:

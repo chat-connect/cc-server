@@ -618,6 +618,318 @@ const docTemplate = `{
                 }
             }
         },
+        "/chat/{userKey}/create_channel_chat/{channelKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ChannelChat"
+                ],
+                "summary": "チャット作成",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.CreateChannelChat"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/{userKey}/create_open_chat/{channelKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "OpenChat"
+                ],
+                "summary": "チャット作成",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.CreateOpenChat"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/{userKey}/create_room_chat/{roomKey}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RoomChat"
+                ],
+                "summary": "チャット作成",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.CreateRoomChat"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/{userKey}/list_channel_chat/{channelKey}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ChannelChat"
+                ],
+                "summary": "チャット一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ListChannelChat"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/{userKey}/list_croom_chat/{roomKey}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "RoomChat"
+                ],
+                "summary": "チャット一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ListRoomChat"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chat/{userKey}/list_open_chat/{channelKey}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "OpenChat"
+                ],
+                "summary": "チャット一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ListOpenChat"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/room/{userKey}/room_join/{roomKey}": {
             "post": {
                 "consumes": [
@@ -931,6 +1243,29 @@ const docTemplate = `{
                 }
             }
         },
+        "output.CreateChannelChat": {
+            "type": "object",
+            "properties": {
+                "channel_chat_key": {
+                    "type": "string"
+                },
+                "channel_key": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                }
+            }
+        },
         "output.CreateChat": {
             "type": "object",
             "properties": {
@@ -944,6 +1279,29 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "message": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.CreateOpenChat": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "open_chat_key": {
+                    "type": "string"
+                },
+                "posted_at": {
                     "type": "string"
                 },
                 "user_key": {
@@ -974,6 +1332,29 @@ const docTemplate = `{
                 },
                 "user_count": {
                     "type": "integer"
+                }
+            }
+        },
+        "output.CreateRoomChat": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
+                "room_chat_key": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
                 }
             }
         },
@@ -1040,6 +1421,46 @@ const docTemplate = `{
                 }
             }
         },
+        "output.ListChannelChat": {
+            "type": "object",
+            "properties": {
+                "channel_key": {
+                    "type": "string"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListChannelChatContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListChannelChatContent": {
+            "type": "object",
+            "properties": {
+                "channel_chat_key": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "image_path": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
         "output.ListChannelContent": {
             "type": "object",
             "properties": {
@@ -1083,6 +1504,49 @@ const docTemplate = `{
                 "content": {
                     "type": "string"
                 },
+                "image_path": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListOpenChat": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListOpenChatContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListOpenChatContent": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "image_path": {
+                    "type": "string"
+                },
+                "open_chat_key": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
                 "user_key": {
                     "type": "string"
                 },
@@ -1105,6 +1569,46 @@ const docTemplate = `{
                 }
             }
         },
+        "output.ListRoomChat": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListRoomChatContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "room_key": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListRoomChatContent": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "image_path": {
+                    "type": "string"
+                },
+                "posted_at": {
+                    "type": "string"
+                },
+                "room_chat_key": {
+                    "type": "string"
+                },
+                "user_key": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
         "output.ListRoomContent": {
             "type": "object",
             "properties": {
@@ -1116,6 +1620,9 @@ const docTemplate = `{
                 },
                 "room_key": {
                     "type": "string"
+                },
+                "status": {
+                    "type": "string"
                 }
             }
         },
@@ -1123,6 +1630,9 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "email": {
+                    "type": "string"
+                },
+                "image_path": {
                     "type": "string"
                 },
                 "message": {
@@ -1180,6 +1690,9 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "status": {
+                    "type": "string"
                 }
             }
         },
@@ -1204,6 +1717,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "user_image": {
                     "type": "string"
                 }
             }
