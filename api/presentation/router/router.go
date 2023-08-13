@@ -18,6 +18,7 @@ func Init() {
 	roomUserController := di.InitializeRoomUserController()
 	channelController := di.InitializeChannelController()
 	chatController := di.InitializeChatController()
+	channelChatController := di.InitializeChannelChatController()
 
 	userMiddleware := di.InitializeUserMiddleware()
 
@@ -62,6 +63,12 @@ func Init() {
 	chat.Use(userMiddleware.UserMiddleware)
 	chat.GET("/:userKey/list_chat/:channelKey", chatController.ListChat()) // chat/:userKey/chat_list/:channelKey
 	chat.POST("/:userKey/create_chat/:channelKey", chatController.CreateChat()) // chat/:userKey/chat_create/:channelKey
+	
+	// channel_chat: チャンネルチャット関連
+	channelChat := e.Group("/channel_chat")
+	channelChat.Use(userMiddleware.UserMiddleware)
+	channelChat.GET("/:userKey/list_channel_chat/:channelKey", channelChatController.ListChannelChat()) // channel_chat/:userKey/list_channel_chat/:channelKey
+	channelChat.POST("/:userKey/create_channel_chat/:channelKey", channelChatController.CreateChannelChat()) // channel_chat/:userKey/create_channel_chat/:channelKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

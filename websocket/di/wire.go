@@ -26,6 +26,20 @@ func InitializeChatController() controller.ChatController {
     return nil
 }
 
+// channel_chat
+func InitializeChannelChatController() controller.ChannelChatController {
+    wire.Build(
+        database.NewDB,
+        dao.NewChannelChatDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
+        service.NewChannelChatService,
+        service.NewUserService,
+        controller.NewChannelChatController,
+    )
+    return nil
+}
+
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(
