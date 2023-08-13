@@ -27,7 +27,7 @@ func (userMiddleware *userMiddleware) UserMiddleware(next echo.HandlerFunc) echo
 		token := c.Request().Header.Get("Authorization")
 		token = strings.ReplaceAll(token, "Bearer ", "")
 		userKey := c.Param("userKey")
-
+		
 		user, err := userMiddleware.userService.FindByUserKey(userKey)
 		if err != nil {
 			return fmt.Errorf("Invalid user_key")

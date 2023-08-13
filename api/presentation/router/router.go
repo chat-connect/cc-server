@@ -69,7 +69,7 @@ func Init() {
 	// open_chat: オープンチャット関連
 	openChat := e.Group("/open_chat")
 	openChat.Use(userMiddleware.UserMiddleware)
-	openChat.GET("/:userKey/list_open_chat", openChatController.ListOpenChat()) // open_chat/:userKey/list_open_chat/:channelKey
+	openChat.GET("/:userKey/list_open_chat", openChatController.ListOpenChat()) // open_chat/:userKey/list_open_chat
 	openChat.POST("/:userKey/create_open_chat", openChatController.CreateOpenChat()) // open_chat/:userKey/create_open_chat/:channelKey
 
 	// room_chat: ルームチャット関連

@@ -33,7 +33,7 @@ func NewOpenChatController(
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ListOpenChat}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /chat/{userKey}/list_open_chat/{channelKey} [get]
+// @Router      /chat/{userKey}/list_open_chat [get]
 func (openChatController *openChatController) ListOpenChat() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
