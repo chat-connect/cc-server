@@ -42,13 +42,13 @@ func (channelChatController *channelChatController) ListChannelChat() echo.Handl
 		channelChatResult, err := channelChatController.channelChatService.ListChannelChat(channelKey)
 		if err != nil {
 			out := output.NewError(err)
-			response := response.ErrorWith("chat_list", 500, out)
+			response := response.ErrorWith("list_channel_chat", 500, out)
 
 			return c.JSON(500, response)
 		}
 
 		out := output.ToListChannelChat(channelKey, channelChatResult)
-		response := response.SuccessWith("chat_list", 200, out)
+		response := response.SuccessWith("list_channel_chat", 200, out)
 
 		return c.JSON(200, response)
 	}

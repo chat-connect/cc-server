@@ -13,7 +13,7 @@ import (
 
 type ChannelChatService interface {
 	ListChannelChat(channelKey string) (channelChatResult *model.ChannelChats, err error)
-	CreateChannelChat(channelKey string, userKey string, channelChatParam *parameter.CreateChannelChat) (chatResult *model.ChannelChat, err error)
+	CreateChannelChat(channelKey string, userKey string, channelChatParam *parameter.CreateChannelChat) (channelChatResult *model.ChannelChat, err error)
 }
 
 type channelChatService struct {
