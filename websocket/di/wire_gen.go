@@ -40,6 +40,18 @@ func InitializeChannelChatController() controller.ChannelChatController {
 	return channelChatController
 }
 
+// open_chat
+func InitializeOpenChatController() controller.OpenChatController {
+	db := database.NewDB()
+	openChatRepository := dao.NewOpenChatDao(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	openChatService := service.NewOpenChatService(openChatRepository, userRepository, transactionRepository)
+	userService := service.NewUserService(userRepository, transactionRepository)
+	openChatController := controller.NewOpenChatController(openChatService, userService)
+	return openChatController
+}
+
 // room_chat
 func InitializeRoomChatController() controller.RoomChatController {
 	db := database.NewDB()

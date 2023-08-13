@@ -40,6 +40,20 @@ func InitializeChannelChatController() controller.ChannelChatController {
     return nil
 }
 
+// open_chat
+func InitializeOpenChatController() controller.OpenChatController {
+    wire.Build(
+        database.NewDB,
+        dao.NewOpenChatDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
+        service.NewOpenChatService,
+        service.NewUserService,
+        controller.NewOpenChatController,
+    )
+    return nil
+}
+
 // room_chat
 func InitializeRoomChatController() controller.RoomChatController {
     wire.Build(

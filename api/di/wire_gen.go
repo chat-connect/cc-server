@@ -73,17 +73,6 @@ func InitializeChatController() controller.ChatController {
 	return chatController
 }
 
-// channel_chat
-func InitializeChannelChatController() controller.ChannelChatController {
-	db := database.NewDB()
-	channelChatRepository := dao.NewChannelChatDao(db)
-	userRepository := dao.NewUserDao(db)
-	transactionRepository := dao.NewTransactionDao(db)
-	channelChatService := service.NewChannelChatService(channelChatRepository, userRepository, transactionRepository)
-	channelChatController := controller.NewChannelChatController(channelChatService)
-	return channelChatController
-}
-
 // room_chat
 func InitializeRoomChatController() controller.RoomChatController {
 	db := database.NewDB()
@@ -93,6 +82,28 @@ func InitializeRoomChatController() controller.RoomChatController {
 	roomChatService := service.NewRoomChatService(roomChatRepository, userRepository, transactionRepository)
 	roomChatController := controller.NewRoomChatController(roomChatService)
 	return roomChatController
+}
+
+// open_chat
+func InitializeOpenChatController() controller.OpenChatController {
+	db := database.NewDB()
+	openChatRepository := dao.NewOpenChatDao(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	openChatService := service.NewOpenChatService(openChatRepository, userRepository, transactionRepository)
+	openChatController := controller.NewOpenChatController(openChatService)
+	return openChatController
+}
+
+// channel_chat
+func InitializeChannelChatController() controller.ChannelChatController {
+	db := database.NewDB()
+	channelChatRepository := dao.NewChannelChatDao(db)
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	channelChatService := service.NewChannelChatService(channelChatRepository, userRepository, transactionRepository)
+	channelChatController := controller.NewChannelChatController(channelChatService)
+	return channelChatController
 }
 
 // user

@@ -79,19 +79,6 @@ func InitializeChatController() controller.ChatController {
     return nil
 }
 
-// channel_chat
-func InitializeChannelChatController() controller.ChannelChatController {
-    wire.Build(
-        database.NewDB,
-        dao.NewChannelChatDao,
-        dao.NewUserDao,
-        dao.NewTransactionDao,
-        service.NewChannelChatService,
-        controller.NewChannelChatController,
-    )
-    return nil
-}
-
 // room_chat
 func InitializeRoomChatController() controller.RoomChatController {
     wire.Build(
@@ -101,6 +88,32 @@ func InitializeRoomChatController() controller.RoomChatController {
         dao.NewTransactionDao,
         service.NewRoomChatService,
         controller.NewRoomChatController,
+    )
+    return nil
+}
+
+// open_chat
+func InitializeOpenChatController() controller.OpenChatController {
+    wire.Build(
+        database.NewDB,
+        dao.NewOpenChatDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
+        service.NewOpenChatService,
+        controller.NewOpenChatController,
+    )
+    return nil
+}
+
+// channel_chat
+func InitializeChannelChatController() controller.ChannelChatController {
+    wire.Build(
+        database.NewDB,
+        dao.NewChannelChatDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
+        service.NewChannelChatService,
+        controller.NewChannelChatController,
     )
     return nil
 }

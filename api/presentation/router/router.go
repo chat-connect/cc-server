@@ -18,8 +18,9 @@ func Init() {
 	roomUserController := di.InitializeRoomUserController()
 	channelController := di.InitializeChannelController()
 	chatController := di.InitializeChatController()
-	channelChatController := di.InitializeChannelChatController()
+	openChatController := di.InitializeOpenChatController()
 	roomChatController := di.InitializeRoomChatController()
+	channelChatController := di.InitializeChannelChatController()
 
 	userMiddleware := di.InitializeUserMiddleware()
 
@@ -65,17 +66,23 @@ func Init() {
 	chat.GET("/:userKey/list_chat/:channelKey", chatController.ListChat()) // chat/:userKey/chat_list/:channelKey
 	chat.POST("/:userKey/create_chat/:channelKey", chatController.CreateChat()) // chat/:userKey/chat_create/:channelKey
 	
+	// open_chat: オープンチャット関連
+	openChat := e.Group("/open_chat")
+	openChat.Use(userMiddleware.UserMiddleware)
+	openChat.GET("/:userKey/list_open_chat", openChatController.ListOpenChat()) // open_chat/:userKey/list_open_chat/:channelKey
+	openChat.POST("/:userKey/create_open_chat", openChatController.CreateOpenChat()) // open_chat/:userKey/create_open_chat/:channelKey
+
+	// room_chat: ルームチャット関連
+	roomChat := e.Group("/room_chat")
+	roomChat.Use(userMiddleware.UserMiddleware)
+	roomChat.GET("/:userKey/list_room_chat/:channelKey", roomChatController.ListRoomChat()) // room_chat/:userKey/list_room_chat/:channelKey
+	roomChat.POST("/:userKey/create_room_chat/:channelKey", roomChatController.CreateRoomChat()) // room_chat/:userKey/create_room_chat/:channelKey
+
 	// channel_chat: チャンネルチャット関連
 	channelChat := e.Group("/channel_chat")
 	channelChat.Use(userMiddleware.UserMiddleware)
 	channelChat.GET("/:userKey/list_channel_chat/:channelKey", channelChatController.ListChannelChat()) // channel_chat/:userKey/list_channel_chat/:channelKey
 	channelChat.POST("/:userKey/create_channel_chat/:channelKey", channelChatController.CreateChannelChat()) // channel_chat/:userKey/create_channel_chat/:channelKey
-
-	// room_chat: チャンネルチャット関連
-	roomChat := e.Group("/room_chat")
-	roomChat.Use(userMiddleware.UserMiddleware)
-	roomChat.GET("/:userKey/list_room_chat/:channelKey", roomChatController.ListRoomChat()) // room_chat/:userKey/list_room_chat/:channelKey
-	roomChat.POST("/:userKey/create_room_chat/:channelKey", roomChatController.CreateRoomChat()) // room_chat/:userKey/create_room_chat/:channelKey
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
