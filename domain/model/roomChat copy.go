@@ -9,7 +9,7 @@ type RoomChats []RoomChat
 type RoomChat struct {
 	ID          int64     `json:"id"`
 	RoomChatKey string    `json:"room_chat_key"`
-	ChannelKey  string    `json:"channel_key"`
+	RoomKey     string    `json:"room_key"`
 	UserKey     string    `json:"user_key"`
 	UserName    string    `json:"user_name"`
  	Content     string    `json:"content"`
@@ -27,7 +27,7 @@ func (roomChat *RoomChat) IsEmpty() bool {
 	return (
 		roomChat.ID == 0 &&
 		roomChat.RoomChatKey == "" &&
-		roomChat.ChannelKey == "" &&
+		roomChat.RoomKey == "" &&
 		roomChat.UserKey == "" &&
 		roomChat.UserName == "" &&
 		roomChat.Content == "" &&

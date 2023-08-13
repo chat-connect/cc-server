@@ -7,7 +7,6 @@ import (
 )
 
 type RoomChatRepository interface {
-	ListByChannelKey(channelKey string) (entity *model.RoomChats, err error)
+	ListByRoomKey(roomKey string) (entity *model.RoomChats, err error)
 	Insert(roomChatModel *model.RoomChat, tx *gorm.DB) (entity *model.RoomChat, err error)
-	DeleteByChannelKey(channelKey string, tx *gorm.DB) (err error)
 }

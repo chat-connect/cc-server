@@ -8,7 +8,7 @@ import (
 
 type CreateRoomChat struct {
 	RoomChatKey string    `json:"room_chat_key"`
-	ChannelKey  string    `json:"channel_key"`
+	RoomKey     string    `json:"room_key"`
 	UserKey     string    `json:"user_key"`
 	Content     string    `json:"content"`
 	PostedAt    time.Time `json:"posted_at"`
@@ -22,7 +22,7 @@ func ToCreateRoomChat(c *model.RoomChat) *CreateRoomChat {
 
 	return &CreateRoomChat{
 		RoomChatKey: c.RoomChatKey,
-		ChannelKey:  c.ChannelKey,
+		RoomKey:  c.RoomKey,
 		UserKey:     c.UserKey,
 		Content:     c.Content,
 		PostedAt:    c.PostedAt,

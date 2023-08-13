@@ -75,8 +75,8 @@ func Init() {
 	// room_chat: ルームチャット関連
 	roomChat := e.Group("/room_chat")
 	roomChat.Use(userMiddleware.UserMiddleware)
-	roomChat.GET("/:userKey/list_room_chat/:channelKey", roomChatController.ListRoomChat()) // room_chat/:userKey/list_room_chat/:channelKey
-	roomChat.POST("/:userKey/create_room_chat/:channelKey", roomChatController.CreateRoomChat()) // room_chat/:userKey/create_room_chat/:channelKey
+	roomChat.GET("/:userKey/list_room_chat/:roomKey", roomChatController.ListRoomChat()) // room_chat/:userKey/list_room_chat/:roomKey
+	roomChat.POST("/:userKey/create_room_chat/:roomKey", roomChatController.CreateRoomChat()) // room_chat/:userKey/create_room_chat/:roomKey
 
 	// channel_chat: チャンネルチャット関連
 	channelChat := e.Group("/channel_chat")

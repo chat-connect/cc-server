@@ -34,21 +34,21 @@ func NewRoomChatController(
 // WebSocketでチャットを送信
 func (roomChatController *roomChatController) SendRoomChat() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		channelKey := c.Param("channelKey")
+		roomKey := c.Param("roomKey")
 
 		conn, err := roomChatUpgrader.Upgrade(c.Response(), c.Request(), nil)
 		if err != nil { return err }
 
-		if rooms[channelKey] == nil {
-			rooms[channelKey] = make(map[*websocket.Conn]bool)
+		if rooms[roomKey] == nil {
+			rooms[roomKey] = make(map[*websocket.Conn]bool)
 		}
 
-		rooms[channelKey][conn] = true
+		rooms[roomKey][conn] = true
 
 		go func() {
 			defer func() {
 				conn.Close()
-				delete(rooms[channelKey], conn)
+				delete(rooms[roomKey], conn)
 			}()
 
 			for {
@@ -67,7 +67,7 @@ func (roomChatController *roomChatController) SendRoomChat() echo.HandlerFunc {
 				if err != nil { return }
 				if token != user.Token { return }
 
-				roomResult, err := roomChatController.roomChatService.CreateRoomChat(channelKey, userKey, roomChatParam)
+				roomResult, err := roomChatController.roomChatService.CreateRoomChat(roomKey, userKey, roomChatParam)
 				if err != nil { return }
 
 				out := output.ToCreateRoomChat(roomResult)
@@ -76,10 +76,10 @@ func (roomChatController *roomChatController) SendRoomChat() echo.HandlerFunc {
 				jsonResponse, err := json.Marshal(response)
 				if err != nil { return }
 
-				for client := range rooms[channelKey] {
+				for client := range rooms[roomKey] {
 					err := client.WriteMessage(messageType, jsonResponse)
 					if err != nil {
-						delete(rooms[channelKey], client)
+						delete(rooms[roomKey], client)
 					}
 				}
 			}

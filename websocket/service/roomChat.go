@@ -12,7 +12,7 @@ import (
 )
 
 type RoomChatService interface {
-	CreateRoomChat(channelKey string, userKey string, roomChatParam *parameter.CreateRoomChat) (chatResult *model.RoomChat, err error)
+	CreateRoomChat(roomKey string, userKey string, roomChatParam *parameter.CreateRoomChat) (chatResult *model.RoomChat, err error)
 }
 
 type roomChatService struct {
@@ -34,7 +34,7 @@ func NewRoomChatService(
 }
 
 // CreateRoomChat チャットを作成する
-func (roomChatService *roomChatService) CreateRoomChat(channelKey string, userKey string, roomChatParam *parameter.CreateRoomChat) (roomChatResult *model.RoomChat, err error) {
+func (roomChatService *roomChatService) CreateRoomChat(roomKey string, userKey string, roomChatParam *parameter.CreateRoomChat) (roomChatResult *model.RoomChat, err error) {
 	// transaction
 	tx, err := roomChatService.transactionRepository.Begin()
 	if err != nil {
@@ -66,7 +66,7 @@ func (roomChatService *roomChatService) CreateRoomChat(channelKey string, userKe
 
 	roomChatModel := &model.RoomChat{}
 	roomChatModel.RoomChatKey = roomChatKey
-	roomChatModel.ChannelKey = channelKey
+	roomChatModel.RoomKey = roomKey
 	roomChatModel.UserKey = userKey
 	roomChatModel.UserName = user.Name
 	roomChatModel.Content = roomChatParam.Content

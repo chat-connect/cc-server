@@ -25,8 +25,8 @@ func Init() {
 	// realtime: 同期関連
 	chat := e.Group("/realtime")
 	chat.GET("/:channelKey/send_chat", chatController.SendChat()) // realtime/:channelKey/send_chat
-	chat.GET("/:channelKey/send_open_chat", openChatController.SendOpenChat()) // realtime/:channelKey/send_open_chat
-	chat.GET("/:channelKey/send_room_chat", roomChatController.SendRoomChat()) // realtime/:channelKey/send_room_chat
+	chat.GET("/send_open_chat", openChatController.SendOpenChat()) // realtime/send_open_chat
+	chat.GET("/:roomKey/send_room_chat", roomChatController.SendRoomChat()) // realtime/:roomKey/send_room_chat
 	chat.GET("/:channelKey/send_channel_chat", channelChatController.SendChannelChat()) // realtime/:channelKey/send_channel_chat
 
 	e.Logger.Fatal(e.Start(":8000"))

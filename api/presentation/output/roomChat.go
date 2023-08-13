@@ -7,9 +7,9 @@ import (
 )
 
 type ListRoomChat struct {
-	ChannelKey string                  `json:"channel_key"`
+	RoomKey string                  `json:"room_key"`
 	List       []ListRoomChatContent `json:"list"`
-	Message    string                   `json:"message"`
+	Message    string                `json:"message"`
 }
 
 type ListRoomChatContent struct {
@@ -21,7 +21,7 @@ type ListRoomChatContent struct {
 	PostedAt    time.Time `json:"posted_at"`
 }
 
-func ToListRoomChat(channelKey string, c *model.RoomChats) *ListRoomChat {
+func ToListRoomChat(roomKey string, c *model.RoomChats) *ListRoomChat {
 	if c == nil {
 		return nil
 	}
@@ -40,7 +40,7 @@ func ToListRoomChat(channelKey string, c *model.RoomChats) *ListRoomChat {
 	}
 
 	return &ListRoomChat{
-		ChannelKey: channelKey,
+		RoomKey: roomKey,
 		List:       list,
 		Message:    "list channel chat created",
 	}
@@ -48,7 +48,7 @@ func ToListRoomChat(channelKey string, c *model.RoomChats) *ListRoomChat {
 
 type CreateRoomChat struct {
 	RoomChatKey string    `json:"room_chat_key"`
-	ChannelKey  string    `json:"channel_key"`
+	RoomKey     string    `json:"room_key"`
 	UserKey     string    `json:"user_key"`
 	Content     string    `json:"content"`
 	PostedAt    time.Time `json:"posted_at"`
@@ -62,7 +62,7 @@ func ToCreateRoomChat(c *model.RoomChat) *CreateRoomChat {
 
 	return &CreateRoomChat{
 		RoomChatKey: c.RoomChatKey,
-		ChannelKey:  c.ChannelKey,
+		RoomKey:     c.RoomKey,
 		UserKey:     c.UserKey,
 		Content:     c.Content,
 		PostedAt:    c.PostedAt,

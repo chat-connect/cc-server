@@ -33,13 +33,13 @@ func NewRoomChatController(
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ListRoomChat}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /chat/{userKey}/list_croom_chat/{channelKey} [get]
+// @Router      /chat/{userKey}/list_croom_chat/{roomKey} [get]
 func (roomChatController *roomChatController) ListRoomChat() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
-		channelKey := c.Param("channelKey")
+		roomKey := c.Param("roomKey")
 
-		roomChatResult, err := roomChatController.roomChatService.ListRoomChat(channelKey)
+		roomChatResult, err := roomChatController.roomChatService.ListRoomChat(roomKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("list_room_chat", 500, out)
@@ -47,7 +47,7 @@ func (roomChatController *roomChatController) ListRoomChat() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToListRoomChat(channelKey, roomChatResult)
+		out := output.ToListRoomChat(roomKey, roomChatResult)
 		response := response.SuccessWith("list_room_chat", 200, out)
 
 		return c.JSON(200, response)
@@ -61,16 +61,16 @@ func (roomChatController *roomChatController) ListRoomChat() echo.HandlerFunc {
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.CreateRoomChat}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /chat/{userKey}/create_room_chat/{channelKey} [post]
+// @Router      /chat/{userKey}/create_room_chat/{roomKey} [post]
 func (roomChatController *roomChatController) CreateRoomChat() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
-		channelKey := c.Param("channelKey")
+		roomKey := c.Param("roomKey")
 		userKey := c.Param("userKey")
 		roomChatParam := &parameter.CreateRoomChat{}
 		c.Bind(roomChatParam)
 
-		roomChatResult, err := roomChatController.roomChatService.CreateRoomChat(channelKey, userKey, roomChatParam)
+		roomChatResult, err := roomChatController.roomChatService.CreateRoomChat(roomKey, userKey, roomChatParam)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("create_room_chat", 500, out)
