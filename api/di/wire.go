@@ -92,6 +92,19 @@ func InitializeChannelChatController() controller.ChannelChatController {
     return nil
 }
 
+// room_chat
+func InitializeRoomChatController() controller.RoomChatController {
+    wire.Build(
+        database.NewDB,
+        dao.NewRoomChatDao,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
+        service.NewRoomChatService,
+        controller.NewRoomChatController,
+    )
+    return nil
+}
+
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(
