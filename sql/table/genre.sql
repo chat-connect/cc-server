@@ -1,7 +1,7 @@
 -- ジャンル情報
 CREATE TABLE `genre` (
     `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ジャンルID",
-    `genre_key`    VARCHAR(20)  NOT NULL                COMMENT "ジャンルKEY",
+    `genre_key`   VARCHAR(20)  NOT NULL                COMMENT "ジャンルKEY",
     `name`        VARCHAR(50)  NOT NULL                COMMENT "ジャンル名",
     `description` VARCHAR(191) NOT NULL                COMMENT "説明",
     `type`        VARCHAR(191) NOT NULL                COMMENT "種別",
