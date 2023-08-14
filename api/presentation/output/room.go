@@ -12,7 +12,7 @@ type ListRoom struct {
 type ListRoomContent struct {
 	RoomKey     string `json:"room_key"`
 	Name        string `json:"name"`
-	Explanation string `json:"explanation"`
+	Description string `json:"description"`
 	Status      string `json:"status"`
 }
 
@@ -26,7 +26,7 @@ func ToListRoom(r *model.Rooms) *ListRoom {
 		roomContent := ListRoomContent{
 			RoomKey:     room.RoomKey,
 			Name:        room.Name,
-			Explanation: room.Explanation,
+			Description: room.Description,
 			Status:      room.Status,
 		}
 		list = append(list, roomContent)
@@ -41,7 +41,7 @@ func ToListRoom(r *model.Rooms) *ListRoom {
 type CreateRoom struct {
 	RoomKey     string `json:"room_key"`
 	Name        string `json:"name"`
-	Explanation string `json:"explanation"`
+	Description string `json:"description"`
 	ImagePath   string `json:"image_path"`
 	UserCount   int64  `json:"user_count"`
 	Status      string `json:"status"`
@@ -56,7 +56,7 @@ func ToCreateRoom(r *model.Room) *CreateRoom {
 	return &CreateRoom{
 		RoomKey:     r.RoomKey,
 		Name:        r.Name,
-		Explanation: r.Explanation,
+		Description: r.Description,
 		UserCount:   r.UserCount,
 		Status:      r.Status,
 		Message: "room create completed",

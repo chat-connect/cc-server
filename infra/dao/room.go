@@ -50,7 +50,7 @@ func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *mode
 		RoomKey:     roomModel.RoomKey,
 		UserKey:     roomModel.UserKey,
 		Name:        roomModel.Name,
-		Explanation: roomModel.Explanation,
+		Description: roomModel.Description,
 		ImagePath:   roomModel.ImagePath,
 		UserCount:   roomModel.UserCount,
 		Status:      roomModel.Status,

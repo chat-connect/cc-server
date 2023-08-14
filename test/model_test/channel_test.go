@@ -24,7 +24,7 @@ func TestChannelModel_EmptyRoom(t *testing.T) {
 				ChannelKey:  "test_key",
 				RoomKey:     "test_key",
 				Name:        "test_name",
-				Explanation: "test_explanation",
+				Description: "test_explanation",
 				Type:        "text",
 			},
 			expected: false,

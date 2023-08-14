@@ -42,7 +42,7 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 			userKey:  "pRxN4QA9bt4p",
 			body: &parameter.CreateRoom{
 				Name:        "test",
-				Explanation: "test",
+				Description: "test",
 				Status:      "public",
 			},
 			expectedCode: http.StatusOK,
@@ -84,7 +84,7 @@ func TestRoomE2E_RoomCreate(t *testing.T) {
 					Items: &output.CreateRoom{
 						RoomKey:     "test",
 						Name:        "test",
-						Explanation: "test",
+						Description: "test",
 						ImagePath:   "",
 						UserCount:   1,
 						Status:      "public",
@@ -136,7 +136,7 @@ func TestRoomE2E_RoomJoin(t *testing.T) {
 			roomKey:  "pRxN4QA9bt4ppRxN4QA9",
 			body: &parameter.CreateRoom{
 				Name:        "test",
-				Explanation: "test",
+				Description: "test",
 				Status:      "public",
 			},
 			expectedCode: http.StatusOK,

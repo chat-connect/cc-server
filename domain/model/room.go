@@ -11,7 +11,7 @@ type Room struct {
 	RoomKey     string    `json:"room_key"`
 	UserKey     string    `json:"user_key"`
 	Name        string    `json:"name"`
-	Explanation string    `json:"explanation"`
+	Description string    `json:"description"`
 	ImagePath   string    `json:"image_path"`
 	UserCount   int64     `json:"user_count"`
  	Status      string    `json:"status"`
@@ -29,7 +29,7 @@ func (room *Room) IsEmpty() bool {
 		room.RoomKey == "" &&
 		room.UserKey == "" &&
 		room.Name == "" &&
-		room.Explanation == "" &&
+		room.Description == "" &&
 		room.ImagePath == "" &&
 		room.UserCount == 0 &&
 		room.Status == "")

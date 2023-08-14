@@ -99,7 +99,7 @@ func (roomService *roomService) CreateRoom(roomParam *parameter.CreateRoom, user
 	roomModel.RoomKey = roomKey
 	roomModel.UserKey = userKey
 	roomModel.Name = roomParam.Name
-	roomModel.Explanation = roomParam.Explanation
+	roomModel.Description = roomParam.Description
 	roomModel.ImagePath = ""
 	roomModel.UserCount = 1
 	roomModel.Status = roomParam.Status

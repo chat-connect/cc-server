@@ -14,7 +14,7 @@ type ListChannelContent struct {
 	ChannelKey  string `json:"channel_key"`
 	Type        string `json:"type"`
 	Name        string `json:"name"`
-	Explanation string `json:"explanation"`
+	Description string `json:"description"`
 }
 
 func ToListChannel(roomKey string, c *model.Channels) *ListChannel {
@@ -28,7 +28,7 @@ func ToListChannel(roomKey string, c *model.Channels) *ListChannel {
 			ChannelKey:  channel.ChannelKey,
 			Type:        channel.Type,
 			Name:        channel.Name,
-			Explanation: channel.Explanation,
+			Description: channel.Description,
 		}
 		list = append(list, channelContent)
 	}
@@ -45,7 +45,7 @@ type CreateChannel struct {
 	RoomKey     string `json:"room_key"`
 	Type        string `json:"type"`
 	Name        string `json:"name"`
-	Explanation string `json:"explanation"`
+	Description string `json:"description"`
 	Message     string `json:"message"`
 }
 
@@ -59,7 +59,7 @@ func ToCreateChannel(c *model.Channel) *CreateChannel {
 		RoomKey:     c.RoomKey,
 		Type:        c.Type,
 		Name:        c.Name,
-		Explanation: c.Explanation,
+		Description: c.Description,
 		Message:     "channel create completed",
 	}
 }

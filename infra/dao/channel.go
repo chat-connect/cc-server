@@ -40,7 +40,7 @@ func (channelDao *channelDao) Insert(channelModel *model.Channel, tx *gorm.DB) (
 		ChannelKey:  channelModel.ChannelKey,
 		RoomKey:     channelModel.RoomKey,
 		Name:        channelModel.Name,
-		Explanation: channelModel.Explanation,
+		Description: channelModel.Description,
 		Type:        channelModel.Type,
 	}
 

@@ -22,7 +22,7 @@ func TestChannelDao_ListByRoomKey(t *testing.T) {
 	}{
 		{
 			name: "Successful: Channels found",
-			mockRows: sqlmock.NewRows([]string{"id", "channel_key",  "room_key", "name",  "explanation", "type", "created_at", "updated_at"}).
+			mockRows: sqlmock.NewRows([]string{"id", "channel_key",  "room_key", "description", "type", "created_at", "updated_at"}).
 				AddRow(1, "test_key", "test_key", "test_name", "test_explanation", "text", time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedChats: &model.Channels{
@@ -31,7 +31,7 @@ func TestChannelDao_ListByRoomKey(t *testing.T) {
                     ChannelKey:  "test_key",
                     RoomKey:     "test_key",
                     Name:        "test_name",
-                    Explanation: "test_explanation",
+                    Description: "test_explanation",
                     Type:        "text",
                     CreatedAt:   time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC),
                     UpdatedAt:   time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC),                    
@@ -72,7 +72,7 @@ func TestChannelkDao_Insert(t *testing.T) {
             mockParam: &model.Channel{
 				ChannelKey:  "test_key",
                 RoomKey:     "test_key",
-                Explanation: "test_explanation",
+                Description: "test_explanation",
                 Type:        "type",
             },
             mockRowsAffected: 1,
@@ -82,7 +82,7 @@ func TestChannelkDao_Insert(t *testing.T) {
                 ID:          1,
 				ChannelKey:  "test_key",
                 RoomKey:     "test_key",
-                Explanation: "test_explanation",
+                Description: "test_explanation",
                 Type:        "type",
 				CreatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),
 				UpdatedAt:    time.Date(1, time.January, 1, 0, 0, 0, 0, time.UTC),

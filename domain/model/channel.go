@@ -11,7 +11,7 @@ type Channel struct {
 	ChannelKey  string    `json:"channel_key"`
 	RoomKey     string    `json:"room_key"`
 	Name        string    `json:"name"`
-	Explanation string    `json:"explanation"`
+	Description string    `json:"description"`
 	Type        string    `json:"type"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
@@ -26,6 +26,6 @@ func (channel *Channel) IsEmpty() bool {
 		channel.ID == 0 &&
 		channel.ChannelKey == "" &&
 		channel.RoomKey == "" &&
-		channel.Explanation == "" &&
+		channel.Description == "" &&
 		channel.Type == "")
 }

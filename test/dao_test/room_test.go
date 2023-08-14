@@ -22,14 +22,14 @@ func TestRoomDao_FindByRoomKey(t *testing.T) {
 	}{
 		{
 			name: "Successful: Room found",
-			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "explanation", "image_path", "user_count", "status", "created_at", "updated_at"}).
+			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "description", "image_path", "user_count", "status", "created_at", "updated_at"}).
 				AddRow(1, "test_key", "test", "test", "/", 1, "public", time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC), time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)),
 			mockError: nil,
 			expectedRoom: &model.Room{
 				ID:          1,
 				RoomKey:     "test_key",
 				Name:        "test",
-                Explanation: "test",
+                Description: "test",
                 ImagePath:   "/",
                 UserCount:   1,
 				Status:      "public",
@@ -40,7 +40,7 @@ func TestRoomDao_FindByRoomKey(t *testing.T) {
 		},
 		{
 			name: "Successful: Room not found",
-			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "explanation", "image_path", "user_count", "status", "created_at", "updated_at"}),
+			mockRows: sqlmock.NewRows([]string{"id", "room_key", "name", "description", "image_path", "user_count", "status", "created_at", "updated_at"}),
 			mockError: nil,
 			expectedRoom: (*model.Room)(nil),
 			expectedError: gorm.ErrRecordNotFound,
@@ -79,7 +79,7 @@ func TestRoomDao_Insert(t *testing.T) {
                 RoomKey:     "test_key",
                 UserKey:     "test_key",
                 Name:        "test",
-				Explanation: "test",
+				Description: "test",
 				ImagePath:   "/test",
 				UserCount:   1,
 				Status:      "public",
@@ -92,7 +92,7 @@ func TestRoomDao_Insert(t *testing.T) {
                 RoomKey:     "test_key",
                 UserKey:     "test_key",
                 Name:        "test",
-				Explanation: "test",
+				Description: "test",
 				ImagePath:   "/test",
 				UserCount:   1,
 				Status:      "public",

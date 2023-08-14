@@ -2,7 +2,7 @@ INSERT INTO room (
     room_key,
     user_key,
     name,
-    explanation,
+    description,
     image_path,
     user_count,
     status,

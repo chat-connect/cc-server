@@ -23,7 +23,7 @@ func TestRoomChatModel_EmptyRoom(t *testing.T) {
 			roomChat: &model.RoomChat{
 				ID:          1,
 				RoomChatKey: "test_key",
-				ChannelKey:  "test_key",
+				RoomKey:  "test_key",
 				UserKey:     "test_key",
 				UserName:    "test_name",
 				Content:     "content",

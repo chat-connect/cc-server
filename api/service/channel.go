@@ -73,7 +73,7 @@ func (channelService *channelService) CreateChannel(roomKey string, userKey stri
 	channelModel.ChannelKey = channelKey
 	channelModel.RoomKey = roomKey
 	channelModel.Name = channelParam.Name
-	channelModel.Explanation = channelParam.Explanation
+	channelModel.Description = channelParam.Description
 	channelModel.Type = channelParam.Type
 
 	channelResult, err = channelService.channelRepository.Insert(channelModel, tx)

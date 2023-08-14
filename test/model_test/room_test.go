@@ -24,7 +24,7 @@ func TestRoomModel_EmptyRoom(t *testing.T) {
 				RoomKey:     "test_key",
 				UserKey:     "test_key",
 				Name:        "test",
-				Explanation: "test",
+				Description: "test",
 				ImagePath:   "/test",
 				UserCount:   0,
 				Status:      "public",
