@@ -7,5 +7,7 @@
 
 .docker/db/data
 .docker/db/sql
+.docker/authdb/data
+.docker/authdb/sql
 .docker/testdb/data
 .docker/testdb/sql
