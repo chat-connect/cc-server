@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"strings"
 	"encoding/json"
 	"github.com/labstack/echo/v4"
 	"github.com/gorilla/websocket"
@@ -37,7 +36,9 @@ func (roomChatController *roomChatController) SendRoomChat() echo.HandlerFunc {
 		roomKey := c.Param("roomKey")
 
 		conn, err := roomChatUpgrader.Upgrade(c.Response(), c.Request(), nil)
-		if err != nil { return err }
+		if err != nil {
+			return err
+		}
 
 		if rooms[roomKey] == nil {
 			rooms[roomKey] = make(map[*websocket.Conn]bool)
@@ -45,7 +46,7 @@ func (roomChatController *roomChatController) SendRoomChat() echo.HandlerFunc {
 
 		rooms[roomKey][conn] = true
 
-		go func() {
+		func() {
 			defer func() {
 				conn.Close()
 				delete(rooms[roomKey], conn)
@@ -53,28 +54,35 @@ func (roomChatController *roomChatController) SendRoomChat() echo.HandlerFunc {
 
 			for {
 				messageType, p, err := conn.ReadMessage()
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				message := string(p)
 				roomChatParam := &parameter.CreateRoomChat{}
 				err = json.Unmarshal([]byte(message), roomChatParam)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
-				token := strings.ReplaceAll(roomChatParam.Token, "Bearer ", "")
+				err = CheckToken(roomChatParam.Token)
+				if err != nil {
+					return
+				}
+
 				userKey := roomChatParam.UserKey
-			
-				user, err := roomChatController.userService.FindByUserKey(userKey)
-				if err != nil { return }
-				if token != user.Token { return }
-
 				roomResult, err := roomChatController.roomChatService.CreateRoomChat(roomKey, userKey, roomChatParam)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				out := output.ToCreateRoomChat(roomResult)
 				response := response.SuccessWith("chat_create", 200, out)
 
 				jsonResponse, err := json.Marshal(response)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				for client := range rooms[roomKey] {
 					err := client.WriteMessage(messageType, jsonResponse)

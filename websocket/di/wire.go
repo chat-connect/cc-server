@@ -9,7 +9,6 @@ import (
     "github.com/game-connect/gc-server/infra/dao"
     "github.com/game-connect/gc-server/websocket/service"	
     "github.com/game-connect/gc-server/websocket/presentation/controller"
-	"github.com/game-connect/gc-server/websocket/presentation/middleware"
 )
 
 // chat
@@ -64,18 +63,6 @@ func InitializeRoomChatController() controller.RoomChatController {
         service.NewRoomChatService,
         service.NewUserService,
         controller.NewRoomChatController,
-    )
-    return nil
-}
-
-// user
-func InitializeUserMiddleware() middleware.UserMiddleware {
-    wire.Build(
-        database.NewDB,
-        dao.NewUserDao,
-        dao.NewTransactionDao,
-        service.NewUserService,
-		middleware.NewUserMiddleware,
     )
     return nil
 }

@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"strings"
 	"encoding/json"
 	"github.com/labstack/echo/v4"
 	"github.com/gorilla/websocket"
@@ -37,7 +36,9 @@ func (channelChatController *channelChatController) SendChannelChat() echo.Handl
 		channelKey := c.Param("channelKey")
 
 		conn, err := roomChatUpgrader.Upgrade(c.Response(), c.Request(), nil)
-		if err != nil { return err }
+		if err != nil {
+			return err
+		}
 
 		if rooms[channelKey] == nil {
 			rooms[channelKey] = make(map[*websocket.Conn]bool)
@@ -45,7 +46,7 @@ func (channelChatController *channelChatController) SendChannelChat() echo.Handl
 
 		rooms[channelKey][conn] = true
 
-		go func() {
+		func() {
 			defer func() {
 				conn.Close()
 				delete(rooms[channelKey], conn)
@@ -53,28 +54,35 @@ func (channelChatController *channelChatController) SendChannelChat() echo.Handl
 
 			for {
 				messageType, p, err := conn.ReadMessage()
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				message := string(p)
 				channelChatParam := &parameter.CreateChannelChat{}
 				err = json.Unmarshal([]byte(message), channelChatParam)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
-				token := strings.ReplaceAll(channelChatParam.Token, "Bearer ", "")
+				err = CheckToken(channelChatParam.Token)
+				if err != nil {
+					return
+				}
+
 				userKey := channelChatParam.UserKey
-			
-				user, err := channelChatController.userService.FindByUserKey(userKey)
-				if err != nil { return }
-				if token != user.Token { return }
-
 				chatResult, err := channelChatController.channelChatService.CreateChannelChat(channelKey, userKey, channelChatParam)
-				if err != nil { return }
+				if err != nil {
+					return 
+				}
 
 				out := output.ToCreateChannelChat(chatResult)
 				response := response.SuccessWith("chat_create", 200, out)
 
 				jsonResponse, err := json.Marshal(response)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				for client := range rooms[channelKey] {
 					err := client.WriteMessage(messageType, jsonResponse)

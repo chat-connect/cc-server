@@ -10,7 +10,6 @@ import (
 	"github.com/game-connect/gc-server/config/database"
 	"github.com/game-connect/gc-server/infra/dao"
 	"github.com/game-connect/gc-server/websocket/presentation/controller"
-	"github.com/game-connect/gc-server/websocket/presentation/middleware"
 	"github.com/game-connect/gc-server/websocket/service"
 )
 
@@ -62,14 +61,4 @@ func InitializeRoomChatController() controller.RoomChatController {
 	userService := service.NewUserService(userRepository, transactionRepository)
 	roomChatController := controller.NewRoomChatController(roomChatService, userService)
 	return roomChatController
-}
-
-// user
-func InitializeUserMiddleware() middleware.UserMiddleware {
-	db := database.NewDB()
-	userRepository := dao.NewUserDao(db)
-	transactionRepository := dao.NewTransactionDao(db)
-	userService := service.NewUserService(userRepository, transactionRepository)
-	userMiddleware := middleware.NewUserMiddleware(userService)
-	return userMiddleware
 }

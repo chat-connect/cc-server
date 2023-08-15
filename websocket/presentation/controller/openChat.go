@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"strings"
 	"encoding/json"
 	"github.com/labstack/echo/v4"
 	"github.com/gorilla/websocket"
@@ -46,7 +45,7 @@ func (openChatController *openChatController) SendOpenChat() echo.HandlerFunc {
 
 		rooms[openKey][conn] = true
 
-		go func() {
+		func() {
 			defer func() {
 				conn.Close()
 				delete(rooms[openKey], conn)
@@ -54,28 +53,35 @@ func (openChatController *openChatController) SendOpenChat() echo.HandlerFunc {
 
 			for {
 				messageType, p, err := conn.ReadMessage()
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				message := string(p)
 				openChatParam := &parameter.CreateOpenChat{}
 				err = json.Unmarshal([]byte(message), openChatParam)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
-				token := strings.ReplaceAll(openChatParam.Token, "Bearer ", "")
+				err = CheckToken(openChatParam.Token)
+				if err != nil {
+					return
+				}
+
 				userKey := openChatParam.UserKey
-			
-				user, err := openChatController.userService.FindByUserKey(userKey)
-				if err != nil { return }
-				if token != user.Token { return }
-
 				openResult, err := openChatController.openChatService.CreateOpenChat(userKey, openChatParam)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				out := output.ToCreateOpenChat(openResult)
 				response := response.SuccessWith("chat_create", 200, out)
 
 				jsonResponse, err := json.Marshal(response)
-				if err != nil { return }
+				if err != nil {
+					return
+				}
 
 				for client := range rooms[openKey] {
 					err := client.WriteMessage(messageType, jsonResponse)
