@@ -12,18 +12,6 @@ import (
 	"github.com/game-connect/gc-server/api/presentation/middleware"
 )
 
-// user
-func InitializeUserController() controller.UserController {
-    wire.Build(
-        database.NewDB,
-        dao.NewUserDao,
-        dao.NewTransactionDao,
-        service.NewUserService,
-        controller.NewUserController,
-    )
-    return nil
-}
-
 // room
 func InitializeRoomController() controller.RoomController {
     wire.Build(
@@ -121,10 +109,6 @@ func InitializeChannelChatController() controller.ChannelChatController {
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
     wire.Build(
-        database.NewDB,
-        dao.NewUserDao,
-        dao.NewTransactionDao,
-        service.NewUserService,
 		middleware.NewUserMiddleware,
     )
     return nil

@@ -25,33 +25,11 @@ services:
       timeout: 20s
       retries: 10
 
-# Auth DB
-  authdb:
-    container_name: gc-authdb
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: mysql_root
-      MYSQL_DATABASE: gc_auth
-      MYSQL_USER: mysql_user
-      MYSQL_PASSWORD: mysql_password
-      TZ: 'Asia/Tokyo'
-    volumes:
-      - ./.docker/authdb/data:/var/lib/mysql  
-      - ./.docker/authdb/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./.docker/authdb/sql:/docker-entrypoint-initdb.d
-    ports:
-      - "3308:3306"
-    tty: true
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
-
 # Auth
   auth:
     container_name: gc-auth
     env_file:
-      - .env.local.auth
+      - .env.local
     build:
       target: development
       context: .
@@ -62,7 +40,7 @@ services:
       - "8000:8000"
     tty: true
     depends_on:
-      authdb:
+      db:
         condition: service_healthy
 
 # API

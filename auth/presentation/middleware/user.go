@@ -3,6 +3,7 @@ package middleware
 import (
 	"fmt"
 	"strings"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 
 	"github.com/game-connect/gc-server/auth/service"
@@ -24,19 +25,27 @@ func NewUserMiddleware(userService service.UserService) UserMiddleware {
 
 func (userMiddleware *userMiddleware) UserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
     return func(c echo.Context) error {
-		token := c.Request().Header.Get("Authorization")
-		token = strings.ReplaceAll(token, "Bearer ", "")
-		userKey := c.Param("userKey")
-		
-		user, err := userMiddleware.userService.FindByUserKey(userKey)
-		if err != nil {
-			return fmt.Errorf("Invalid user_key")
+		tokenString := c.Request().Header.Get("Authorization")
+		tokenString = strings.ReplaceAll(tokenString, "Bearer ", "")
+		if tokenString == "" {
+			return fmt.Errorf("Invalid token")
 		}
-
-		if token != user.Token {
+	
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+			return []byte("secret"), nil
+		})
+		if err != nil {
 			return fmt.Errorf("Invalid token")
 		}
 
-		return next(c)
+		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+
+			return next(c)
+		} else {
+			return fmt.Errorf("Invalid token")
+		}
     }
 }

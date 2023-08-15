@@ -13,7 +13,6 @@ import (
 
 func Init() {
 	// di: wire ./api/di/wire.go
-	userController := di.InitializeUserController()
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
 	channelController := di.InitializeChannelController()
@@ -31,17 +30,6 @@ func Init() {
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{ Output: log.GenerateApiLog() }))
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-
-	// auth: 認証API
-	auth := e.Group("/auth")
-	auth.POST("/register_user", userController.RegisterUser()) // auth/user_register
-	auth.POST("/login_user", userController.LoginUser()) // auth/user_login
-
-	// auth: 認証済ユーザーのみアクセス可能
-	auth.Use(userMiddleware.UserMiddleware)
-	auth.GET("/check_user/:userKey", userController.CheckUser()) // auth/user_check/:userKey
-	auth.PUT("/logout_user/:userKey", userController.LogoutUser()) // auth/user_logout/:userKey
-	auth.DELETE("/delete_user/:userKey", userController.DeleteUser()) // auth/user_delete/:userKey
 
 	// room: 部屋関連
 	room := e.Group("/room")
