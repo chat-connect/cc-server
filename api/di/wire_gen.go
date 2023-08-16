@@ -16,6 +16,15 @@ import (
 
 // Injectors from wire.go:
 
+// genre
+func InitializeGenreController() controller.GenreController {
+	db := database.NewDB()
+	genreRepository := dao.NewGenreDao(db)
+	genreService := service.NewGenreService(genreRepository)
+	genreController := controller.NewGenreController(genreService)
+	return genreController
+}
+
 // room
 func InitializeRoomController() controller.RoomController {
 	db := database.NewDB()

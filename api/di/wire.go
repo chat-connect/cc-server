@@ -12,6 +12,17 @@ import (
 	"github.com/game-connect/gc-server/api/presentation/middleware"
 )
 
+// genre
+func InitializeGenreController() controller.GenreController {
+    wire.Build(
+        database.NewDB,
+        dao.NewGenreDao,
+        service.NewGenreService,
+        controller.NewGenreController,
+    )
+    return nil
+}
+
 // room
 func InitializeRoomController() controller.RoomController {
     wire.Build(
