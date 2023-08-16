@@ -17,7 +17,9 @@ func InitializeGenreController() controller.GenreController {
     wire.Build(
         database.NewDB,
         dao.NewGenreDao,
+        dao.NewGameDao,
         service.NewGenreService,
+        service.NewGameService,
         controller.NewGenreController,
     )
     return nil

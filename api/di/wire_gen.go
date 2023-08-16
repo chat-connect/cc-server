@@ -21,17 +21,10 @@ func InitializeGenreController() controller.GenreController {
 	db := database.NewDB()
 	genreRepository := dao.NewGenreDao(db)
 	genreService := service.NewGenreService(genreRepository)
-	genreController := controller.NewGenreController(genreService)
-	return genreController
-}
-
-// game
-func InitializeGameController() controller.GameController {
-	db := database.NewDB()
 	gameRepository := dao.NewGameDao(db)
 	gameService := service.NewGameService(gameRepository)
-	gameController := controller.NewGameController(gameService)
-	return gameController
+	genreController := controller.NewGenreController(genreService, gameService)
+	return genreController
 }
 
 // room
