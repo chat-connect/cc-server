@@ -23,6 +23,17 @@ func InitializeGenreController() controller.GenreController {
     return nil
 }
 
+// game
+func InitializeGameController() controller.GameController {
+    wire.Build(
+        database.NewDB,
+        dao.NewGameDao,
+        service.NewGameService,
+        controller.NewGameController,
+    )
+    return nil
+}
+
 // room
 func InitializeRoomController() controller.RoomController {
     wire.Build(

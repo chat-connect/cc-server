@@ -14,6 +14,7 @@ import (
 func Init() {
 	// di: wire ./api/di/wire.go
 	genreController := di.InitializeGenreController()
+	gameController := di.InitializeGameController()
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
 	channelController := di.InitializeChannelController()
@@ -35,6 +36,10 @@ func Init() {
 	// genre: ジャンル関連
 	genre := e.Group("/genre")
 	genre.GET("/list_genre", genreController.ListGenre()) // genre/list_genre
+
+	// game: ゲーム関連
+	game := e.Group("/game")
+	game.GET("/list_game", gameController.ListGame()) // genre/list_game
 
 	// room: 部屋関連
 	room := e.Group("/room")
