@@ -14,6 +14,8 @@ type ListRoomContent struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Status      string `json:"status"`
+	Genre       string `json:"genre"`
+	Game        string `json:"game"`
 }
 
 func ToListRoom(r *model.Rooms) *ListRoom {
@@ -28,7 +30,10 @@ func ToListRoom(r *model.Rooms) *ListRoom {
 			Name:        room.Name,
 			Description: room.Description,
 			Status:      room.Status,
+			Genre:       room.Genre,
+			Game:        room.Game,
 		}
+
 		list = append(list, roomContent)
 	}
 
@@ -45,6 +50,8 @@ type CreateRoom struct {
 	ImagePath   string `json:"image_path"`
 	UserCount   int64  `json:"user_count"`
 	Status      string `json:"status"`
+	Genre       string `json:"genre"`
+	Game        string `json:"game"`
 	Message     string `json:"message"`
 }
 
@@ -59,6 +66,8 @@ func ToCreateRoom(r *model.Room) *CreateRoom {
 		Description: r.Description,
 		UserCount:   r.UserCount,
 		Status:      r.Status,
+		Genre:       r.Genre,
+		Game:        r.Game,
 		Message: "room create completed",
 	}
 }

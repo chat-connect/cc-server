@@ -28,6 +28,8 @@ func TestRoomModel_EmptyRoom(t *testing.T) {
 				ImagePath:   "/test",
 				UserCount:   0,
 				Status:      "public",
+				Genre:       "RPG",
+				Game:        "RPG",
 			},
 			expected: false,
 		},

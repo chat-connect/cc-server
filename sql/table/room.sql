@@ -8,6 +8,8 @@ CREATE TABLE `room` (
     `image_path`  VARCHAR(50)  NOT NULL                COMMENT "画像パス",
     `user_count`  INT          NOT NULL                COMMENT "ユーザー数",
     `status`      VARCHAR(191) NOT NULL                COMMENT "状態",
+    `genre`       VARCHAR(191) NOT NULL                COMMENT "ジャンル",
+    `game`        VARCHAR(191) NOT NULL                COMMENT "ゲーム",
     `created_at`  TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at`  TIMESTAMP    NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

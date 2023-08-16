@@ -54,6 +54,8 @@ func (roomDao *roomDao) Insert(roomModel *model.Room, tx *gorm.DB) (entity *mode
 		ImagePath:   roomModel.ImagePath,
 		UserCount:   roomModel.UserCount,
 		Status:      roomModel.Status,
+		Genre:       roomModel.Genre,
+		Game:        roomModel.Game,
 	}
 
 	res := conn.Model(&model.Room{}).Create(entity)

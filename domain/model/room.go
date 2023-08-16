@@ -15,6 +15,8 @@ type Room struct {
 	ImagePath   string    `json:"image_path"`
 	UserCount   int64     `json:"user_count"`
  	Status      string    `json:"status"`
+	Genre       string    `json:"genre"`
+	Game        string    `json:"game"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
@@ -32,5 +34,7 @@ func (room *Room) IsEmpty() bool {
 		room.Description == "" &&
 		room.ImagePath == "" &&
 		room.UserCount == 0 &&
-		room.Status == "")
+		room.Status == "" &&
+		room.Genre == "" &&
+		room.Game == "")
 }

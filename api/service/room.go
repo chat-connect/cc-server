@@ -103,6 +103,8 @@ func (roomService *roomService) CreateRoom(roomParam *parameter.CreateRoom, user
 	roomModel.ImagePath = ""
 	roomModel.UserCount = 1
 	roomModel.Status = roomParam.Status
+	roomModel.Genre = roomParam.Genre
+	roomModel.Game = roomParam.Game
 
 	roomResult, err = roomService.roomRepository.Insert(roomModel, tx)
 	if err != nil {
