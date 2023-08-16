@@ -1,7 +1,7 @@
 -- ゲーム情報
 CREATE TABLE `game` (
     `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ゲームID",
-    `game_key`    VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ゲームKEY",
+    `game_key`    VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ジャンルKEY",
     `genre_key`   VARCHAR(20)  NOT NULL                COMMENT "ゲームKEY",
     `name`        VARCHAR(50)  NOT NULL                COMMENT "ゲーム名",
     `description` VARCHAR(191) NOT NULL                COMMENT "説明",
