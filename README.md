@@ -44,12 +44,12 @@ docker compose -f docker-compose.local.yml exec api wire api/di/wire.go
 
 2.WebSocket
 ```
-docker compose -f docker-compose.local.yml exec batch wire api/di/wire.go
+docker compose -f docker-compose.local.yml exec websocket wire websocket/di/wire.go
 ```
 
 2.Batch
 ```
-docker compose -f docker-compose.local.yml exec batch wire api/di/wire.go
+docker compose -f docker-compose.local.yml exec batch wire batch/di/wire.go
 ```
 
 ## DB
