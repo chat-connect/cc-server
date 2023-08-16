@@ -1,21 +1,10 @@
 basePath: /
 definitions:
-  output.CheckUser:
-    properties:
-      email:
-        type: string
-      message:
-        type: string
-      name:
-        type: string
-      user_key:
-        type: string
-    type: object
   output.CreateChannel:
     properties:
       channel_key:
         type: string
-      explanation:
+      description:
         type: string
       message:
         type: string
@@ -71,7 +60,7 @@ definitions:
     type: object
   output.CreateRoom:
     properties:
-      explanation:
+      description:
         type: string
       image_path:
         type: string
@@ -107,11 +96,6 @@ definitions:
         type: string
     type: object
   output.DeleteRoom:
-    properties:
-      message:
-        type: string
-    type: object
-  output.DeleteUser:
     properties:
       message:
         type: string
@@ -171,7 +155,7 @@ definitions:
     properties:
       channel_key:
         type: string
-      explanation:
+      description:
         type: string
       name:
         type: string
@@ -202,6 +186,26 @@ definitions:
       user_key:
         type: string
       user_name:
+        type: string
+    type: object
+  output.ListGenre:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListGenreContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGenreContent:
+    properties:
+      description:
+        type: string
+      genre_key:
+        type: string
+      name:
+        type: string
+      type:
         type: string
     type: object
   output.ListOpenChat:
@@ -265,7 +269,7 @@ definitions:
     type: object
   output.ListRoomContent:
     properties:
-      explanation:
+      description:
         type: string
       name:
         type: string
@@ -274,67 +278,18 @@ definitions:
       status:
         type: string
     type: object
-  output.LoginUser:
-    properties:
-      email:
-        type: string
-      image_path:
-        type: string
-      message:
-        type: string
-      name:
-        type: string
-      token:
-        type: string
-      user_key:
-        type: string
-    type: object
-  output.LogoutUser:
-    properties:
-      message:
-        type: string
-    type: object
   output.OutRoom:
     properties:
       message:
         type: string
     type: object
-  output.RegisterUser:
-    properties:
-      email:
-        type: string
-      message:
-        type: string
-      name:
-        type: string
-      user_key:
-        type: string
-    type: object
   parameter.CreateRoom:
     properties:
-      explanation:
+      description:
         type: string
       name:
         type: string
       status:
-        type: string
-    type: object
-  parameter.LoginUser:
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-    type: object
-  parameter.RegisterUser:
-    properties:
-      email:
-        type: string
-      name:
-        type: string
-      password:
-        type: string
-      user_image:
         type: string
     type: object
   response.Error:
@@ -363,198 +318,6 @@ info:
   title: Chat Connect
   version: "1.0"
 paths:
-  /auth/user_check/{user_key}:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: user_key
-        in: path
-        maxLength: 12
-        name: user_key
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                items:
-                  $ref: '#/definitions/output.CheckUser'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Error'
-            - properties:
-                errors:
-                  $ref: '#/definitions/output.Error'
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: ユーザー取得
-      tags:
-      - User
-  /auth/user_delete/{user_key}:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: ユーザーキー
-        in: path
-        name: user_key
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                items:
-                  $ref: '#/definitions/output.DeleteUser'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Error'
-            - properties:
-                errors:
-                  $ref: '#/definitions/output.Error'
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: ユーザー削除
-      tags:
-      - User
-  /auth/user_login:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: ユーザーログイン
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/parameter.LoginUser'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                items:
-                  $ref: '#/definitions/output.LoginUser'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Error'
-            - properties:
-                errors:
-                  $ref: '#/definitions/output.Error'
-              type: object
-      summary: ユーザーログイン
-      tags:
-      - Auth
-  /auth/user_logout/{user_key}:
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: user_key
-        in: path
-        maxLength: 12
-        name: user_key
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                items:
-                  $ref: '#/definitions/output.LogoutUser'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Error'
-            - properties:
-                errors:
-                  $ref: '#/definitions/output.Error'
-              type: object
-      security:
-      - ApiKeyAuth: []
-      summary: ログアウト
-      tags:
-      - User
-  /auth/user_register:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: ユーザー登録
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/parameter.RegisterUser'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                items:
-                  $ref: '#/definitions/output.RegisterUser'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            items:
-              $ref: '#/definitions/output.Error'
-            type: array
-      summary: ユーザー登録
-      tags:
-      - Auth
   /channel/{userKey}/channel_create/{roomKey}:
     post:
       consumes:
@@ -835,7 +598,7 @@ paths:
       summary: チャット一覧取得
       tags:
       - RoomChat
-  /chat/{userKey}/list_open_chat/{channelKey}:
+  /chat/{userKey}/list_open_chat:
     get:
       consumes:
       - application/json
@@ -863,6 +626,34 @@ paths:
       summary: チャット一覧取得
       tags:
       - OpenChat
+  /genre/list_genre:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListGenre'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ジャンル一覧取得
+      tags:
+      - Genre
   /room/{user_key}/room_delete/{roomKey}:
     delete:
       consumes:
