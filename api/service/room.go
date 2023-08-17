@@ -13,6 +13,7 @@ import (
 type RoomService interface {
 	FindByRoomKey(userKey string) (roomResult *model.Room, err error)
 	ListRoom(userKey string) (roomResult *model.Rooms, err error)
+	SearchRoom(name string, genre string, game string) (roomResult *model.Rooms, err error)
 	CreateRoom(roomParam *parameter.CreateRoom, userKey string) (*model.Room, error)
 	DeleteRoom(roomKey string, userKey string) (err error)
 }
@@ -61,9 +62,64 @@ func (roomService *roomService) ListRoom(userKey string) (roomResult *model.Room
 		roomKeyList = append(roomKeyList, roomUser.RoomKey)
 	}	
 
-	roomResult, err = roomService.roomRepository.ListByRoomKeyList(roomKeyList)
+	roomResult, err = roomService.roomRepository.ListByRoomKeys(roomKeyList)
 	if err != nil {
 		return nil, err
+	}
+
+	return roomResult, nil
+}
+
+// SearchRoom ルームを検索する
+func (roomService *roomService) SearchRoom(name string, genre string, game string) (roomResult *model.Rooms, err error) {
+	if name != "" && genre == "" && game == "" {
+		// nameのみの場合
+		roomResult, err = roomService.roomRepository.ListByName(name)
+		if err != nil {
+			return nil, err
+		}
+	} else if name == "" && genre != "" && game == "" {
+		// genreのみの場合
+		roomResult, err = roomService.roomRepository.ListByGenre(genre)
+		if err != nil {
+			return nil, err
+		}
+	} else if name == "" && genre == "" && game != "" {
+		// gameのみの場合
+		roomResult, err = roomService.roomRepository.ListByGame(game)
+		if err != nil {
+			return nil, err
+		}
+	} else if name != "" && genre != "" && game == "" {
+		// nameとgenreのみの場合
+		roomResult, err = roomService.roomRepository.ListByNameAndGenre(name, genre)
+		if err != nil {
+			return nil, err
+		}
+	} else if name != "" && genre == "" && game != "" {
+		// nameとgameのみの場合
+		roomResult, err = roomService.roomRepository.ListByNameAndGame(name, game)
+		if err != nil {
+			return nil, err
+		}
+	} else if name == "" && genre != "" && game != "" {
+		// genreとgameのみの場合
+		roomResult, err = roomService.roomRepository.ListByGenreAndGame(genre, game)
+		if err != nil {
+			return nil, err
+		}
+	} else if name != "" && genre != "" && game != "" {
+		// 全ての条件
+		roomResult, err = roomService.roomRepository.ListByNameAndGenreAndGame(name, genre, game)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		// 何も条件が指定されていない場合
+		roomResult, err = roomService.roomRepository.List()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return roomResult, nil

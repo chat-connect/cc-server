@@ -38,10 +38,11 @@ func Init() {
 	genre.GET("/list_game", genreController.ListGame()) // genre/list_game
 	genre.GET("/list_genre_and_game", genreController.ListGenreAndGame()) // genre/list_game_and_game
 
-	// room: 部屋関連
+	// room: ルーム関連
 	room := e.Group("/room")
 	room.Use(userMiddleware.UserMiddleware)
 	room.GET("/:userKey/list_room", roomController.ListRoom()) // room/:userKey/room_list
+	room.GET("/:userKey/search_room", roomController.SearchRoom()) // room/:userKey/search_room
 	room.POST("/:userKey/create_room", roomController.CreateRoom()) // room/:userKey/room_create
 	room.DELETE("/:userKey/delete_room/:roomKey", roomController.DeleteRoom()) // room/:userKey/room_delete/:roomKey
 

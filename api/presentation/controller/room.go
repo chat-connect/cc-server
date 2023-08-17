@@ -11,6 +11,7 @@ import (
 
 type RoomController interface {
 	ListRoom() echo.HandlerFunc
+	SearchRoom() echo.HandlerFunc
 	CreateRoom() echo.HandlerFunc
 	DeleteRoom() echo.HandlerFunc
 }
@@ -32,7 +33,7 @@ func NewRoomController(roomService service.RoomService) RoomController {
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ListRoom}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /room/{userKey}/room_list [get]
+// @Router      /room/{userKey}/list_room [get]
 func (roomController *roomController) ListRoom() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
@@ -53,6 +54,36 @@ func (roomController *roomController) ListRoom() echo.HandlerFunc {
 	}
 }
 
+// List
+// @Summary     ルーム検索
+// @tags        Room
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListRoom}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /room/{userKey}/search_room [get]
+func (roomController *roomController) SearchRoom() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		name := c.QueryParam("name")
+		genre := c.QueryParam("genre")
+		game := c.QueryParam("game")
+
+		roomResult, err := roomController.roomService.SearchRoom(name, genre, game)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("search_room", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListRoom(roomResult)
+		response := response.SuccessWith("search_room", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
 // Create
 // @Summary     ルーム作成
 // @tags        Room
@@ -61,7 +92,7 @@ func (roomController *roomController) ListRoom() echo.HandlerFunc {
 // @Param       body body parameter.CreateRoom true "ルーム作成"
 // @Success     200  {object} response.Success{items=output.CreateRoom}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /user/{user_key}/room_create  [post]
+// @Router      /user/{user_key}/create_room  [post]
 func (roomController *roomController) CreateRoom() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
@@ -91,7 +122,7 @@ func (roomController *roomController) CreateRoom() echo.HandlerFunc {
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.DeleteRoom}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      /room/{user_key}/room_delete/{roomKey}  [delete]
+// @Router      /room/{user_key}/delete_room/{roomKey}  [delete]
 func (roomController *roomController) DeleteRoom() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
