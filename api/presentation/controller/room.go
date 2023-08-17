@@ -42,13 +42,13 @@ func (roomController *roomController) ListRoom() echo.HandlerFunc {
 		roomResult, err := roomController.roomService.ListRoom(userKey)
 		if err != nil {
 			out := output.NewError(err)
-			response := response.ErrorWith("room_list", 500, out)
+			response := response.ErrorWith("list_room", 500, out)
 
 			return c.JSON(500, response)
 		}
 
 		out := output.ToListRoom(roomResult)
-		response := response.SuccessWith("room_list", 200, out)
+		response := response.SuccessWith("list_room", 200, out)
 
 		return c.JSON(200, response)
 	}
@@ -103,13 +103,13 @@ func (roomController *roomController) CreateRoom() echo.HandlerFunc {
 		roomResult, err := roomController.roomService.CreateRoom(roomParam, userKey)
 		if err != nil {
 			out := output.NewError(err)
-			response := response.ErrorWith("room_create", 500, out)
+			response := response.ErrorWith("create_room", 500, out)
 
 			return c.JSON(500, response)
 		}
 
 		out := output.ToCreateRoom(roomResult)
-		response := response.SuccessWith("room_create", 200, out)
+		response := response.SuccessWith("create_room", 200, out)
 
 		return c.JSON(200, response)
 	}
@@ -132,13 +132,13 @@ func (roomController *roomController) DeleteRoom() echo.HandlerFunc {
 		err := roomController.roomService.DeleteRoom(roomKey, userKey)
 		if err != nil {
 			out := output.NewError(err)
-			response := response.ErrorWith("room_delete", 500, out)
+			response := response.ErrorWith("delete_room", 500, out)
 
 			return c.JSON(500, response)
 		}
 
 		out := output.ToDeleteRoom()
-		response := response.SuccessWith("room_delete", 200, out)
+		response := response.SuccessWith("delete_room", 200, out)
 		
 		return c.JSON(200, response)
 	}
