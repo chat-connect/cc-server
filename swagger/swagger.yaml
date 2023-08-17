@@ -62,6 +62,10 @@ definitions:
     properties:
       description:
         type: string
+      game:
+        type: string
+      genre:
+        type: string
       image_path:
         type: string
       message:
@@ -188,9 +192,44 @@ definitions:
       user_name:
         type: string
     type: object
+  output.ListGame:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListGameContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGameContent:
+    properties:
+      description:
+        type: string
+      game_key:
+        type: string
+      genre_key:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+    type: object
   output.ListGenre:
     properties:
       list:
+        items:
+          $ref: '#/definitions/output.ListGenreContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGenreAndGame:
+    properties:
+      list_game:
+        items:
+          $ref: '#/definitions/output.ListGameContent'
+        type: array
+      list_genre:
         items:
           $ref: '#/definitions/output.ListGenreContent'
         type: array
@@ -271,6 +310,10 @@ definitions:
     properties:
       description:
         type: string
+      game:
+        type: string
+      genre:
+        type: string
       name:
         type: string
       room_key:
@@ -286,6 +329,10 @@ definitions:
   parameter.CreateRoom:
     properties:
       description:
+        type: string
+      game:
+        type: string
+      genre:
         type: string
       name:
         type: string
@@ -626,6 +673,34 @@ paths:
       summary: チャット一覧取得
       tags:
       - OpenChat
+  /genre/list_game:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListGame'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ゲーム一覧取得
+      tags:
+      - Game
   /genre/list_genre:
     get:
       consumes:
@@ -640,7 +715,7 @@ paths:
             - $ref: '#/definitions/response.Success'
             - properties:
                 items:
-                  $ref: '#/definitions/output.ListGenre'
+                  $ref: '#/definitions/output.ListGenreAndGame'
               type: object
         "500":
           description: Internal Server Error
@@ -651,10 +726,10 @@ paths:
                 errors:
                   $ref: '#/definitions/output.Error'
               type: object
-      summary: ジャンル一覧取得
+      summary: ジャンル＆ゲーム一覧取得
       tags:
       - Genre
-  /room/{user_key}/room_delete/{roomKey}:
+  /room/{user_key}/delete_room/{roomKey}:
     delete:
       consumes:
       - application/json
@@ -680,6 +755,34 @@ paths:
                   $ref: '#/definitions/output.Error'
               type: object
       summary: ルーム削除
+      tags:
+      - Room
+  /room/{userKey}/list_room:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListRoom'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ルーム一覧取得
       tags:
       - Room
   /room/{userKey}/room_join/{roomKey}:
@@ -710,34 +813,6 @@ paths:
       summary: ルーム参加
       tags:
       - Room
-  /room/{userKey}/room_list:
-    get:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Success'
-            - properties:
-                items:
-                  $ref: '#/definitions/output.ListRoom'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.Error'
-            - properties:
-                errors:
-                  $ref: '#/definitions/output.Error'
-              type: object
-      summary: ルーム一覧取得
-      tags:
-      - Room
   /room/{userKey}/room_out/{roomKey}:
     delete:
       consumes:
@@ -766,7 +841,35 @@ paths:
       summary: ルーム退出
       tags:
       - Room
-  /user/{user_key}/room_create:
+  /room/{userKey}/search_room:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListRoom'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ルーム検索
+      tags:
+      - Room
+  /user/{user_key}/create_room:
     post:
       consumes:
       - application/json

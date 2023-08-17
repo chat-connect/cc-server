@@ -592,7 +592,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/genre/list_genre": {
+        "/genre/list_game": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -601,9 +601,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Genre"
+                    "Game"
                 ],
-                "summary": "ジャンル一覧取得",
+                "summary": "ゲーム一覧取得",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -616,7 +616,111 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "items": {
-                                            "$ref": "#/definitions/output.ListGenre"
+                                            "$ref": "#/definitions/output.ListGame"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/genre/list_genre": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Genre"
+                ],
+                "summary": "ジャンル＆ゲーム一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ListGenreAndGame"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/room/{userKey}/list_room": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム一覧取得",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ListRoom"
                                         }
                                     }
                                 }
@@ -696,58 +800,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/room/{userKey}/room_list": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Room"
-                ],
-                "summary": "ルーム一覧取得",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.Success"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "items": {
-                                            "$ref": "#/definitions/output.ListRoom"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.Error"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "errors": {
-                                            "$ref": "#/definitions/output.Error"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
         "/room/{userKey}/room_out/{roomKey}": {
             "delete": {
                 "consumes": [
@@ -800,7 +852,59 @@ const docTemplate = `{
                 }
             }
         },
-        "/room/{user_key}/room_delete/{roomKey}": {
+        "/room/{userKey}/search_room": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Room"
+                ],
+                "summary": "ルーム検索",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "items": {
+                                            "$ref": "#/definitions/output.ListRoom"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.Error"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/output.Error"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/room/{user_key}/delete_room/{roomKey}": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -852,7 +956,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/{user_key}/room_create": {
+        "/user/{user_key}/create_room": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -1010,6 +1114,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "game": {
+                    "type": "string"
+                },
+                "genre": {
                     "type": "string"
                 },
                 "image_path": {
@@ -1207,10 +1317,64 @@ const docTemplate = `{
                 }
             }
         },
+        "output.ListGame": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListGameContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListGameContent": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "game_key": {
+                    "type": "string"
+                },
+                "genre_key": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
         "output.ListGenre": {
             "type": "object",
             "properties": {
                 "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListGenreContent"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.ListGenreAndGame": {
+            "type": "object",
+            "properties": {
+                "list_game": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/output.ListGameContent"
+                    }
+                },
+                "list_genre": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/output.ListGenreContent"
@@ -1335,6 +1499,12 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
+                "game": {
+                    "type": "string"
+                },
+                "genre": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -1358,6 +1528,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "description": {
+                    "type": "string"
+                },
+                "game": {
+                    "type": "string"
+                },
+                "genre": {
                     "type": "string"
                 },
                 "name": {
