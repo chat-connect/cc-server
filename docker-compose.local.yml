@@ -79,6 +79,24 @@ services:
       db:
         condition: service_healthy
 
+# Admin
+  admin:
+    container_name: gc-admin
+    env_file:
+      - .env.local
+    build: 
+      target: development
+      context: .
+      dockerfile: .docker/admin/Dockerfile
+    volumes:
+      - ./:/go/src/app
+    ports:
+      - "8004:8000"
+    tty: true
+    depends_on:
+      db:
+        condition: service_healthy
+
 # Batch
   batch:
     container_name: gc-batch
