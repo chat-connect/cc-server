@@ -2,6 +2,7 @@ package output
 
 import (
 	"github.com/game-connect/gc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/dto"
 )
 
 type ListRoom struct {
@@ -10,15 +11,15 @@ type ListRoom struct {
 }
 
 type ListRoomContent struct {
-	RoomKey     string `json:"room_key"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Status      string `json:"status"`
-	Genre       string `json:"genre"`
-	Game        string `json:"game"`
+	RoomKey     string      `json:"room_key"`
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	Status      string      `json:"status"`
+	Genre       model.Genre `json:"genre"`
+	Game        model.Game  `json:"game"`
 }
 
-func ToListRoom(r *model.Rooms) *ListRoom {
+func ToListRoom(r *dto.RoomAndGenreAndGames) *ListRoom {
 	if r == nil {
 		return nil
 	}
@@ -26,10 +27,10 @@ func ToListRoom(r *model.Rooms) *ListRoom {
 	var list []ListRoomContent
 	for _, room := range *r {
 		roomContent := ListRoomContent{
-			RoomKey:     room.RoomKey,
-			Name:        room.Name,
-			Description: room.Description,
-			Status:      room.Status,
+			RoomKey:     room.Room.RoomKey,
+			Name:        room.Room.Name,
+			Description: room.Room.Description,
+			Status:      room.Room.Status,
 			Genre:       room.Genre,
 			Game:        room.Game,
 		}

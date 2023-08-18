@@ -39,7 +39,7 @@ func (roomController *roomController) ListRoom() echo.HandlerFunc {
 		// parameters
 		userKey := c.Param("userKey")
 
-		roomResult, err := roomController.roomService.ListRoom(userKey)
+		roomResults, err := roomController.roomService.ListRoom(userKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("list_room", 500, out)
@@ -47,7 +47,7 @@ func (roomController *roomController) ListRoom() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToListRoom(roomResult)
+		out := output.ToListRoom(roomResults)
 		response := response.SuccessWith("list_room", 200, out)
 
 		return c.JSON(200, response)
@@ -69,7 +69,7 @@ func (roomController *roomController) SearchRoom() echo.HandlerFunc {
 		genre := c.QueryParam("genre")
 		game := c.QueryParam("game")
 
-		roomResult, err := roomController.roomService.SearchRoom(name, genre, game)
+		roomResults, err := roomController.roomService.SearchRoom(name, genre, game)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("search_room", 500, out)
@@ -77,7 +77,7 @@ func (roomController *roomController) SearchRoom() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToListRoom(roomResult)
+		out := output.ToListRoom(roomResults)
 		response := response.SuccessWith("search_room", 200, out)
 
 		return c.JSON(200, response)

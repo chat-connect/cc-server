@@ -5,5 +5,6 @@ import (
 )
 
 type GameRepository interface {
+	FindByGameKey(gameKey string) (entity *model.Game, err error)
 	List() (entity *model.Games, err error)
 }

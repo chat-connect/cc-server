@@ -41,7 +41,6 @@ func (roomDao *roomDao) FindByRoomKey(roomKey string) (entity *model.Room, err e
 
 func (roomDao *roomDao) List() (entity *model.Rooms, err error) {
 	entity = &model.Rooms{}
-	
 	res := roomDao.Conn.Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err

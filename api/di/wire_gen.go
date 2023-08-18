@@ -27,14 +27,25 @@ func InitializeGenreController() controller.GenreController {
 	return genreController
 }
 
+// game
+func InitializeGameController() controller.GameController {
+	db := database.NewDB()
+	gameRepository := dao.NewGameDao(db)
+	gameService := service.NewGameService(gameRepository)
+	gameController := controller.NewGameController(gameService)
+	return gameController
+}
+
 // room
 func InitializeRoomController() controller.RoomController {
 	db := database.NewDB()
 	roomRepository := dao.NewRoomDao(db)
 	roomUserRepository := dao.NewRoomUserDao(db)
 	userRepository := dao.NewUserDao(db)
+	genreRepository := dao.NewGenreDao(db)
+	gameRepository := dao.NewGameDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	roomService := service.NewRoomService(roomRepository, roomUserRepository, userRepository, transactionRepository)
+	roomService := service.NewRoomService(roomRepository, roomUserRepository, userRepository, genreRepository, gameRepository, transactionRepository)
 	roomController := controller.NewRoomController(roomService)
 	return roomController
 }
@@ -45,8 +56,10 @@ func InitializeRoomUserController() controller.RoomUserController {
 	roomRepository := dao.NewRoomDao(db)
 	roomUserRepository := dao.NewRoomUserDao(db)
 	userRepository := dao.NewUserDao(db)
+	genreRepository := dao.NewGenreDao(db)
+	gameRepository := dao.NewGameDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	roomService := service.NewRoomService(roomRepository, roomUserRepository, userRepository, transactionRepository)
+	roomService := service.NewRoomService(roomRepository, roomUserRepository, userRepository, genreRepository, gameRepository, transactionRepository)
 	roomUserService := service.NewRoomUserService(roomRepository, roomUserRepository, userRepository, transactionRepository)
 	roomUserController := controller.NewRoomUserController(roomService, roomUserService)
 	return roomUserController
