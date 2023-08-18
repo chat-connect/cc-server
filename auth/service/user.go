@@ -96,7 +96,7 @@ func (userService *userService) RegisterUser(userParam *parameter.RegisterUser) 
 	userModel.Email = userParam.Email
 	userModel.Name = userParam.Name
 	userModel.Password = password
-	userModel.Status = "offline"
+	userModel.Status = "not_linked"
 	userModel.Token = "nil"
 	userModel.ImagePath = "/user/" + userKey + ".png"
 
@@ -164,7 +164,6 @@ func (userService *userService) LoginUser(userModel *model.User) (user *model.Us
 	}
 
 	user.Token = token
-	user.Status = "login"
 
 	_, err = userService.userRepository.Update(user, tx)
 	if err != nil {
