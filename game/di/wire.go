@@ -24,6 +24,19 @@ func InitializeAdminUserController() controller.AdminUserController {
     return nil
 }
 
+// link game
+func InitializeLinkGameController() controller.LinkGameController {
+    wire.Build(
+        database.NewDB,
+        dao.NewAdminUserDao,
+        dao.NewLinkGameDao,
+        dao.NewTransactionDao,
+        service.NewLinkGameService,
+        controller.NewLinkGameController,
+    )
+    return nil
+}
+
 // user
 func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
     wire.Build(
