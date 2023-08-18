@@ -6,7 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 
-	"github.com/game-connect/gc-server/admin/service"
+	"github.com/game-connect/gc-server/game/service"
 )
 
 type UserMiddleware interface {

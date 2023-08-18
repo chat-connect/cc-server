@@ -11,3 +11,5 @@
 .docker/authdb/sql
 .docker/testdb/data
 .docker/testdb/sql
+.docker/gamedb/data
+.docker/gamedb/sql

@@ -8,11 +8,11 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 
 	"github.com/game-connect/gc-server/log"
-	"github.com/game-connect/gc-server/admin/di"
+	"github.com/game-connect/gc-server/game/di"
 )
 
 func Init() {
-	// di: wire ./admin/di/wire.go
+	// di: wire ./api/di/wire.go
 	userController := di.InitializeUserController()
 	userMiddleware := di.InitializeUserMiddleware()
 

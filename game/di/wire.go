@@ -7,9 +7,9 @@ import (
 
     "github.com/game-connect/gc-server/config/database"
     "github.com/game-connect/gc-server/infra/dao"
-    "github.com/game-connect/gc-server/admin/service"	
-    "github.com/game-connect/gc-server/admin/presentation/controller"
-	"github.com/game-connect/gc-server/admin/presentation/middleware"
+    "github.com/game-connect/gc-server/game/service"	
+    "github.com/game-connect/gc-server/game/presentation/controller"
+	"github.com/game-connect/gc-server/game/presentation/middleware"
 )
 
 // user

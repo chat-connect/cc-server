@@ -4,10 +4,10 @@ import (
 	"github.com/labstack/echo/v4"
 	
 	"github.com/game-connect/gc-server/domain/model"
-	"github.com/game-connect/gc-server/admin/service"
-	"github.com/game-connect/gc-server/admin/presentation/output"
-	"github.com/game-connect/gc-server/admin/presentation/response"
-	"github.com/game-connect/gc-server/admin/presentation/parameter"
+	"github.com/game-connect/gc-server/game/service"
+	"github.com/game-connect/gc-server/game/presentation/output"
+	"github.com/game-connect/gc-server/game/presentation/response"
+	"github.com/game-connect/gc-server/game/presentation/parameter"
 )
 
 type UserController interface {

@@ -9,7 +9,7 @@ import (
 	
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/repository"
-	"github.com/game-connect/gc-server/admin/presentation/parameter"
+	"github.com/game-connect/gc-server/game/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
 	"github.com/game-connect/gc-server/infra/api"
 )

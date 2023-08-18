@@ -38,4 +38,4 @@ RUN go install github.com/google/wire/cmd/wire@v0.5.0
 
 EXPOSE 8000
 
-CMD [ "go", "run", "admin/main.go" ]
+CMD [ "go", "run", "game/main.go" ]
