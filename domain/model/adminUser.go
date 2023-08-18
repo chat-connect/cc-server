@@ -8,7 +8,7 @@ type AdminUsers []AdminUser
 
 type AdminUser struct {
 	ID           int64     `json:"id"`
-	AdminUserKey string    `json:"user_key"`
+	AdminUserKey string    `json:"admin_user_key"`
 	Name         string    `json:"name"`
 	Email        string    `json:"email"`
 	Password     string    `json:"password"`
