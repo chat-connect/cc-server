@@ -26,13 +26,13 @@ func UploadImage(imageFile string, imageName string, imagePath string) error {
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/image/upload", os.Getenv("GC_IMAGE_URL")), bytes.NewBuffer(request))
 	if err != nil {
-		fmt.Println("Failed to create request:", err)
+		return err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		fmt.Println("Failed to send request:", err)
+		return err
 	}
 	defer resp.Body.Close()
 
