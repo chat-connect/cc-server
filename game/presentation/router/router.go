@@ -39,6 +39,7 @@ func Init() {
 
 	// admin: ゲームを登録
 	linkGame := e.Group("/link_game")
+	linkGame.Use(adminUserMiddleware.AdminUserMiddleware)
 	linkGame.POST("/:adminUserKey/create_link_game", linkGameController.CreateLinkGame()) // linkGame/:adminUserKey/create_link_game
 
 	e.Logger.Fatal(e.Start(":8000"))
