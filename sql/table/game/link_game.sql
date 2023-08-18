@@ -2,6 +2,7 @@
 CREATE TABLE `link_game` (
     `id`               BIGINT       NOT NULL AUTO_INCREMENT COMMENT "連携ゲームID",
     `link_game_key`    VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "連携ゲームKEY",
+    `admin_user_key`   VARCHAR(20)  NOT NULL                COMMENT "企業ユーザーKEY",
     `api_key`          VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "連携APIKEY",    
     `game_title`       VARCHAR(50)  NOT NULL                COMMENT "ゲームタイトル",
     `game_image_path`  VARCHAR(191) NOT NULL                COMMENT "画像パス",

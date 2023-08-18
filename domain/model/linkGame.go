@@ -9,6 +9,7 @@ type LinkGames []LinkGame
 type LinkGame struct {
 	ID            int64     `json:"id"`
 	LinkGameKey   string    `json:"link_game_key"`
+	AdminUserKey  string    `json:"admin_user_key"`
 	ApiKey        string    `json:"api_key"`
 	GameTitle     string    `json:"game_title"`
 	GameImagePath string    `json:"game_image_path"`
@@ -25,6 +26,7 @@ func (linkGame *LinkGame) IsEmpty() bool {
 	return (
 		linkGame.ID == 0 &&
 		linkGame.LinkGameKey == "" &&
+		linkGame.AdminUserKey == "" &&
 		linkGame.ApiKey == "" &&
 		linkGame.GameTitle == "" &&
 		linkGame.GameImagePath == "" &&

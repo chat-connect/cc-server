@@ -22,6 +22,7 @@ func TestLinkGameModel_EmptyLinkGame(t *testing.T) {
 			linkGame: &model.LinkGame{
 				ID:            1,
 				LinkGameKey:   "test_key",
+				AdminUserKey:  "test_key",
 				ApiKey:        "test_api_key",
 				GameTitle:     "test_game_title",
 				GameImagePath: "test_image_path",
