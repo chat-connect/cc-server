@@ -12,7 +12,7 @@ import (
 )
 
 func Init() {
-	// di: wire ./api/di/wire.go
+	// di: wire ./game/di/wire.go
 	adminUserController := di.InitializeAdminUserController()
 	adminUserMiddleware := di.InitializeAdminUserMiddleware()
 
@@ -24,16 +24,18 @@ func Init() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	// auth: 認証API
+	// admin: 認証API
 	admin := e.Group("/admin")
 	admin.POST("/register_admin_user", adminUserController.RegisterAdminUser()) // admin/register_admin_use
 	admin.POST("/login_admin_user", adminUserController.LoginAdminUser()) // auth/user_login
 
-	// auth: 認証済ユーザーのみアクセス可能
+	// admin: 認証済ユーザーのみアクセス可能
 	admin.Use(adminUserMiddleware.AdminUserMiddleware)
 	admin.GET("/check_admin_user/:adminUserKey", adminUserController.CheckAdminUser()) // auth/user_check/:userKey
 	admin.PUT("/logout_admin_user/:adminUserKey", adminUserController.LogoutAdminUser()) // auth/user_logout/:userKey
 	admin.DELETE("/delete_admin_user/:adminUserKey", adminUserController.DeleteAdminUser()) // auth/user_delete/:userKey
+	
+
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
