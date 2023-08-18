@@ -105,7 +105,7 @@ services:
   game:
     container_name: gc-game
     env_file:
-      - .env.local
+      - .env.game.local
     build: 
       target: development
       context: .

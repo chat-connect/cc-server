@@ -9,21 +9,21 @@ import (
 	"github.com/game-connect/gc-server/game/service"
 )
 
-type UserMiddleware interface {
-	UserMiddleware(next echo.HandlerFunc) echo.HandlerFunc
+type AdminUserMiddleware interface {
+	AdminUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc
 }
 
-type userMiddleware struct {
-	userService service.UserService
+type adminUserMiddleware struct {
+	adminUserService service.AdminUserService
 }
 
-func NewUserMiddleware(userService service.UserService) UserMiddleware {
-    return &userMiddleware{
-        userService: userService,
+func NewAdminUserMiddleware(adminUserService service.AdminUserService) AdminUserMiddleware {
+    return &adminUserMiddleware{
+        adminUserService: adminUserService,
     }
 }
 
-func (userMiddleware *userMiddleware) UserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+func (adminUserMiddleware *adminUserMiddleware) AdminUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
     return func(c echo.Context) error {
 		tokenString := c.Request().Header.Get("Authorization")
 		tokenString = strings.ReplaceAll(tokenString, "Bearer ", "")

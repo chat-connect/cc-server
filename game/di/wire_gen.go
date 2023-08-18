@@ -7,31 +7,31 @@
 package di
 
 import (
-	"github.com/game-connect/gc-server/auth/presentation/controller"
-	"github.com/game-connect/gc-server/auth/presentation/middleware"
-	"github.com/game-connect/gc-server/auth/service"
 	"github.com/game-connect/gc-server/config/database"
+	"github.com/game-connect/gc-server/game/presentation/controller"
+	"github.com/game-connect/gc-server/game/presentation/middleware"
+	"github.com/game-connect/gc-server/game/service"
 	"github.com/game-connect/gc-server/infra/dao"
 )
 
 // Injectors from wire.go:
 
 // user
-func InitializeUserController() controller.UserController {
+func InitializeAdminUserController() controller.AdminUserController {
 	db := database.NewDB()
-	userRepository := dao.NewUserDao(db)
+	adminUserRepository := dao.NewAdminUserDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	userService := service.NewUserService(userRepository, transactionRepository)
-	userController := controller.NewUserController(userService)
-	return userController
+	adminUserService := service.NewAdminUserService(adminUserRepository, transactionRepository)
+	adminUserController := controller.NewAdminUserController(adminUserService)
+	return adminUserController
 }
 
 // user
-func InitializeUserMiddleware() middleware.UserMiddleware {
+func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
 	db := database.NewDB()
-	userRepository := dao.NewUserDao(db)
+	adminUserRepository := dao.NewAdminUserDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	userService := service.NewUserService(userRepository, transactionRepository)
-	userMiddleware := middleware.NewUserMiddleware(userService)
-	return userMiddleware
+	adminUserService := service.NewAdminUserService(adminUserRepository, transactionRepository)
+	adminUserMiddleware := middleware.NewAdminUserMiddleware(adminUserService)
+	return adminUserMiddleware
 }

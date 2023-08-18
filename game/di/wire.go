@@ -13,25 +13,25 @@ import (
 )
 
 // user
-func InitializeUserController() controller.UserController {
+func InitializeAdminUserController() controller.AdminUserController {
     wire.Build(
         database.NewDB,
-        dao.NewUserDao,
+        dao.NewAdminUserDao,
         dao.NewTransactionDao,
-        service.NewUserService,
-        controller.NewUserController,
+        service.NewAdminUserService,
+        controller.NewAdminUserController,
     )
     return nil
 }
 
 // user
-func InitializeUserMiddleware() middleware.UserMiddleware {
+func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
     wire.Build(
         database.NewDB,
-        dao.NewUserDao,
+        dao.NewAdminUserDao,
         dao.NewTransactionDao,
-        service.NewUserService,
-		middleware.NewUserMiddleware,
+        service.NewAdminUserService,
+		middleware.NewAdminUserMiddleware,
     )
     return nil
 }
