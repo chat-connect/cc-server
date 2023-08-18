@@ -113,7 +113,7 @@ services:
     volumes:
       - ./:/go/src/app
     ports:
-      - "8004:8000"
+      - "8005:8000"
     tty: true
     depends_on:
       db:
