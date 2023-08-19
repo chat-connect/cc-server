@@ -12,21 +12,25 @@ import (
 
 type GameService interface {
 	FindByApiKey(apiKey string) (*model.Game, error)
+	ListGenre() (genreResult *model.Genres, err error)
 	ListGame() (gameResult *model.Games, err error)
 	CreateGame(adminUserKey string, gameParam *parameter.CreateGame) (*model.Game, error)
 }
 
 type gameService struct {
-	gameRepository    repository.GameRepository
+	gameRepository        repository.GameRepository
+	genreRepository       repository.GenreRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewGameService(
 		gameRepository        repository.GameRepository,
+		genreRepository       repository.GenreRepository,
 		transactionRepository repository.TransactionRepository,
 	) GameService {
 	return &gameService{
-		gameRepository:    gameRepository,
+		gameRepository:        gameRepository,
+		genreRepository:       genreRepository,
 		transactionRepository: transactionRepository,
 	}
 }
@@ -39,6 +43,16 @@ func (gameService *gameService) FindByApiKey(apiKey string) (*model.Game, error)
 	}
 
 	return gameResult, nil
+}
+
+// ListGenre ジャンル一覧を取得する
+func (gameService *gameService) ListGenre() (genreResult *model.Genres, err error) {
+	genreResult, err = gameService.genreRepository.List()
+	if err != nil {
+		return nil, err
+	}
+
+	return genreResult, nil
 }
 
 // ListGame ゲーム一覧を取得する
