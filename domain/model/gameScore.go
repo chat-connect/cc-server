@@ -9,7 +9,7 @@ type GameScores []GameScore
 type GameScore struct {
 	ID                 int64     `json:"id"`
 	GameScoreKey       string    `json:"game_score_key"`
-	LinkGameKey        string    `json:"link_game_key"`
+	GameKey            string    `json:"game_key"`
 	UserKey            string    `json:"user_key"`
 	GameUsername       string    `json:"game_username"`
 	GameUserImagePath  string    `json:"game_user_image_path"`
@@ -30,7 +30,7 @@ func (gameScore *GameScore) IsEmpty() bool {
 	return (
 		gameScore.ID == 0 &&
 		gameScore.GameScoreKey == "" &&
-		gameScore.LinkGameKey == "" &&
+		gameScore.GameKey == "" &&
 		gameScore.UserKey == "" &&
 		gameScore.GameUsername == "" &&
 		gameScore.GameUserImagePath == "" &&

@@ -23,7 +23,7 @@ func TestGameScoreModel_EmptyScore(t *testing.T) {
 			gameScore: &model.GameScore{
 				ID:                 1,
 				GameScoreKey:       "test_score_key",
-				LinkGameKey:        "test_link_game_key",
+				GameKey:            "test_game_key",
 				UserKey:            "test_user_key",
 				GameUsername:       "test_username",
 				GameUserImagePath:  "test_image_path",

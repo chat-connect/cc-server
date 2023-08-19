@@ -2,7 +2,7 @@
 CREATE TABLE `game_score` (
     `id`                    BIGINT       NOT NULL AUTO_INCREMENT COMMENT "連携ゲームID",
     `game_score_key`        VARCHAR(20)  NOT NULL                COMMENT "連携ゲームスコアKEY",
-    `link_game_key`         VARCHAR(20)  NOT NULL                COMMENT "連携ゲームKEY",
+    `game_key`              VARCHAR(20)  NOT NULL                COMMENT "連携ゲームKEY",
     `user_key`              VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
     `game_username`         VARCHAR(191) NOT NULL                COMMENT "ゲーム内ユーザー名",
     `game_user_image_path`  VARCHAR(191) NOT NULL                COMMENT "ユーザーアイコン",

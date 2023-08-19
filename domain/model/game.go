@@ -7,14 +7,15 @@ import (
 type Games []Game
 
 type Game struct {
-	ID          int64     `json:"id"`
-	GameKey     string    `json:"game_key"`
-	GenreKey    string    `json:"genre_key"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Type        string    `json:"type"`
-	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
-    UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	ID            int64     `json:"id"`
+	GameKey       string    `json:"game_key"`
+	GenreKey      string    `json:"genre_key"`
+	AdminUserKey  string    `json:"admin_user_key"`
+	ApiKey        string    `json:"api_key"`
+	GameTitle     string    `json:"game_title"`
+	GameImagePath string    `json:"game_image_path"`
+	CreatedAt     time.Time `json:"created_at" gorm:"autoCreateTime"`
+    UpdatedAt     time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
 func EmptyGame() *Game {
@@ -26,7 +27,8 @@ func (game *Game) IsEmpty() bool {
 		game.ID == 0 &&
 		game.GameKey == "" &&
 		game.GenreKey == "" &&
-		game.Name == "" &&
-		game.Description == "" &&
-		game.Type == "")
+		game.AdminUserKey == "" &&
+		game.ApiKey == "" &&
+		game.GameTitle == "" &&
+		game.GameImagePath == "")
 }

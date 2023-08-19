@@ -20,7 +20,7 @@ func NewGameScoreDao(conn *gorm.DB) repository.GameScoreRepository {
 func (gameScoreDao *gameScoreDao) Insert(param *model.GameScore, tx *gorm.DB) (*model.GameScore, error) {
 	entity := &model.GameScore{
 		GameScoreKey:       param.GameScoreKey,
-		LinkGameKey:        param.LinkGameKey,
+		GameKey:            param.GameKey,
 		UserKey:            param.UserKey,
 		GameUsername:       param.GameUsername,
 		GameUserImagePath:  param.GameUserImagePath,

@@ -11,23 +11,23 @@ import (
 	"github.com/game-connect/gc-server/game/presentation/parameter"
 )
 
-type LinkGameMiddleware interface {
+type GameMiddleware interface {
 	CheckApiKey(next echo.HandlerFunc) echo.HandlerFunc
 }
 
-type linkGameMiddleware struct {
-	linkGameService service.LinkGameService
+type gameMiddleware struct {
+	gameService service.GameService
 }
 
-func NewLinkGameMiddleware(
-		linkGameService service.LinkGameService,
-	) LinkGameMiddleware {
-    return &linkGameMiddleware{
-		linkGameService: linkGameService,
+func NewGameMiddleware(
+		gameService service.GameService,
+	) GameMiddleware {
+    return &gameMiddleware{
+		gameService: gameService,
     }
 }
 
-func (linkGameMiddleware *linkGameMiddleware) CheckApiKey(next echo.HandlerFunc) echo.HandlerFunc {
+func (gameMiddleware *gameMiddleware) CheckApiKey(next echo.HandlerFunc) echo.HandlerFunc {
     return func(c echo.Context) error {
         bodyBytes, err := ioutil.ReadAll(c.Request().Body)
         if err != nil {
@@ -41,7 +41,7 @@ func (linkGameMiddleware *linkGameMiddleware) CheckApiKey(next echo.HandlerFunc)
 
         c.Request().Body = ioutil.NopCloser(bytes.NewReader(bodyBytes))
 
-        _, err = linkGameMiddleware.linkGameService.FindByApiKey(userParam.ApiKey)
+        _, err = gameMiddleware.gameService.FindByApiKey(userParam.ApiKey)
         if err != nil {
             return fmt.Errorf("Invalid api key")
         }

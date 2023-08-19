@@ -56,7 +56,7 @@ func (gameScoreService *gameScoreService) UpdateGameScore(userKey string, gameSc
 
 	gameScoreModel := &model.GameScore{}
 	gameScoreModel.GameScoreKey = gameScoreKey
-	gameScoreModel.LinkGameKey = gameScoreParam.LinkGameKey
+	gameScoreModel.GameKey = gameScoreParam.GameKey
 	gameScoreModel.UserKey = userKey
 	gameScoreModel.GameUsername = gameScoreParam.GameUsername
 	gameScoreModel.GameUserImagePath = gameScoreParam.GameUserImage

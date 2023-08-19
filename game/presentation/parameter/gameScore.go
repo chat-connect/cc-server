@@ -1,7 +1,7 @@
 package parameter
 
 type UpdateGameScore struct {
-	LinkGameKey    string `json:"link_game_key"`
+	GameKey        string `json:"game_key"`
 	ApiKey         string `json:"api_key"`
 	GameUsername   string `json:"game_username"`
 	GameUserImage  string `json:"game_user_image"`

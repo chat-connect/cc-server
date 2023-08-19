@@ -36,14 +36,14 @@ func InitializeUserController() controller.UserController {
 	return userController
 }
 
-// link game
-func InitializeLinkGameController() controller.LinkGameController {
+// game
+func InitializeGameController() controller.GameController {
 	db := database.NewDB()
-	linkGameRepository := dao.NewLinkGameDao(db)
+	gameRepository := dao.NewGameDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	linkGameService := service.NewLinkGameService(linkGameRepository, transactionRepository)
-	linkGameController := controller.NewLinkGameController(linkGameService)
-	return linkGameController
+	gameService := service.NewGameService(gameRepository, transactionRepository)
+	gameController := controller.NewGameController(gameService)
+	return gameController
 }
 
 // game score
@@ -72,12 +72,12 @@ func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
 	return adminUserMiddleware
 }
 
-// link game
-func InitializeLinkGameMiddleware() middleware.LinkGameMiddleware {
+// game
+func InitializeGameMiddleware() middleware.GameMiddleware {
 	db := database.NewDB()
-	linkGameRepository := dao.NewLinkGameDao(db)
+	gameRepository := dao.NewGameDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	linkGameService := service.NewLinkGameService(linkGameRepository, transactionRepository)
-	linkGameMiddleware := middleware.NewLinkGameMiddleware(linkGameService)
-	return linkGameMiddleware
+	gameService := service.NewGameService(gameRepository, transactionRepository)
+	gameMiddleware := middleware.NewGameMiddleware(gameService)
+	return gameMiddleware
 }

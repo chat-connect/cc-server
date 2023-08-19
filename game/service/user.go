@@ -61,7 +61,7 @@ func (userService *userService) LoginUser(userParam *parameter.LoginUser) (*mode
 	}
 
 	// 初回の場合は連携ユーザーとゲームを記録
-	userGame, _ := userService.gameUserRepository.FindByUserKeyAndLinkGameKey(userResult.UserKey, userParam.LinkGameKey)
+	userGame, _ := userService.gameUserRepository.FindByUserKeyAndLinkGameKey(userResult.UserKey, userParam.GameKey)
 	if userGame == nil {
 		gameUserKey, err := key.GenerateKey()
 		if err != nil {
@@ -71,7 +71,7 @@ func (userService *userService) LoginUser(userParam *parameter.LoginUser) (*mode
 		gameUserModel := &model.GameUser{}
 		gameUserModel.GameUserKey= gameUserKey
 		gameUserModel.UserKey = userResult.UserKey
-		gameUserModel.LinkGameKey = userParam.LinkGameKey	
+		gameUserModel.GameKey = userParam.GameKey	
 		_, err = userService.gameUserRepository.Insert(gameUserModel, tx)
 		if err != nil {
 			return nil, err

@@ -1,7 +1,7 @@
 package parameter
 
-type CreateLinkGame struct {
+type CreateGame struct {
 	GameTitle string  `json:"game_title"`
 	GameImage *string `json:"game_image"`
-	GameGenre string  `json:"game_genre"`
+	GenreKey  string  `json:"genre_key"`
 }

@@ -6,26 +6,27 @@ import (
 	"github.com/game-connect/gc-server/domain/model"
 )
 
-func TestGameModel_EmptyRoom(t *testing.T) {
+func TestLinkGameModel_EmptyLinkGame(t *testing.T) {
 	tests := []struct {
 		name     string
-		game     *model.Game
+		game *model.Game
 		expected bool
 	}{
 		{
 			name:     "Empty Game",
-			game:     model.EmptyGame(),
+			game: model.EmptyGame(),
 			expected: true,
 		},
 		{
 			name: "Not Empty Game",
 			game: &model.Game{
-				ID:          1,
-				GameKey:     "test_key",
-				GenreKey:    "test_key",
-				Name:        "test_name",
-				Description: "test_explanation",
-				Type:        "text",
+				ID:            1,
+				GameKey:       "test_key",
+				GenreKey:      "test_genre",
+				AdminUserKey:  "test_key",
+				ApiKey:        "test_api_key",
+				GameTitle:     "test_game_title",
+				GameImagePath: "test_image_path",
 			},
 			expected: false,
 		},

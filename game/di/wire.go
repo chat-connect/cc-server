@@ -36,14 +36,14 @@ func InitializeUserController() controller.UserController {
     return nil
 }
 
-// link game
-func InitializeLinkGameController() controller.LinkGameController {
+// game
+func InitializeGameController() controller.GameController {
     wire.Build(
         database.NewDB,
-        dao.NewLinkGameDao,
+        dao.NewGameDao,
         dao.NewTransactionDao,
-        service.NewLinkGameService,
-        controller.NewLinkGameController,
+        service.NewGameService,
+        controller.NewGameController,
     )
     return nil
 }
@@ -80,14 +80,14 @@ func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
     return nil
 }
 
-// link game
-func InitializeLinkGameMiddleware() middleware.LinkGameMiddleware {
+// game
+func InitializeGameMiddleware() middleware.GameMiddleware {
     wire.Build(
         database.NewDB,
-        dao.NewLinkGameDao,
+        dao.NewGameDao,
         dao.NewTransactionDao,
-        service.NewLinkGameService,
-        middleware.NewLinkGameMiddleware,
+        service.NewGameService,
+        middleware.NewGameMiddleware,
     )
     return nil
 }

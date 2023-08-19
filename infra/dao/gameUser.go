@@ -17,9 +17,9 @@ func NewGameUserDao(conn *gorm.DB) repository.GameUserRepository {
 	}
 }
 
-func (gameUserDao *gameUserDao) FindByUserKeyAndLinkGameKey(userKey string, linkGameKey string) (entity *model.GameUser, err error) {
+func (gameUserDao *gameUserDao) FindByUserKeyAndLinkGameKey(userKey string, gameKey string) (entity *model.GameUser, err error) {
 	entity = &model.GameUser{}
-	res := gameUserDao.Conn.Where("user_key = ?", userKey).Where("link_game_key = ?", linkGameKey).Find(entity)
+	res := gameUserDao.Conn.Where("user_key = ?", userKey).Where("game_key = ?", gameKey).Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func (gameUserDao *gameUserDao) FindByUserKeyAndLinkGameKey(userKey string, link
 func (gameUserDao *gameUserDao) Insert(param *model.GameUser, tx *gorm.DB) (entity *model.GameUser, err error) {
 	entity = &model.GameUser{
 		GameUserKey: param.GameUserKey,
-		LinkGameKey: param.LinkGameKey,
+		GameKey:     param.GameKey,
 		UserKey:     param.UserKey,
 	}
 

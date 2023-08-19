@@ -15,12 +15,12 @@ func Init() {
 	// di: wire ./game/di/wire.go
 	adminUserController := di.InitializeAdminUserController()
 	userController := di.InitializeUserController()
-	linkGameController := di.InitializeLinkGameController()
+	gameController := di.InitializeGameController()
 	gameScoreController := di.InitializeGameScoreController()
 
 	userMiddleware := di.InitializeUserMiddleware()
 	adminUserMiddleware := di.InitializeAdminUserMiddleware()
-	linkGameMiddleware := di.InitializeLinkGameMiddleware()
+	gameMiddleware := di.InitializeGameMiddleware()
 
 	e := echo.New()
 
@@ -44,11 +44,11 @@ func Init() {
 	// admin: ゲームを登録
 	linkGame := e.Group("/link_game")
 	linkGame.Use(adminUserMiddleware.CheckToken)
-	linkGame.POST("/:adminUserKey/create_link_game", linkGameController.CreateLinkGame()) // linkGame/:adminUserKey/create_link_game
+	linkGame.POST("/:adminUserKey/create_game", gameController.CreateGame()) // linkGame/:adminUserKey/create_link_game
 
 	// user: 認証API 
 	user := e.Group("/user")
-	user.Use(linkGameMiddleware.CheckApiKey)
+	user.Use(gameMiddleware.CheckApiKey)
 	user.POST("/login_user", userController.LoginUser()) // user/login_user
 
 	// game: ゲームAPI

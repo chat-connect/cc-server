@@ -23,7 +23,7 @@ func TestGameUserModel_EmptyUser(t *testing.T) {
 				ID:          1,
 				GameUserKey: "test_game_user_key",
 				UserKey:     "test_user_key",
-				LinkGameKey: "test_link_game_key",
+				GameKey:     "test_game_key",
 			},
 			expected: false,
 		},
