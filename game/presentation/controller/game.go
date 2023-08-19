@@ -12,6 +12,7 @@ import (
 type GameController interface {
 	ListGenre() echo.HandlerFunc
 	ListGame() echo.HandlerFunc
+	ListGenreAndGame() echo.HandlerFunc
 	CreateGame() echo.HandlerFunc
 }
 
@@ -70,6 +71,39 @@ func (gameController *gameController) ListGame() echo.HandlerFunc {
 
 		out := output.ToListGame(gameResult)
 		response := response.SuccessWith("list_game", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// List
+// @Summary     ジャンル＆ゲーム一覧取得
+// @tags        Genre
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListGenreAndGame}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /genre/list_genre [get]
+func (gameController *gameController) ListGenreAndGame() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		genreResult, err := gameController.gameService.ListGenre()
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_genre_and_game", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		gameResult, err := gameController.gameService.ListGame()
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_game_and_game", 500, out)
+			
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListGenreAndGame(genreResult, gameResult)
+		response := response.SuccessWith("list_genre_and_game", 200, out)
 
 		return c.JSON(200, response)
 	}

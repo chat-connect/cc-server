@@ -34,6 +34,7 @@ func Init() {
 	genre := e.Group("/genre")
 	genre.GET("/list_genre", gameController.ListGenre()) // genre/list_genre
 	genre.GET("/list_game", gameController.ListGame()) // genre/list_game
+	genre.GET("/list_genre_and_game", gameController.ListGenreAndGame()) // genre/list_game_and_game
 
 	// admin: 認証API
 	admin := e.Group("/admin")

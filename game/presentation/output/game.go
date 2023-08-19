@@ -95,3 +95,48 @@ func ToListGame(c *model.Games) *ListGame {
 		Message: "game list created",
 	}
 }
+
+type ListGenreAndGame struct {
+	ListGenre []ListGenreContent `json:"list_genre"`
+	ListGame  []ListGameContent  `json:"list_game"`
+	Message   string             `json:"message"`
+}
+
+
+func ToListGenreAndGame(ge *model.Genres, ga *model.Games) *ListGenreAndGame {
+	if ge == nil {
+		return nil
+	}
+
+	if ga == nil {
+		return nil
+	}
+
+	var list_genre []ListGenreContent
+	for _, genre := range *ge {
+		genreContent := ListGenreContent{
+			GenreKey:    genre.GenreKey,
+			Type:        genre.Type,
+			Name:        genre.Name,
+			Description: genre.Description,
+		}
+
+		list_genre = append(list_genre, genreContent)
+	}
+
+	var list_game []ListGameContent
+	for _, game := range *ga {
+		gameContent := ListGameContent{
+			GameKey:     game.GameKey,
+			GenreKey:    game.GenreKey,
+			GameTitle:   game.GameTitle,
+		}
+		list_game = append(list_game, gameContent)
+	}
+
+	return &ListGenreAndGame{
+		ListGenre: list_genre,
+		ListGame:  list_game,
+		Message:   "list genre and game created",
+	}
+}
