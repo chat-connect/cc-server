@@ -30,8 +30,9 @@ func InitializeAdminUserController() controller.AdminUserController {
 func InitializeUserController() controller.UserController {
 	db := database.NewDB()
 	gameUserRepository := dao.NewGameUserDao(db)
+	gameScoreRepository := dao.NewGameScoreDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	userService := service.NewUserService(gameUserRepository, transactionRepository)
+	userService := service.NewUserService(gameUserRepository, gameScoreRepository, transactionRepository)
 	userController := controller.NewUserController(userService)
 	return userController
 }
@@ -44,6 +45,12 @@ func InitializeLinkGameController() controller.LinkGameController {
 	linkGameService := service.NewLinkGameService(linkGameRepository, transactionRepository)
 	linkGameController := controller.NewLinkGameController(linkGameService)
 	return linkGameController
+}
+
+// user
+func InitializeUserMiddleware() middleware.UserMiddleware {
+	userMiddleware := middleware.NewUserMiddleware()
+	return userMiddleware
 }
 
 // admin user

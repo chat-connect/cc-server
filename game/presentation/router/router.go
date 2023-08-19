@@ -17,6 +17,7 @@ func Init() {
 	userController := di.InitializeUserController()
 	linkGameController := di.InitializeLinkGameController()
 
+	// userMiddleware := di.InitializeUserMiddleware()
 	adminUserMiddleware := di.InitializeAdminUserMiddleware()
 	linkGameMiddleware := di.InitializeLinkGameMiddleware()
 
@@ -49,5 +50,9 @@ func Init() {
 	user.Use(linkGameMiddleware.CheckApiKey)
 	user.POST("/login_user", userController.LoginUser()) // user/login_user
 
+	// user: ゲームAPI
+	// user.Use(userMiddleware.CheckToken)
+
+	
 	e.Logger.Fatal(e.Start(":8000"))
 }

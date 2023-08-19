@@ -17,15 +17,18 @@ type UserService interface {
 
 type userService struct {
 	gameUserRepository    repository.GameUserRepository
+	gameScoreRepository   repository.GameScoreRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewUserService(
 		gameUserRepository    repository.GameUserRepository,
+		gameScoreRepository   repository.GameScoreRepository,
 		transactionRepository repository.TransactionRepository,
 	) UserService {
 	return &userService{
 		gameUserRepository:    gameUserRepository,
+		gameScoreRepository:   gameScoreRepository,
 		transactionRepository: transactionRepository,
 	}
 }
@@ -60,23 +63,38 @@ func (userService *userService) LoginUser(userParam *parameter.LoginUser) (*mode
 		return nil, err
 	}
 
-	gameUserKey, err := key.GenerateKey()
-	if err != nil {
-		return nil, err
-	}
-
 	// 初回の場合は連携ユーザーとゲームを記録
 	userGame, _ := userService.gameUserRepository.FindByUserKeyAndLinkGameKey(userResult.UserKey, userParam.LinkGameKey)
-
 	if userGame == nil {
+		gameUserKey, err := key.GenerateKey()
+		if err != nil {
+			return nil, err
+		}
+	
 		gameUserModel := &model.GameUser{}
 		gameUserModel.GameUserKey= gameUserKey
 		gameUserModel.UserKey = userResult.UserKey
 		gameUserModel.LinkGameKey = userParam.LinkGameKey	
-		_, err := userService.gameUserRepository.Insert(gameUserModel, tx)
+		_, err = userService.gameUserRepository.Insert(gameUserModel, tx)
 		if err != nil {
 			return nil, err
 		}
+
+		gameScoreKey, err := key.GenerateKey()
+		if err != nil {
+			return nil, err
+		}
+	
+		gameScoreModel := &model.GameScore{}
+		gameScoreModel.GameScoreKey = gameScoreKey
+		gameScoreModel.LinkGameKey = userParam.LinkGameKey
+		gameScoreModel.UserKey = userResult.UserKey
+
+		_, err = userService.gameScoreRepository.Insert(gameScoreModel, tx)
+		if err != nil {
+			return nil, err
+		}
+
 	}
 
 	return userResult, nil
