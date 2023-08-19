@@ -16,26 +16,6 @@ import (
 
 // Injectors from wire.go:
 
-// genre
-func InitializeGenreController() controller.GenreController {
-	db := database.NewDB()
-	genreRepository := dao.NewGenreDao(db)
-	genreService := service.NewGenreService(genreRepository)
-	gameRepository := dao.NewGameDao(db)
-	gameService := service.NewGameService(gameRepository)
-	genreController := controller.NewGenreController(genreService, gameService)
-	return genreController
-}
-
-// game
-func InitializeGameController() controller.GameController {
-	db := database.NewDB()
-	gameRepository := dao.NewGameDao(db)
-	gameService := service.NewGameService(gameRepository)
-	gameController := controller.NewGameController(gameService)
-	return gameController
-}
-
 // room
 func InitializeRoomController() controller.RoomController {
 	db := database.NewDB()

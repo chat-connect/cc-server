@@ -13,7 +13,6 @@ import (
 
 func Init() {
 	// di: wire ./api/di/wire.go
-	genreController := di.InitializeGenreController()
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
 	channelController := di.InitializeChannelController()
@@ -31,12 +30,6 @@ func Init() {
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{ Output: log.GenerateApiLog() }))
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-
-	// genre: ジャンル関連
-	genre := e.Group("/genre")
-	genre.GET("/list_genre", genreController.ListGenre()) // genre/list_genre
-	genre.GET("/list_game", genreController.ListGame()) // genre/list_game
-	genre.GET("/list_genre_and_game", genreController.ListGenreAndGame()) // genre/list_game_and_game
 
 	// room: ルーム関連
 	room := e.Group("/room")
