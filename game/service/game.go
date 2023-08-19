@@ -12,6 +12,7 @@ import (
 
 type GameService interface {
 	FindByApiKey(apiKey string) (*model.Game, error)
+	ListGame() (gameResult *model.Games, err error)
 	CreateGame(adminUserKey string, gameParam *parameter.CreateGame) (*model.Game, error)
 }
 
@@ -38,6 +39,16 @@ func (gameService *gameService) FindByApiKey(apiKey string) (*model.Game, error)
 	}
 
 	return gameResult, nil
+}
+
+// ListGame ゲーム一覧を取得する
+func (gameService *gameService) ListGame() (genreResult *model.Games, err error) {
+	genreResult, err = gameService.gameRepository.List()
+	if err != nil {
+		return nil, err
+	}
+
+	return genreResult, nil
 }
 
 // CreateGame 連携ゲームを作成する

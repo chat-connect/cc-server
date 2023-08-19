@@ -30,6 +30,10 @@ func Init() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	// genre: ジャンル関連
+	genre := e.Group("/genre")
+	genre.GET("/list_game", gameController.ListGame()) // genre/list_game
+
 	// admin: 認証API
 	admin := e.Group("/admin")
 	admin.POST("/register_admin_user", adminUserController.RegisterAdminUser()) // admin/register_admin_use
