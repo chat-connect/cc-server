@@ -29,9 +29,9 @@ func InitializeAdminUserController() controller.AdminUserController {
 // user
 func InitializeUserController() controller.UserController {
 	db := database.NewDB()
-	userRepository := dao.NewUserDao(db)
+	gameUserRepository := dao.NewGameUserDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	userService := service.NewUserService(userRepository, transactionRepository)
+	userService := service.NewUserService(gameUserRepository, transactionRepository)
 	userController := controller.NewUserController(userService)
 	return userController
 }

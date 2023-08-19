@@ -28,7 +28,7 @@ func InitializeAdminUserController() controller.AdminUserController {
 func InitializeUserController() controller.UserController {
     wire.Build(
         database.NewDB,
-        dao.NewUserDao,
+        dao.NewGameUserDao,
         dao.NewTransactionDao,
         service.NewUserService,
         controller.NewUserController,
