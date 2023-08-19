@@ -12,7 +12,7 @@ import (
 	"github.com/game-connect/gc-server/game/presentation/middleware"
 )
 
-// user
+// admin user
 func InitializeAdminUserController() controller.AdminUserController {
     wire.Build(
         database.NewDB,
@@ -20,6 +20,18 @@ func InitializeAdminUserController() controller.AdminUserController {
         dao.NewTransactionDao,
         service.NewAdminUserService,
         controller.NewAdminUserController,
+    )
+    return nil
+}
+
+// user
+func InitializeUserController() controller.UserController {
+    wire.Build(
+        database.NewDB,
+        dao.NewUserDao,
+        dao.NewTransactionDao,
+        service.NewUserService,
+        controller.NewUserController,
     )
     return nil
 }

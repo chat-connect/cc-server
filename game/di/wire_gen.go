@@ -16,7 +16,7 @@ import (
 
 // Injectors from wire.go:
 
-// user
+// admin user
 func InitializeAdminUserController() controller.AdminUserController {
 	db := database.NewDB()
 	adminUserRepository := dao.NewAdminUserDao(db)
@@ -24,6 +24,16 @@ func InitializeAdminUserController() controller.AdminUserController {
 	adminUserService := service.NewAdminUserService(adminUserRepository, transactionRepository)
 	adminUserController := controller.NewAdminUserController(adminUserService)
 	return adminUserController
+}
+
+// user
+func InitializeUserController() controller.UserController {
+	db := database.NewDB()
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	userService := service.NewUserService(userRepository, transactionRepository)
+	userController := controller.NewUserController(userService)
+	return userController
 }
 
 // link game

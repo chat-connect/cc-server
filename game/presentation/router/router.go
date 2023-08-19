@@ -14,6 +14,7 @@ import (
 func Init() {
 	// di: wire ./game/di/wire.go
 	adminUserController := di.InitializeAdminUserController()
+	userController := di.InitializeUserController()
 	linkGameController := di.InitializeLinkGameController()
 
 	adminUserMiddleware := di.InitializeAdminUserMiddleware()
@@ -29,7 +30,7 @@ func Init() {
 	// admin: 認証API
 	admin := e.Group("/admin")
 	admin.POST("/register_admin_user", adminUserController.RegisterAdminUser()) // admin/register_admin_use
-	admin.POST("/login_admin_user", adminUserController.LoginAdminUser()) // admin/register_admin_login
+	admin.POST("/login_admin_user", adminUserController.LoginAdminUser()) // admin/register_admin_user
 
 	// admin: 認証済ユーザーのみアクセス可能
 	admin.Use(adminUserMiddleware.AdminUserMiddleware)
@@ -41,6 +42,10 @@ func Init() {
 	linkGame := e.Group("/link_game")
 	linkGame.Use(adminUserMiddleware.AdminUserMiddleware)
 	linkGame.POST("/:adminUserKey/create_link_game", linkGameController.CreateLinkGame()) // linkGame/:adminUserKey/create_link_game
+
+	// user: 認証API 
+	user := e.Group("/user")
+	user.POST("/login_user", userController.LoginUser()) // user/login_user
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
