@@ -29,7 +29,6 @@ func InitializeUserController() controller.UserController {
     wire.Build(
         database.NewDB,
         dao.NewGameUserDao,
-        dao.NewGameScoreDao,
         dao.NewTransactionDao,
         service.NewUserService,
         controller.NewUserController,
@@ -45,6 +44,18 @@ func InitializeLinkGameController() controller.LinkGameController {
         dao.NewTransactionDao,
         service.NewLinkGameService,
         controller.NewLinkGameController,
+    )
+    return nil
+}
+
+// game score
+func InitializeGameScoreController() controller.GameScoreController {
+    wire.Build(
+        database.NewDB,
+        dao.NewGameScoreDao,
+        dao.NewTransactionDao,
+        service.NewGameScoreService,
+        controller.NewGameScoreController,
     )
     return nil
 }
