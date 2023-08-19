@@ -102,7 +102,6 @@ type ListGenreAndGame struct {
 	Message   string             `json:"message"`
 }
 
-
 func ToListGenreAndGame(ge *model.Genres, ga *model.Games) *ListGenreAndGame {
 	if ge == nil {
 		return nil
