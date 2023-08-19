@@ -10,20 +10,22 @@ import (
 )
 
 type AdminUserMiddleware interface {
-	AdminUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc
+	CheckToken(next echo.HandlerFunc) echo.HandlerFunc
 }
 
 type adminUserMiddleware struct {
 	adminUserService service.AdminUserService
 }
 
-func NewAdminUserMiddleware(adminUserService service.AdminUserService) AdminUserMiddleware {
+func NewAdminUserMiddleware(
+		adminUserService service.AdminUserService,
+	) AdminUserMiddleware {
     return &adminUserMiddleware{
         adminUserService: adminUserService,
     }
 }
 
-func (adminUserMiddleware *adminUserMiddleware) AdminUserMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+func (adminUserMiddleware *adminUserMiddleware) CheckToken(next echo.HandlerFunc) echo.HandlerFunc {
     return func(c echo.Context) error {
 		tokenString := c.Request().Header.Get("Authorization")
 		tokenString = strings.ReplaceAll(tokenString, "Bearer ", "")

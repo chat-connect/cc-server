@@ -40,7 +40,6 @@ func InitializeUserController() controller.UserController {
 func InitializeLinkGameController() controller.LinkGameController {
     wire.Build(
         database.NewDB,
-        dao.NewAdminUserDao,
         dao.NewLinkGameDao,
         dao.NewTransactionDao,
         service.NewLinkGameService,
@@ -49,7 +48,7 @@ func InitializeLinkGameController() controller.LinkGameController {
     return nil
 }
 
-// user
+// admin user
 func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
     wire.Build(
         database.NewDB,
@@ -57,6 +56,18 @@ func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
         dao.NewTransactionDao,
         service.NewAdminUserService,
 		middleware.NewAdminUserMiddleware,
+    )
+    return nil
+}
+
+// link game
+func InitializeLinkGameMiddleware() middleware.LinkGameMiddleware {
+    wire.Build(
+        database.NewDB,
+        dao.NewLinkGameDao,
+        dao.NewTransactionDao,
+        service.NewLinkGameService,
+        middleware.NewLinkGameMiddleware,
     )
     return nil
 }

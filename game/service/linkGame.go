@@ -11,25 +11,33 @@ import (
 )
 
 type LinkGameService interface {
+	FindByApiKey(apiKey string) (linkGameResult *model.LinkGame, err error)
 	CreateLinkGame(adminUserKey string, linkGameParam *parameter.CreateLinkGame) (linkGameResult *model.LinkGame, err error)
 }
 
 type linkGameService struct {
-	adminUserRepository   repository.AdminUserRepository
 	linkGameRepository    repository.LinkGameRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewLinkGameService(
-		adminUserRepository   repository.AdminUserRepository,
 		linkGameRepository    repository.LinkGameRepository,
 		transactionRepository repository.TransactionRepository,
 	) LinkGameService {
 	return &linkGameService{
-		adminUserRepository:   adminUserRepository,
 		linkGameRepository:    linkGameRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// FindByApiKey api_keyからゲームを検索する
+func (linkGameService *linkGameService) FindByApiKey(apiKey string) (linkGameResult *model.LinkGame, err error) {
+	linkGameResult, err = linkGameService.linkGameRepository.FindByApiKey(apiKey)
+	if err != nil {
+		return linkGameResult, err
+	}
+
+	return linkGameResult, nil
 }
 
 // CreateLinkGame 連携ゲームを作成する

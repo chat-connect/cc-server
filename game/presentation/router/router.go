@@ -18,6 +18,7 @@ func Init() {
 	linkGameController := di.InitializeLinkGameController()
 
 	adminUserMiddleware := di.InitializeAdminUserMiddleware()
+	linkGameMiddleware := di.InitializeLinkGameMiddleware()
 
 	e := echo.New()
 
@@ -33,18 +34,19 @@ func Init() {
 	admin.POST("/login_admin_user", adminUserController.LoginAdminUser()) // admin/register_admin_user
 
 	// admin: 認証済ユーザーのみアクセス可能
-	admin.Use(adminUserMiddleware.AdminUserMiddleware)
+	admin.Use(adminUserMiddleware.CheckToken)
 	admin.GET("/check_admin_user/:adminUserKey", adminUserController.CheckAdminUser()) // admin/register_admin_check/:adminUserKey
 	admin.PUT("/logout_admin_user/:adminUserKey", adminUserController.LogoutAdminUser()) // admin/register_admin_logout/:adminUserKey
 	admin.DELETE("/delete_admin_user/:adminUserKey", adminUserController.DeleteAdminUser()) // admin/register_admin_delete/:adminUserKey
 
 	// admin: ゲームを登録
 	linkGame := e.Group("/link_game")
-	linkGame.Use(adminUserMiddleware.AdminUserMiddleware)
+	linkGame.Use(adminUserMiddleware.CheckToken)
 	linkGame.POST("/:adminUserKey/create_link_game", linkGameController.CreateLinkGame()) // linkGame/:adminUserKey/create_link_game
 
 	// user: 認証API 
 	user := e.Group("/user")
+	user.Use(linkGameMiddleware.CheckApiKey)
 	user.POST("/login_user", userController.LoginUser()) // user/login_user
 
 	e.Logger.Fatal(e.Start(":8000"))
