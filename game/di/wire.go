@@ -53,6 +53,7 @@ func InitializeGameController() controller.GameController {
 func InitializeGameScoreController() controller.GameScoreController {
     wire.Build(
         database.NewDB,
+        dao.NewGameDao,
         dao.NewGameScoreDao,
         dao.NewTransactionDao,
         service.NewGameScoreService,

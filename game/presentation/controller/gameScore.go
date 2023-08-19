@@ -10,6 +10,7 @@ import (
 )
 
 type GameScoreController interface {
+	ListGameScore() echo.HandlerFunc
 	UpdateGameScore() echo.HandlerFunc
 }
 
@@ -25,12 +26,41 @@ func NewGameScoreController(
     }
 }
 
+// List
+// @Summary     スコア更新
+// @tags        GameScore
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListGameScore}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      user/list_game_score [post]
+func (gameScoreController *gameScoreController) ListGameScore() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		gameKey := c.Param("gameKey")
+		userKey := c.Param("userKey")
+
+		gameAndGameScoreResult, err := gameScoreController.gameScoreService.ListGameScore(gameKey, userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_game_score", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListGameScore(gameAndGameScoreResult)
+		response := response.SuccessWith("list_game_score", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
 // Update
 // @Summary     スコア更新
 // @tags        GameScore
 // @Accept      json
 // @Produce     json
-// @Param       body body parameter.CreateLinkGame true "スコア更新"
+// @Param       body body parameter.UpdateGameScore true "スコア更新"
 // @Success     200  {object} response.Success{items=output.UpdateGameScore}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      user/update_game_score [post]

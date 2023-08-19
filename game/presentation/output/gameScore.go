@@ -2,6 +2,7 @@ package output
 
 import (
 	"github.com/game-connect/gc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/dto"
 )
 
 type UpdateGameScore struct {
@@ -31,5 +32,47 @@ func ToUpdateGameScore(gs *model.GameScore) *UpdateGameScore {
 		GameRank:           gs.GameRank,
 		GamePlayTime:       gs.GamePlayTime,
 		GameScoreImagePath: gs.GameScoreImagePath,
+	}
+}
+
+type ListGameScore struct {
+	GameKey           string                 `json:"game_key"`
+	GameTitle         string                 `json:"game_title"`
+	GameImagePath     string                 `json:"game_image_path"`
+	List              []ListGameScoreContent `json:"list"`
+	Message           string                 `json:"message"`
+}
+
+type ListGameScoreContent struct {
+	GameScore          string `json:"game_score"`
+	GameComboScore     string `json:"game_combo_score"`
+	GameRank           string `json:"game_rank"`
+	GamePlayTime       int    `json:"game_play_time"`
+	GameScoreImagePath string `json:"game_score_image_path"`
+}
+
+func ToListGameScore(gs *dto.GameAndGameScore) *ListGameScore {
+	if gs == nil {
+		return nil
+	}
+
+	var list []ListGameScoreContent
+	for _, gameScore := range gs.GameScores {
+		gameScoreContent := ListGameScoreContent{
+			GameScore:          gameScore.GameScore,
+			GameComboScore:     gameScore.GameComboScore,
+			GameRank:           gameScore.GameRank,
+			GamePlayTime:       gameScore.GamePlayTime,
+			GameScoreImagePath: gameScore.GameScoreImagePath,
+		}
+		list = append(list, gameScoreContent)
+	}
+
+	return &ListGameScore{
+		GameKey:       gs.Game.GameKey,
+		GameTitle:     gs.Game.GameTitle,
+		GameImagePath: gs.Game.GameTitle,
+		List:          list,
+		Message:       "game list score created",
 	}
 }

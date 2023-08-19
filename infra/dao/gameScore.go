@@ -17,6 +17,19 @@ func NewGameScoreDao(conn *gorm.DB) repository.GameScoreRepository {
 	}
 }
 
+func (gameScoreDao *gameScoreDao) ListByGameKeyAndUserKey(userKey string, gameKey string) (*model.GameScores, error) {
+	entity := &model.GameScores{}
+	res := gameScoreDao.Conn.
+		Where("game_key = ?", userKey).
+		Where("user_key = ?", gameKey).
+		Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (gameScoreDao *gameScoreDao) Insert(param *model.GameScore, tx *gorm.DB) (*model.GameScore, error) {
 	entity := &model.GameScore{
 		GameScoreKey:       param.GameScoreKey,

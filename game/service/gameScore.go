@@ -4,31 +4,55 @@ import (
 	"log"
 
 	"github.com/game-connect/gc-server/domain/model"
+	"github.com/game-connect/gc-server/domain/dto"
 	"github.com/game-connect/gc-server/domain/repository"
 	"github.com/game-connect/gc-server/game/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
 )
 
 type GameScoreService interface {
+	ListGameScore(gameKey string, userKey string) (*dto.GameAndGameScore, error) 
 	UpdateGameScore(userKey string, gameScoreParam *parameter.UpdateGameScore) (*model.GameScore, error) 
 }
 
 type gameScoreService struct {
+	gameRepository        repository.GameRepository
 	gameScoreRepository   repository.GameScoreRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewGameScoreService(
+		gameRepository        repository.GameRepository,
 		gameScoreRepository   repository.GameScoreRepository,
 		transactionRepository repository.TransactionRepository,
 	) GameScoreService {
 	return &gameScoreService{
+		gameRepository:        gameRepository,
 		gameScoreRepository:   gameScoreRepository,
 		transactionRepository: transactionRepository,
 	}
 }
 
-// CreateLinkGame 連携ゲームを作成する
+// ListGameScore ゲームスコアを取得する
+func (gameScoreService *gameScoreService) ListGameScore(gameKey string, userKey string) (*dto.GameAndGameScore, error) {
+	game, err := gameScoreService.gameRepository.FindByGameKey(gameKey)
+	if err != nil {
+		return nil, err
+	}
+
+	gameScores, err := gameScoreService.gameScoreRepository.ListByGameKeyAndUserKey(gameKey, userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	gameAndGameScore := &dto.GameAndGameScore{}
+	gameAndGameScore.Game = *game
+	gameAndGameScore.GameScores = *gameScores
+	
+	return gameAndGameScore, nil
+}
+
+// UpdateGameScore ゲームスコアを追加する
 func (gameScoreService *gameScoreService) UpdateGameScore(userKey string, gameScoreParam *parameter.UpdateGameScore) (*model.GameScore, error) {
 	// transaction
 	tx, err := gameScoreService.transactionRepository.Begin()

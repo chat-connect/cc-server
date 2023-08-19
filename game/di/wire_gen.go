@@ -50,9 +50,10 @@ func InitializeGameController() controller.GameController {
 // game score
 func InitializeGameScoreController() controller.GameScoreController {
 	db := database.NewDB()
+	gameRepository := dao.NewGameDao(db)
 	gameScoreRepository := dao.NewGameScoreDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	gameScoreService := service.NewGameScoreService(gameScoreRepository, transactionRepository)
+	gameScoreService := service.NewGameScoreService(gameRepository, gameScoreRepository, transactionRepository)
 	gameScoreController := controller.NewGameScoreController(gameScoreService)
 	return gameScoreController
 }

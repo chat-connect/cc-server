@@ -61,6 +61,7 @@ func Init() {
 	game := e.Group("/game")
 	game.Use(userMiddleware.CheckToken)
 	game.POST("/update_game_score", gameScoreController.UpdateGameScore()) // user/update_game_score
+	game.GET("/:userKey/list_game_score/:gameKey", gameScoreController.ListGameScore()) // user/list_game_score
 	
 	e.Logger.Fatal(e.Start(":8000"))
 }
