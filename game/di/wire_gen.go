@@ -58,6 +58,17 @@ func InitializeGameScoreController() controller.GameScoreController {
 	return gameScoreController
 }
 
+// game user
+func InitializeGameUserController() controller.GameUserController {
+	db := database.NewDB()
+	gameRepository := dao.NewGameDao(db)
+	gameUserRepository := dao.NewGameUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	gameUserService := service.NewGameUserService(gameRepository, gameUserRepository, transactionRepository)
+	gameUserController := controller.NewGameUserController(gameUserService)
+	return gameUserController
+}
+
 // user
 func InitializeUserMiddleware() middleware.UserMiddleware {
 	userMiddleware := middleware.NewUserMiddleware()

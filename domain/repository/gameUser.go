@@ -7,6 +7,7 @@ import (
 )
 
 type GameUserRepository interface {
-	FindByUserKeyAndLinkGameKey(userKey string, linkGameKey string) (entity *model.GameUser, err error)
-	Insert(gameUserModel *model.GameUser, tx *gorm.DB) (entity *model.GameUser, err error)
+	FindByUserKeyAndLinkGameKey(userKey string, linkGameKey string) (*model.GameUser, error)
+	ListByUserKey(userKey string)  (*model.GameUsers, error)
+	Insert(gameUserModel *model.GameUser, tx *gorm.DB) (*model.GameUser, error)
 }

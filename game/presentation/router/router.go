@@ -17,6 +17,7 @@ func Init() {
 	userController := di.InitializeUserController()
 	gameController := di.InitializeGameController()
 	gameScoreController := di.InitializeGameScoreController()
+	gameUserController := di.InitializeGameUserController()
 
 	userMiddleware := di.InitializeUserMiddleware()
 	adminUserMiddleware := di.InitializeAdminUserMiddleware()
@@ -60,8 +61,10 @@ func Init() {
 	// game: ゲームAPI
 	game := e.Group("/game")
 	game.Use(userMiddleware.CheckToken)
-	game.POST("/update_game_score", gameScoreController.UpdateGameScore()) // user/update_game_score
-	game.GET("/:userKey/list_game_score/:gameKey", gameScoreController.ListGameScore()) // user/list_game_score
+	game.POST("/update_game_score", gameScoreController.UpdateGameScore()) // game//:userKey/list_game_user
+	game.GET("/:userKey/list_game_score/:gameKey", gameScoreController.ListGameScore()) // game/:userKey/list_game_score/:gameKey
+	
+	game.GET("/:userKey/list_game_user", gameUserController.ListGameUser()) // game//:userKey/list_game_user
 	
 	e.Logger.Fatal(e.Start(":8000"))
 }

@@ -17,8 +17,8 @@ func NewGameUserDao(conn *gorm.DB) repository.GameUserRepository {
 	}
 }
 
-func (gameUserDao *gameUserDao) FindByUserKeyAndLinkGameKey(userKey string, gameKey string) (entity *model.GameUser, err error) {
-	entity = &model.GameUser{}
+func (gameUserDao *gameUserDao) FindByUserKeyAndLinkGameKey(userKey string, gameKey string) (*model.GameUser, error) {
+	entity := &model.GameUser{}
 	res := gameUserDao.Conn.Where("user_key = ?", userKey).Where("game_key = ?", gameKey).Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err
@@ -27,8 +27,18 @@ func (gameUserDao *gameUserDao) FindByUserKeyAndLinkGameKey(userKey string, game
 	return entity, nil
 }
 
-func (gameUserDao *gameUserDao) Insert(param *model.GameUser, tx *gorm.DB) (entity *model.GameUser, err error) {
-	entity = &model.GameUser{
+func (gameUserDao *gameUserDao) ListByUserKey(userKey string) (*model.GameUsers, error) {
+	entity := &model.GameUsers{}
+	res := gameUserDao.Conn.Where("user_key = ?", userKey).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
+func (gameUserDao *gameUserDao) Insert(param *model.GameUser, tx *gorm.DB) (*model.GameUser, error) {
+	entity := &model.GameUser{
 		GameUserKey: param.GameUserKey,
 		GameKey:     param.GameKey,
 		UserKey:     param.UserKey,
@@ -43,8 +53,8 @@ func (gameUserDao *gameUserDao) Insert(param *model.GameUser, tx *gorm.DB) (enti
 	
 	res := conn.Model(&model.GameUser{}).Create(entity)
 	if err := res.Error; err != nil {
-		return entity, err
+		return nil, err
 	}
 
-	return entity, err
+	return entity, nil
 }
