@@ -104,7 +104,7 @@ func (gameService *gameService) CreateGame(adminUserKey string, gameParam *param
 	gameModel.GameImagePath = "/link_game/" + gameKey + ".png"
 	gameModel.GenreKey = gameParam.GenreKey
 
-	err = api.UploadImage(*gameParam.GameImage, gameKey, "/game")
+	err = api.UploadImage(*gameParam.GameImage, gameKey, "/link_game")
 	if err != nil {
 		return nil, err
 	}
