@@ -40,9 +40,10 @@ func InitializeUserController() controller.UserController {
 func InitializeGameController() controller.GameController {
 	db := database.NewDB()
 	gameRepository := dao.NewGameDao(db)
+	gameSettingRepository := dao.NewGameSettingDao(db)
 	genreRepository := dao.NewGenreDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	gameService := service.NewGameService(gameRepository, genreRepository, transactionRepository)
+	gameService := service.NewGameService(gameRepository, gameSettingRepository, genreRepository, transactionRepository)
 	gameController := controller.NewGameController(gameService)
 	return gameController
 }
@@ -89,9 +90,10 @@ func InitializeAdminUserMiddleware() middleware.AdminUserMiddleware {
 func InitializeGameMiddleware() middleware.GameMiddleware {
 	db := database.NewDB()
 	gameRepository := dao.NewGameDao(db)
+	gameSettingRepository := dao.NewGameSettingDao(db)
 	genreRepository := dao.NewGenreDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	gameService := service.NewGameService(gameRepository, genreRepository, transactionRepository)
+	gameService := service.NewGameService(gameRepository, gameSettingRepository, genreRepository, transactionRepository)
 	gameMiddleware := middleware.NewGameMiddleware(gameService)
 	return gameMiddleware
 }

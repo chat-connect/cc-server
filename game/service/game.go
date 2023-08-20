@@ -19,17 +19,20 @@ type GameService interface {
 
 type gameService struct {
 	gameRepository        repository.GameRepository
+	gameSettingRepository repository.GameSettingRepository
 	genreRepository       repository.GenreRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewGameService(
 		gameRepository        repository.GameRepository,
+		gameSettingRepository repository.GameSettingRepository,
 		genreRepository       repository.GenreRepository,
 		transactionRepository repository.TransactionRepository,
 	) GameService {
 	return &gameService{
 		gameRepository:        gameRepository,
+		gameSettingRepository: gameSettingRepository,
 		genreRepository:       genreRepository,
 		transactionRepository: transactionRepository,
 	}
@@ -103,13 +106,25 @@ func (gameService *gameService) CreateGame(adminUserKey string, gameParam *param
 	gameModel.GameTitle = gameParam.GameTitle
 	gameModel.GameImagePath = "/link_game/" + gameKey + ".png"
 	gameModel.GenreKey = gameParam.GenreKey
-
-	err = api.UploadImage(*gameParam.GameImage, gameKey, "/link_game")
+	gameResult, err := gameService.gameRepository.Insert(gameModel, tx)
 	if err != nil {
 		return nil, err
 	}
 
-	gameResult, err := gameService.gameRepository.Insert(gameModel, tx)
+	gameSettingModel := &model.GameSetting{}
+	gameSettingModel.GameKey = gameKey
+	gameSettingModel.AdminUserKey = adminUserKey
+	gameSettingModel.GameScore = gameParam.Setting.GameScore
+	gameSettingModel.GameComboScore = gameParam.Setting.GameComboScore
+	gameSettingModel.GameRank = gameParam.Setting.GameRank
+	gameSettingModel.GamePlayTime = gameParam.Setting.GamePlayTime
+	gameSettingModel.GameScoreImagePath = gameParam.Setting.GameScoreImage
+	_, err = gameService.gameSettingRepository.Insert(gameSettingModel, tx)
+	if err != nil {
+		return nil, err
+	}
+
+	err = api.UploadImage(*gameParam.GameImage, gameKey, "/link_game")
 	if err != nil {
 		return nil, err
 	}

@@ -41,6 +41,7 @@ func InitializeGameController() controller.GameController {
     wire.Build(
         database.NewDB,
         dao.NewGameDao,
+        dao.NewGameSettingDao,
         dao.NewGenreDao,
         dao.NewTransactionDao,
         service.NewGameService,
@@ -100,6 +101,7 @@ func InitializeGameMiddleware() middleware.GameMiddleware {
     wire.Build(
         database.NewDB,
         dao.NewGameDao,
+        dao.NewGameSettingDao,
         dao.NewGenreDao,
         dao.NewTransactionDao,
         service.NewGameService,
