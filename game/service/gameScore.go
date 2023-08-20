@@ -17,17 +17,20 @@ type GameScoreService interface {
 
 type gameScoreService struct {
 	gameRepository        repository.GameRepository
+	gameSettingRepository repository.GameSettingRepository
 	gameScoreRepository   repository.GameScoreRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewGameScoreService(
 		gameRepository        repository.GameRepository,
+		gameSettingRepository repository.GameSettingRepository,
 		gameScoreRepository   repository.GameScoreRepository,
 		transactionRepository repository.TransactionRepository,
 	) GameScoreService {
 	return &gameScoreService{
 		gameRepository:        gameRepository,
+		gameSettingRepository: gameSettingRepository,
 		gameScoreRepository:   gameScoreRepository,
 		transactionRepository: transactionRepository,
 	}
@@ -40,6 +43,11 @@ func (gameScoreService *gameScoreService) ListGameScore(gameKey string, userKey 
 		return nil, err
 	}
 
+	gameSetting, err := gameScoreService.gameSettingRepository.FindByGameKey(gameKey)
+	if err != nil {
+		return nil, err
+	}
+	
 	gameScores, err := gameScoreService.gameScoreRepository.ListByGameKeyAndUserKey(gameKey, userKey)
 	if err != nil {
 		return nil, err
@@ -47,6 +55,7 @@ func (gameScoreService *gameScoreService) ListGameScore(gameKey string, userKey 
 
 	gameAndGameScore := &dto.GameAndGameScore{}
 	gameAndGameScore.Game = *game
+	gameAndGameScore.GameSetting = *gameSetting
 	gameAndGameScore.GameScores = *gameScores
 	
 	return gameAndGameScore, nil

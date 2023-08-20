@@ -5,8 +5,9 @@ import (
 )
 
 type GameAndGameScore struct {
-	Game       model.Game
-	GameScores model.GameScores
+	Game        model.Game
+	GameSetting model.GameSetting
+	GameScores  model.GameScores
 }
 
 type GameAndGameScores []GameAndGameScore

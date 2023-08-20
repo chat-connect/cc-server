@@ -17,6 +17,18 @@ func NewGameSettingDao(conn *gorm.DB) repository.GameSettingRepository {
 	}
 }
 
+func (gameSettingDao *gameSettingDao) FindByGameKey(gameKey string) (*model.GameSetting, error) {
+	entity := &model.GameSetting{}
+	res := gameSettingDao.Conn.
+		Where("game_key = ?", gameKey).
+		Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (gameSettingDao *gameSettingDao) Insert(param *model.GameSetting, tx *gorm.DB) (*model.GameSetting, error) {
 	entity := &model.GameSetting{
 		GameKey:            param.GameKey,

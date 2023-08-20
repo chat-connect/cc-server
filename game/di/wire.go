@@ -56,6 +56,7 @@ func InitializeGameScoreController() controller.GameScoreController {
         database.NewDB,
         dao.NewGameDao,
         dao.NewGameScoreDao,
+        dao.NewGameSettingDao,
         dao.NewTransactionDao,
         service.NewGameScoreService,
         controller.NewGameScoreController,

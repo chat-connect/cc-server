@@ -35,8 +35,17 @@ type ListGameScore struct {
 	GameKey           string                 `json:"game_key"`
 	GameTitle         string                 `json:"game_title"`
 	GameImagePath     string                 `json:"game_image_path"`
-	List              []ListGameScoreContent `json:"list"`
+	Setting           GameSetting            `json:"setting"`
+ 	List              []ListGameScoreContent `json:"list"`
 	Message           string                 `json:"message"`
+}
+
+type GameSetting struct {
+	GameScore          bool `json:"game_score"`
+	GameComboScore     bool `json:"game_combo_score"`
+	GameRank           bool `json:"game_rank"`
+	GamePlayTime       bool `json:"game_play_time"`
+	GameScoreImagePath bool `json:"game_score_image_path"`	
 }
 
 type ListGameScoreContent struct {
@@ -52,6 +61,14 @@ func ToListGameScore(gs *dto.GameAndGameScore) *ListGameScore {
 		return nil
 	}
 
+	setting := &GameSetting{
+		GameScore:          gs.GameSetting.GameScore,
+		GameComboScore:     gs.GameSetting.GameComboScore,
+		GameRank:           gs.GameSetting.GameRank,
+		GamePlayTime:       gs.GameSetting.GamePlayTime,
+		GameScoreImagePath: gs.GameSetting.GameScoreImagePath,
+	}
+	
 	var list []ListGameScoreContent
 	for _, gameScore := range gs.GameScores {
 		gameScoreContent := ListGameScoreContent{
@@ -68,6 +85,7 @@ func ToListGameScore(gs *dto.GameAndGameScore) *ListGameScore {
 		GameKey:       gs.Game.GameKey,
 		GameTitle:     gs.Game.GameTitle,
 		GameImagePath: gs.Game.GameTitle,
+		Setting:       *setting,
 		List:          list,
 		Message:       "game list score created",
 	}
