@@ -68,7 +68,7 @@ func ToListGameScore(gs *dto.GameAndGameScore) *ListGameScore {
 		GamePlayTime:       gs.GameSetting.GamePlayTime,
 		GameScoreImagePath: gs.GameSetting.GameScoreImagePath,
 	}
-	
+
 	var list []ListGameScoreContent
 	for _, gameScore := range gs.GameScores {
 		gameScoreContent := ListGameScoreContent{
@@ -84,7 +84,7 @@ func ToListGameScore(gs *dto.GameAndGameScore) *ListGameScore {
 	return &ListGameScore{
 		GameKey:       gs.Game.GameKey,
 		GameTitle:     gs.Game.GameTitle,
-		GameImagePath: gs.Game.GameTitle,
+		GameImagePath: gs.Game.GameImagePath,
 		Setting:       *setting,
 		List:          list,
 		Message:       "game list score created",
