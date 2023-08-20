@@ -25,8 +25,6 @@ func TestGameScoreModel_EmptyScore(t *testing.T) {
 				GameScoreKey:       "test_score_key",
 				GameKey:            "test_game_key",
 				UserKey:            "test_user_key",
-				GameUsername:       "test_username",
-				GameUserImagePath:  "test_image_path",
 				GameScore:          "100",
 				GameComboScore:     "50",
 				GameRank:           "A",

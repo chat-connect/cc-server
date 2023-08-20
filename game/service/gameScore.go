@@ -82,8 +82,6 @@ func (gameScoreService *gameScoreService) UpdateGameScore(userKey string, gameSc
 	gameScoreModel.GameScoreKey = gameScoreKey
 	gameScoreModel.GameKey = gameScoreParam.GameKey
 	gameScoreModel.UserKey = userKey
-	gameScoreModel.GameUsername = gameScoreParam.GameUsername
-	gameScoreModel.GameUserImagePath = gameScoreParam.GameUserImage
 	gameScoreModel.GameScore = gameScoreParam.GameScore
 	gameScoreModel.GameComboScore = gameScoreParam.GameComboScore
 	gameScoreModel.GameRank = gameScoreParam.GameRank

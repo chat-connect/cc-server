@@ -4,8 +4,6 @@ CREATE TABLE `game_score` (
     `game_score_key`        VARCHAR(20)  NOT NULL                COMMENT "連携ゲームスコアKEY",
     `game_key`              VARCHAR(20)  NOT NULL                COMMENT "連携ゲームKEY",
     `user_key`              VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
-    `game_username`         VARCHAR(191) NOT NULL                COMMENT "ゲーム内ユーザー名",
-    `game_user_image_path`  VARCHAR(191) NOT NULL                COMMENT "ユーザーアイコン",
     `game_score`            VARCHAR(191) NOT NULL                COMMENT "スコア",
     `game_combo_score`      VARCHAR(191) NOT NULL                COMMENT "コンボスコア",
     `game_rank`             VARCHAR(191) NOT NULL                COMMENT "ランク",

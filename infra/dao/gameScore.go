@@ -35,8 +35,6 @@ func (gameScoreDao *gameScoreDao) Insert(param *model.GameScore, tx *gorm.DB) (*
 		GameScoreKey:       param.GameScoreKey,
 		GameKey:            param.GameKey,
 		UserKey:            param.UserKey,
-		GameUsername:       param.GameUsername,
-		GameUserImagePath:  param.GameUserImagePath,
 		GameScore:          param.GameScore,
 		GameComboScore:     param.GameComboScore,
 		GameRank:           param.GameRank,
