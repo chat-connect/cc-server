@@ -33,7 +33,7 @@ func NewGameScoreController(
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ListGameScore}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      user/list_game_score [post]
+// @Router      /user/list_game_score [post]
 func (gameScoreController *gameScoreController) ListGameScore() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
@@ -63,7 +63,7 @@ func (gameScoreController *gameScoreController) ListGameScore() echo.HandlerFunc
 // @Param       body body parameter.UpdateGameScore true "スコア更新"
 // @Success     200  {object} response.Success{items=output.UpdateGameScore}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      user/update_game_score [post]
+// @Router      /user/update_game_score [post]
 func (gameScoreController *gameScoreController) UpdateGameScore() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters

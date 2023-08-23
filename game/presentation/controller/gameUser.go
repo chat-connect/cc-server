@@ -29,7 +29,7 @@ func NewGameUserController(gameUserService service.GameUserService) GameUserCont
 // @Produce     json
 // @Success     200  {object} response.Success{items=output.ListGameUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      game//:userKey/list_game_user [get]
+// @Router      /game/{userKey}/list_game_user [get]
 func (gameUserController *gameUserController) ListGameUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		userKey := c.Param("userKey")

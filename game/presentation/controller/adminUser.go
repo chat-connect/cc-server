@@ -33,7 +33,7 @@ func NewAdminUserController(adminUserService service.AdminUserService) AdminUser
 // @tags        Auth
 // @Accept      json
 // @Produce     json
-// @Param       body body parameter.RegisterUser true "企業ユーザー登録"
+// @Param       body body parameter.RegisterAdminUser true "企業ユーザー登録"
 // @Success     200  {object} response.Success{items=output.RegisterAdminUser}
 // @Failure     500  {array}  output.Error
 // @Router      /admin/user_admin_register [post]
@@ -131,7 +131,7 @@ func (adminUserController *adminUserController) CheckAdminUser() echo.HandlerFun
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "user_key" maxlength(12)
-// @Success     200  {object} response.Success{items=output.LogoutUser}
+// @Success     200  {object} response.Success{items=output.LogoutAdminUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /auth/user_logout/{user_key} [put]
 func (adminUserController *adminUserController) LogoutAdminUser() echo.HandlerFunc {
@@ -165,7 +165,7 @@ func (adminUserController *adminUserController) LogoutAdminUser() echo.HandlerFu
 // @Security    ApiKeyAuth
 // @param       Authorization header string true "Authorization"
 // @Param       user_key path string true "ユーザーキー"
-// @Success     200  {object} response.Success{items=output.DeleteUser}
+// @Success     200  {object} response.Success{items=output.DeleteAdminUser}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      /admin/delete_admin_user/{admin_user_key} [delete]
 func (adminUserController *adminUserController) DeleteAdminUser() echo.HandlerFunc {
