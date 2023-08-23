@@ -1,4 +1,4 @@
--- 企業情報
+-- 企業
 CREATE TABLE `admin_user` (
     `id`               BIGINT       NOT NULL AUTO_INCREMENT COMMENT "企業ID",
     `admin_user_key`   VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "企業KEY",

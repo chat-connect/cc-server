@@ -1,4 +1,4 @@
--- ルーム情報
+-- ルーム
 CREATE TABLE `room` (
     `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ルームID",
     `room_key`    VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ルームKEY",

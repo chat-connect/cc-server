@@ -1,4 +1,4 @@
--- チャンネルチャット情報
+-- チャンネルチャット
 CREATE TABLE `channel_chat` (
     `id`               BIGINT       NOT NULL AUTO_INCREMENT COMMENT "チャンネルチャットID",
     `channel_chat_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "チャンネルチャットKEY",

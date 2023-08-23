@@ -1,4 +1,4 @@
--- 連携ゲームスコア情報
+-- 連携ゲームスコア
 CREATE TABLE `game_score` (
     `id`                    BIGINT       NOT NULL AUTO_INCREMENT COMMENT "連携ゲームID",
     `game_score_key`        VARCHAR(20)  NOT NULL                COMMENT "連携ゲームスコアKEY",

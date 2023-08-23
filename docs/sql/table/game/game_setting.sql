@@ -1,4 +1,4 @@
--- 連携ゲーム設定情報
+-- 連携ゲーム設定
 CREATE TABLE `game_setting` (
     `id`                    BIGINT      NOT NULL AUTO_INCREMENT COMMENT "連携ゲームID",
     `game_key`              VARCHAR(20) NOT NULL UNIQUE KEY     COMMENT "連携ゲームKEY",

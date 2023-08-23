@@ -1,4 +1,4 @@
--- ルームのユーザー情報
+-- ルームのユーザー
 CREATE TABLE `room_user` (
     `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ルームユーザーID",
     `room_user_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ルームユーザーKEY",

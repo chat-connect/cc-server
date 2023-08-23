@@ -1,4 +1,4 @@
--- ユーザー情報
+-- ユーザー
 CREATE TABLE `user` (
     `id`         BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ユーザーID",
     `user_key`   VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ユーザーKEY",

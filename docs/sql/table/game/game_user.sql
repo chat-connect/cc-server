@@ -1,4 +1,4 @@
--- 連携ユーザー情報
+-- 連携ユーザー
 CREATE TABLE `game_user` (
     `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ゲームユーザーID",
     `game_user_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ゲームユーザーKEY",

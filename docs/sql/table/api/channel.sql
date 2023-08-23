@@ -1,9 +1,9 @@
--- ゲーム情報
-CREATE TABLE `game` (
-    `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ゲームID",
-    `game_key`    VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ジャンルKEY",
-    `genre_key`   VARCHAR(20)  NOT NULL                COMMENT "ゲームKEY",
-    `name`        VARCHAR(50)  NOT NULL                COMMENT "ゲーム名",
+-- チャット
+CREATE TABLE `channel` (
+    `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT "チャンネルID",
+    `channel_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "チャンネルKEY",
+    `room_key`    VARCHAR(20)  NOT NULL                COMMENT "ルームKEY",
+    `name`        VARCHAR(50)  NOT NULL                COMMENT "チャンネル名",
     `description` VARCHAR(191) NOT NULL                COMMENT "説明",
     `type`        VARCHAR(191) NOT NULL                COMMENT "種別",
     `created_at`  TIMESTAMP    NOT NULL                COMMENT "作成日時",

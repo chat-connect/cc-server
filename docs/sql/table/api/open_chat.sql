@@ -1,8 +1,7 @@
--- ルームチャット情報
-CREATE TABLE `room_chat` (
-    `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ルームチャットID",
-    `room_chat_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ルームチャットKEY",
-    `room_key`      VARCHAR(20)  NOT NULL                COMMENT "ルームKEY",
+-- オープンチャット
+CREATE TABLE `open_chat` (
+    `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT "オープンチャットID",
+    `open_chat_key` VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "オープンチャットKEY",
     `user_key`      VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
     `user_name`     VARCHAR(50)  NOT NULL                COMMENT "ユーザー名",
     `content`       VARCHAR(191) NOT NULL                COMMENT "コンテンツ",
