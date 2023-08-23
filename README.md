@@ -29,11 +29,11 @@ docker compose -f docker-compose.local.yml exec batch go run batch/main.go --com
 ## Swagger
 1.Swaggerのビルド
 ```
-docker compose -f docker-compose.local.yml exec api swag init --dir=api --output=swagger
+docker compose -f docker-compose.local.yml exec api swag init --dir=api --output=docs/swagger
 ```
 2.Swaggerのmackサーバーを起動
 ```
-docker compose -f docker-compose.local.yml exec swagger prism mock ./swagger/swagger.yaml --port=8000 --host=0.0.0.0
+docker compose -f docker-compose.local.yml exec swagger prism mock ./docs/swagger/swagger.yaml --port=8000 --host=0.0.0.0
 ```
 
 ## DI
