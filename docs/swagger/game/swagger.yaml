@@ -1,0 +1,708 @@
+basePath: /
+definitions:
+  output.CheckAdminUser:
+    properties:
+      admin_user_key:
+        type: string
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+    type: object
+  output.CreateGame:
+    properties:
+      admin_user_key:
+        type: string
+      api_key:
+        type: string
+      game_image_path:
+        type: string
+      game_key:
+        type: string
+      game_title:
+        type: string
+      genre_key:
+        type: string
+      message:
+        type: string
+    type: object
+  output.DeleteAdminUser:
+    properties:
+      message:
+        type: string
+    type: object
+  output.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  output.GameSetting:
+    properties:
+      game_combo_score:
+        type: boolean
+      game_play_time:
+        type: boolean
+      game_rank:
+        type: boolean
+      game_score:
+        type: boolean
+      game_score_image_path:
+        type: boolean
+    type: object
+  output.ListGame:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListGameContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGameContent:
+    properties:
+      game_key:
+        type: string
+      game_title:
+        type: string
+      genre_key:
+        type: string
+    type: object
+  output.ListGameScore:
+    properties:
+      game_image_path:
+        type: string
+      game_key:
+        type: string
+      game_title:
+        type: string
+      list:
+        items:
+          $ref: '#/definitions/output.ListGameScoreContent'
+        type: array
+      message:
+        type: string
+      setting:
+        $ref: '#/definitions/output.GameSetting'
+    type: object
+  output.ListGameScoreContent:
+    properties:
+      game_combo_score:
+        type: integer
+      game_play_time:
+        type: integer
+      game_rank:
+        type: integer
+      game_score:
+        type: integer
+      game_score_image_path:
+        type: string
+    type: object
+  output.ListGameUser:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListGameUserContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGameUserContent:
+    properties:
+      game_image_path:
+        type: string
+      game_key:
+        type: string
+      game_title:
+        type: string
+    type: object
+  output.ListGenre:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/output.ListGenreContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGenreAndGame:
+    properties:
+      list_game:
+        items:
+          $ref: '#/definitions/output.ListGameContent'
+        type: array
+      list_genre:
+        items:
+          $ref: '#/definitions/output.ListGenreContent'
+        type: array
+      message:
+        type: string
+    type: object
+  output.ListGenreContent:
+    properties:
+      description:
+        type: string
+      genre_key:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  output.LoginAdminUser:
+    properties:
+      admin_user_key:
+        type: string
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      token:
+        type: string
+    type: object
+  output.LoginUser:
+    properties:
+      email:
+        type: string
+      image_path:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      token:
+        type: string
+      user_key:
+        type: string
+    type: object
+  output.LogoutAdminUser:
+    properties:
+      message:
+        type: string
+    type: object
+  output.RegisterAdminUser:
+    properties:
+      admin_user_key:
+        type: string
+      email:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+    type: object
+  output.UpdateGameScore:
+    properties:
+      game_combo_score:
+        type: integer
+      game_key:
+        type: string
+      game_play_time:
+        type: integer
+      game_rank:
+        type: integer
+      game_score:
+        type: integer
+      game_score_image_path:
+        type: string
+      user_key:
+        type: string
+    type: object
+  parameter.CreateGame:
+    properties:
+      game_image:
+        type: string
+      game_title:
+        type: string
+      genre_key:
+        type: string
+      setting:
+        properties:
+          game_combo_score:
+            type: boolean
+          game_play_time:
+            type: boolean
+          game_rank:
+            type: boolean
+          game_score:
+            type: boolean
+          game_score_image:
+            type: boolean
+        type: object
+    type: object
+  parameter.LoginUser:
+    properties:
+      api_key:
+        type: string
+      email:
+        type: string
+      game_key:
+        type: string
+      password:
+        type: string
+    type: object
+  parameter.RegisterAdminUser:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  parameter.UpdateGameScore:
+    properties:
+      api_key:
+        type: string
+      game_combo_score:
+        type: integer
+      game_key:
+        type: string
+      game_play_time:
+        type: integer
+      game_rank:
+        type: integer
+      game_score:
+        type: integer
+      game_score_image:
+        type: string
+    type: object
+  response.Error:
+    properties:
+      items: {}
+      status:
+        type: integer
+      types:
+        type: string
+    type: object
+  response.Success:
+    properties:
+      items: {}
+      status:
+        type: integer
+      types:
+        type: string
+    type: object
+host: localhost:8004
+info:
+  contact: {}
+  description: This is a sample swagger server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Chat Connect
+  version: "1.0"
+paths:
+  /admin/check_admin_user/{admin_user_key}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: user_key
+        in: path
+        maxLength: 12
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.CheckAdminUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 企業ユーザー取得
+      tags:
+      - User
+  /admin/delete_admin_user/{admin_user_key}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ユーザーキー
+        in: path
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.DeleteAdminUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: ユーザー削除
+      tags:
+      - User
+  /admin/login_admin_user:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 企業ユーザーログイン
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/parameter.LoginUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.LoginAdminUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: 企業ユーザーログイン
+      tags:
+      - Auth
+  /admin/user_admin_register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 企業ユーザー登録
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/parameter.RegisterAdminUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.RegisterAdminUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/output.Error'
+            type: array
+      summary: 企業ユーザー登録
+      tags:
+      - Auth
+  /auth/user_logout/{user_key}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: user_key
+        in: path
+        maxLength: 12
+        name: user_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.LogoutAdminUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: ログアウト
+      tags:
+      - User
+  /game/{admin_user_key}/create_game:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 連携ゲーム作成
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/parameter.CreateGame'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.CreateGame'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: 連携ゲーム作成
+      tags:
+      - LinkGame
+  /game/{userKey}/list_game_user:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListGameUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: 連携ゲーム一覧取得
+      tags:
+      - GameUser
+  /genre/list_game:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListGame'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ゲーム一覧取得
+      tags:
+      - Game
+  /genre/list_genre:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListGenreAndGame'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ジャンル＆ゲーム一覧取得
+      tags:
+      - Genre
+  /user/list_game_score:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.ListGameScore'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: スコア更新
+      tags:
+      - GameScore
+  /user/login_user:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ユーザーログイン
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/parameter.LoginUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.LoginUser'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: ユーザーログイン
+      tags:
+      - User
+  /user/update_game_score:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: スコア更新
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/parameter.UpdateGameScore'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Success'
+            - properties:
+                items:
+                  $ref: '#/definitions/output.UpdateGameScore'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Error'
+            - properties:
+                errors:
+                  $ref: '#/definitions/output.Error'
+              type: object
+      summary: スコア更新
+      tags:
+      - GameScore
+swagger: "2.0"
