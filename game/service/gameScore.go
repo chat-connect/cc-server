@@ -48,15 +48,17 @@ func (gameScoreService *gameScoreService) ListGameScore(gameKey string, userKey 
 		return nil, err
 	}
 	
-	gameScores, err := gameScoreService.gameScoreRepository.ListByGameKeyAndUserKey(gameKey, userKey)
+	gameScores, err := gameScoreService.gameScoreRepository.ListByGameKeyAndUserKey(gameKey, userKey, 10)
 	if err != nil {
 		return nil, err
 	}
 
+	sortGameScore := gameScores.Reverse()
+	
 	gameAndGameScore := &dto.GameAndGameScore{}
 	gameAndGameScore.Game = *game
 	gameAndGameScore.GameSetting = *gameSetting
-	gameAndGameScore.GameScores = *gameScores
+	gameAndGameScore.GameScores = sortGameScore
 	
 	return gameAndGameScore, nil
 }

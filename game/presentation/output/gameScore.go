@@ -8,9 +8,9 @@ import (
 type UpdateGameScore struct {
 	GameKey            string    `json:"game_key"`
 	UserKey            string    `json:"user_key"`
-	GameScore          string    `json:"game_score"`
-	GameComboScore     string    `json:"game_combo_score"`
-	GameRank           string    `json:"game_rank"`
+	GameScore          int       `json:"game_score"`
+	GameComboScore     int       `json:"game_combo_score"`
+	GameRank           int       `json:"game_rank"`
 	GamePlayTime       int       `json:"game_play_time"`
 	GameScoreImagePath string    `json:"game_score_image_path"`
 }
@@ -49,9 +49,9 @@ type GameSetting struct {
 }
 
 type ListGameScoreContent struct {
-	GameScore          string `json:"game_score"`
-	GameComboScore     string `json:"game_combo_score"`
-	GameRank           string `json:"game_rank"`
+	GameScore          int    `json:"game_score"`
+	GameComboScore     int    `json:"game_combo_score"`
+	GameRank           int    `json:"game_rank"`
 	GamePlayTime       int    `json:"game_play_time"`
 	GameScoreImagePath string `json:"game_score_image_path"`
 }

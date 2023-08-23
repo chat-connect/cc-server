@@ -11,9 +11,9 @@ type GameScore struct {
 	GameScoreKey       string    `json:"game_score_key"`
 	GameKey            string    `json:"game_key"`
 	UserKey            string    `json:"user_key"`
-	GameScore          string    `json:"game_score"`
-	GameComboScore     string    `json:"game_combo_score"`
-	GameRank           string    `json:"game_rank"`
+	GameScore          int       `json:"game_score"`
+	GameComboScore     int       `json:"game_combo_score"`
+	GameRank           int       `json:"game_rank"`
 	GamePlayTime       int       `json:"game_play_time"`
 	GameScoreImagePath string    `json:"game_score_image_path"`
 	CreatedAt          time.Time `json:"created_at" gorm:"autoCreateTime"`
@@ -30,9 +30,17 @@ func (gameScore *GameScore) IsEmpty() bool {
 		gameScore.GameScoreKey == "" &&
 		gameScore.GameKey == "" &&
 		gameScore.UserKey == "" &&
-		gameScore.GameScore == "" &&
-		gameScore.GameComboScore == "" &&
-		gameScore.GameRank == "" &&
+		gameScore.GameScore == 0 &&
+		gameScore.GameComboScore == 0 &&
+		gameScore.GameRank == 0 &&
 		gameScore.GamePlayTime == 0 &&
 		gameScore.GameScoreImagePath == "")
+}
+
+func (scores GameScores) Reverse() GameScores {
+    reversed := make(GameScores, len(scores))
+    for i, j := 0, len(scores)-1; i < len(scores); i, j = i+1, j-1 {
+        reversed[i] = scores[j]
+    }
+    return reversed
 }
