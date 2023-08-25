@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	
 	"github.com/game-connect/gc-server/api/service"
@@ -39,6 +40,15 @@ func (followController *followController) CreateFollow() echo.HandlerFunc {
 		userKey := c.Param("userKey")
 		followParam := &parameter.CreateFollow{}
 		c.Bind(followParam)
+
+		// validation
+		check, _ := followController.followService.FindByUserKeyAndFollowingUserKey(userKey, followParam.FollowingUserKey)
+		if check != nil && check.UserKey == userKey && check.FollowingUserKey ==followParam.FollowingUserKey {
+			out := output.NewError(fmt.Errorf("already followed"))
+			response := response.ErrorWith("chat_follow", 404, out)
+
+			return c.JSON(404, response)
+		}
 
 		followResult, err := followController.followService.CreateFollow(userKey, followParam)
 		if err != nil {

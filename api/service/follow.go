@@ -10,6 +10,7 @@ import (
 )
 
 type FollowService interface {
+	FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error)
 	CreateFollow(userKey string, followParam *parameter.CreateFollow) (*model.Follow, error)
 }
 
@@ -26,6 +27,16 @@ func NewFollowService(
 		followRepository:      followRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// FindByUserKeyAndFollowingUserKey followユーザーを取得する
+func (followService *followService) FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error) {
+	checkFollow, err := followService.followRepository.FindByUserKeyAndFollowingUserKey(userKey, followingUserKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return checkFollow, nil
 }
 
 // CreateChat チャットを作成する
@@ -56,9 +67,6 @@ func (followService *followService) CreateFollow(userKey string, followParam *pa
 
 	// 相互フォローの確認
 	checkFollow, _ := followService.followRepository.FindByUserKeyAndFollowingUserKey(followParam.FollowingUserKey, userKey)
-	if err != nil {
-		return nil, err
-	}
 
 	followModel := &model.Follow{}
 	followModel.FollowKey = followKey
