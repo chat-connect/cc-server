@@ -11,10 +11,10 @@ type ListFollowing struct {
 }
 
 type ListFollowingContent struct {
-	FollowKey        string  `json:"follow_key"`
-	FollowingUserKey string  `json:"following_user_key"`
-	Mutual           bool    `json:"mutual"`
-	MutualFollowKey  *string `json:"mutual_follow_key"`
+	FollowKey        string `json:"follow_key"`
+	FollowingUserKey string `json:"following_user_key"`
+	Mutual           bool   `json:"mutual"`
+	MutualFollowKey  string `json:"mutual_follow_key"`
 }
 
 func ToListFollowing(userKey string, f *model.Follows) *ListFollowing {
@@ -41,12 +41,12 @@ func ToListFollowing(userKey string, f *model.Follows) *ListFollowing {
 }
 
 type CreateFollow struct {
-	FollowKey        string  `json:"follow_key"`
-	UserKey          string  `json:"user_key"`
-	FollowingUserKey string  `json:"following_user_key"`
-	Mutual           bool    `json:"mutual"`
-	MutualFollowKey  *string `json:"mutual_follow_key"`
-	Message          string  `json:"message"`
+	FollowKey        string `json:"follow_key"`
+	UserKey          string `json:"user_key"`
+	FollowingUserKey string `json:"following_user_key"`
+	Mutual           bool   `json:"mutual"`
+	MutualFollowKey  string `json:"mutual_follow_key"`
+	Message          string `json:"message"`
 }
 
 func ToCreateFollow(f *model.Follow) *CreateFollow {

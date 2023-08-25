@@ -26,7 +26,7 @@ func TestFollowModel_EmptyFollow(t *testing.T) {
 				UserKey:          "test_user_key",
 				FollowingUserKey: "test_following_user_key",
 				Mutual:           false,
-				MutualFollowKey:  nil,
+				MutualFollowKey:  "",
 				CreatedAt:        time.Now(),
 				UpdatedAt:        time.Now(),
 			},

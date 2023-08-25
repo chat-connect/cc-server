@@ -90,10 +90,10 @@ func (followService *followService) CreateFollow(userKey string, followParam *pa
 		}
 
 		followModel.Mutual = true
-		followModel.MutualFollowKey = &mutualFollowKey
+		followModel.MutualFollowKey = mutualFollowKey
 		
 		checkFollow.Mutual = true
-		checkFollow.MutualFollowKey = &mutualFollowKey
+		checkFollow.MutualFollowKey = mutualFollowKey
 		
 		_, err = followService.followRepository.Update(checkFollow, tx)
 		if err != nil {
@@ -101,7 +101,7 @@ func (followService *followService) CreateFollow(userKey string, followParam *pa
 		}
 	} else {
 		followModel.Mutual = false
-		followModel.MutualFollowKey = nil	
+		followModel.MutualFollowKey = ""	
 	}
 
 	followResult, err := followService.followRepository.Insert(followModel, tx)

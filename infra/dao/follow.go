@@ -51,10 +51,10 @@ func (followDao *followDao) Insert(followModel *model.Follow, tx *gorm.DB) (*mod
 	}
 
 	entity := &model.Follow{
-		FollowKey:  followModel.FollowKey,
-		UserKey:    followModel.UserKey,
-		FollowingUserKey:   followModel.FollowingUserKey,
-		Mutual:  followModel.Mutual,
+		FollowKey:        followModel.FollowKey,
+		UserKey:          followModel.UserKey,
+		FollowingUserKey: followModel.FollowingUserKey,
+		Mutual:           followModel.Mutual,
 		MutualFollowKey:  followModel.MutualFollowKey,
 	}
 
