@@ -54,6 +54,7 @@ func Init() {
 	follow := e.Group("/follow")
 	follow.Use(userMiddleware.UserMiddleware)
 	follow.POST("/:userKey/create_follow", followController.CreateFollow()) // follow/:userKey/create_follow
+	follow.GET("/:userKey/list_following", followController.ListFollowing()) // follow/:userKey/list_following
 
 	// chat: チャット関連
 	chat := e.Group("/chat")

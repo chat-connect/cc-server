@@ -11,6 +11,7 @@ import (
 )
 
 type FollowController interface {
+	ListFollowing() echo.HandlerFunc
 	CreateFollow() echo.HandlerFunc
 }
 
@@ -27,13 +28,42 @@ func NewFollowController(
 }
 
 // Create
+// @Summary     フォローしているユーザー一覧
+// @tags        Follow
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListFollowing}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      follow/{userKey}/list_following [post]
+func (followController *followController) ListFollowing() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		userKey := c.Param("userKey")
+
+		followResults, err := followController.followService.ListFollowing(userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_following", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListFollowing(userKey, followResults)
+		response := response.SuccessWith("list_following", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// Create
 // @Summary     フォロー作成
 // @tags        Follow
 // @Accept      json
 // @Produce     json
+// @Param       body body parameter.CreateFollow true "フォロー作成"
 // @Success     200  {object} response.Success{items=output.CreateFollow}
 // @Failure     500  {object} response.Error{errors=output.Error}
-// @Router      direct_mail/{userKey}/create_direct_mail [post]
+// @Router      follow/{userKey}/create_follow [post]
 func (followController *followController) CreateFollow() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
