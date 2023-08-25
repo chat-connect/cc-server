@@ -54,12 +54,36 @@ func (followService *followService) CreateFollow(userKey string, followParam *pa
 		return nil, err
 	}
 
+	// 相互フォローの確認
+	checkFollow, _ := followService.followRepository.FindByUserKeyAndFollowingUserKey(followParam.FollowingUserKey, userKey)
+	if err != nil {
+		return nil, err
+	}
+
 	followModel := &model.Follow{}
 	followModel.FollowKey = followKey
 	followModel.UserKey = userKey
 	followModel.FollowingUserKey = followParam.FollowingUserKey
-	followModel.Mutual = false
-	followModel.MutualFollowKey = nil
+	if checkFollow != nil {
+		mutualFollowKey, err := key.GenerateKey()
+		if err != nil {
+			return nil, err
+		}
+
+		followModel.Mutual = true
+		followModel.MutualFollowKey = &mutualFollowKey
+		
+		checkFollow.Mutual = true
+		checkFollow.MutualFollowKey = &mutualFollowKey
+		
+		_, err = followService.followRepository.Update(checkFollow, tx)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		followModel.Mutual = false
+		followModel.MutualFollowKey = nil	
+	}
 
 	followResult, err := followService.followRepository.Insert(followModel, tx)
 	if err != nil {

@@ -17,6 +17,19 @@ func NewFollowDao(conn *gorm.DB) repository.FollowRepository {
 	}
 }
 
+func (followDao *followDao) FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error) {
+	entity := &model.Follow{}
+	res := followDao.Conn.
+		Where("user_key = ?", userKey).
+		Where("following_user_key = ?", followingUserKey).
+		Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (followDao *followDao) Insert(followModel *model.Follow, tx *gorm.DB) (*model.Follow, error) {
 	var conn *gorm.DB
 	if tx != nil {
@@ -34,6 +47,30 @@ func (followDao *followDao) Insert(followModel *model.Follow, tx *gorm.DB) (*mod
 	}
 
 	res := conn.Model(&model.Follow{}).Create(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+
+	return entity, nil
+}
+
+func (followDao *followDao) Update(followModel *model.Follow, tx *gorm.DB) (*model.Follow, error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = followDao.Conn
+	}
+	
+	entity := &model.Follow{
+		FollowKey:        followModel.FollowKey,
+		UserKey:          followModel.UserKey,
+		FollowingUserKey: followModel.FollowingUserKey,
+		Mutual:           followModel.Mutual,
+		MutualFollowKey:  followModel.MutualFollowKey,
+	}
+
+	res := conn.Model(&model.Follow{}).Where("follow_key = ?", entity.FollowKey).Update(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
