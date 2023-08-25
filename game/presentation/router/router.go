@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	_ "github.com/game-connect/gc-server/swagger"
+	_ "github.com/game-connect/gc-server/docs/swagger/game"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
 	"github.com/game-connect/gc-server/log"
