@@ -12,6 +12,7 @@ import (
 type FollowService interface {
 	FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error)
 	ListFollowing(userKey string) (*model.Follows, error)
+	ListFollowers(userKey string) (*model.Follows, error)
 	CreateFollow(userKey string, followParam *parameter.CreateFollow) (*model.Follow, error)
 }
 
@@ -43,6 +44,16 @@ func (followService *followService) FindByUserKeyAndFollowingUserKey(userKey, fo
 // ListFollowing フォローしているユーザー一覧
 func (followService *followService) ListFollowing(userKey string) (*model.Follows, error) {
 	followResults, err := followService.followRepository.ListByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return followResults, nil
+}
+
+// ListFollowers フォローされているユーザー一覧
+func (followService *followService) ListFollowers(userKey string) (*model.Follows, error) {
+	followResults, err := followService.followRepository.ListByFollowingUserKey(userKey)
 	if err != nil {
 		return nil, err
 	}

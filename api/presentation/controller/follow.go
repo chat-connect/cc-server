@@ -12,6 +12,7 @@ import (
 
 type FollowController interface {
 	ListFollowing() echo.HandlerFunc
+	ListFollowers() echo.HandlerFunc
 	CreateFollow() echo.HandlerFunc
 }
 
@@ -32,7 +33,7 @@ func NewFollowController(
 // @tags        Follow
 // @Accept      json
 // @Produce     json
-// @Success     200  {object} response.Success{items=output.ListFollowing}
+// @Success     200  {object} response.Success{items=output.ListFollows}
 // @Failure     500  {object} response.Error{errors=output.Error}
 // @Router      follow/{userKey}/list_following [post]
 func (followController *followController) ListFollowing() echo.HandlerFunc {
@@ -50,6 +51,34 @@ func (followController *followController) ListFollowing() echo.HandlerFunc {
 
 		out := output.ToListFollowing(userKey, followResults)
 		response := response.SuccessWith("list_following", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// Create
+// @Summary     フォローしているユーザー一覧
+// @tags        Follow
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListFollows}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      follow/{userKey}/list_followers [post]
+func (followController *followController) ListFollowers() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		userKey := c.Param("userKey")
+
+		followResults, err := followController.followService.ListFollowers(userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_followers", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListFollowers(userKey, followResults)
+		response := response.SuccessWith("list_followers", 200, out)
 
 		return c.JSON(200, response)
 	}

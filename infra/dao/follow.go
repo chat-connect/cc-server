@@ -30,11 +30,23 @@ func (followDao *followDao) FindByUserKeyAndFollowingUserKey(userKey, followingU
 	return entity, nil
 }
 
-func (followDao *followDao) ListByUserKey(userKey string) (entity *model.Follows, err error) {
-	entity = &model.Follows{}
+func (followDao *followDao) ListByUserKey(userKey string) (*model.Follows, error) {
+	entity := &model.Follows{}
 
 	// 最新の100行目までを取得する
 	res := followDao.Conn.Where("user_key = ?", userKey).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
+func (followDao *followDao) ListByFollowingUserKey(followingUserKey string) (*model.Follows, error) {
+	entity := &model.Follows{}
+
+	// 最新の100行目までを取得する
+	res := followDao.Conn.Where("following_user_key = ?", followingUserKey).Find(entity)
 	if err := res.Error; err != nil {
 		return nil, err
 	}
