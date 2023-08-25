@@ -17,7 +17,7 @@ func NewGameScoreDao(conn *gorm.DB) repository.GameScoreRepository {
 	}
 }
 
-func (gameScoreDao *gameScoreDao) ListByGameKeyAndUserKey(userKey string, gameKey string, limit int) (*model.GameScores, error) {
+func (gameScoreDao *gameScoreDao) ListByGameKeyAndUserKey(userKey string, gameKey string, limit int64) (*model.GameScores, error) {
 	entity := &model.GameScores{}
 	res := gameScoreDao.Conn.
 		Where("game_key = ?", userKey).

@@ -7,6 +7,6 @@ import (
 )
 
 type GameScoreRepository interface {
-	ListByGameKeyAndUserKey(userKey string, gameKey string, limit int) (*model.GameScores, error)
+	ListByGameKeyAndUserKey(userKey string, gameKey string, limit int64) (*model.GameScores, error)
 	Insert(gameScoreModel *model.GameScore, tx *gorm.DB) (entity *model.GameScore, err error)
 }
