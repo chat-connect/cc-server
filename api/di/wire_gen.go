@@ -56,6 +56,16 @@ func InitializeChannelController() controller.ChannelController {
 	return channelController
 }
 
+// follow
+func InitializeFollowController() controller.FollowController {
+	db := database.NewDB()
+	followRepository := dao.NewFollowDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	followService := service.NewFollowService(followRepository, transactionRepository)
+	followController := controller.NewFollowController(followService)
+	return followController
+}
+
 // chat
 func InitializeChatController() controller.ChatController {
 	db := database.NewDB()

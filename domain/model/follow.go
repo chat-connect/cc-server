@@ -11,8 +11,8 @@ type Follow struct {
 	FollowKey        string    `json:"follow_key"`
 	UserKey          string    `json:"user_key"`
 	FollowingUserKey string    `json:"following_user_key"`
-	Mutual           string    `json:"mutual"`
-	MutualFollowKey  string    `json:"mutual_follow_key"`
+	Mutual           bool      `json:"mutual"`
+	MutualFollowKey  *string   `json:"mutual_follow_key"`
 	CreatedAt        time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt        time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
@@ -27,6 +27,6 @@ func (follow *Follow) IsEmpty() bool {
 		follow.FollowKey == "" &&
 		follow.UserKey == "" &&
 		follow.FollowingUserKey == "" &&
-		follow.Mutual == "" &&
-		follow.MutualFollowKey == "")
+		follow.Mutual == false &&
+		follow.MutualFollowKey == nil)
 }

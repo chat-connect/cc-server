@@ -58,6 +58,18 @@ func InitializeChannelController() controller.ChannelController {
     return nil
 }
 
+// follow
+func InitializeFollowController() controller.FollowController {
+    wire.Build(
+        database.NewDB,
+        dao.NewFollowDao,
+        dao.NewTransactionDao,
+        service.NewFollowService,
+        controller.NewFollowController,
+    )
+    return nil
+}
+
 // chat
 func InitializeChatController() controller.ChatController {
     wire.Build(

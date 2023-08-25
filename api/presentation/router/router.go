@@ -15,6 +15,7 @@ func Init() {
 	// di: wire ./api/di/wire.go
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
+	followController := di.InitializeFollowController()
 	channelController := di.InitializeChannelController()
 	chatController := di.InitializeChatController()
 	openChatController := di.InitializeOpenChatController()
@@ -48,6 +49,11 @@ func Init() {
 	channel.GET("/:userKey/list_channel/:roomKey", channelController.ListChannel()) // channel/:userKey/channel_list/:roomKey
 	channel.POST("/:userKey/create_channel/:roomKey", channelController.CreateChannel()) // channel/:userKey/channel_create/:roomKey
 	channel.DELETE("/:userKey/delete_channel/:channelKey", channelController.DeleteChannel()) // channel/:userKey/channel_delete/:channelKey
+
+	// follow
+	follow := e.Group("/follow")
+	follow.Use(userMiddleware.UserMiddleware)
+	follow.POST("/:userKey/create_follow", followController.CreateFollow()) // follow/:userKey/create_follow
 
 	// chat: チャット関連
 	chat := e.Group("/chat")
