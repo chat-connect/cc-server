@@ -13,7 +13,7 @@ import (
 type FollowService interface {
 	FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error)
 	ListFollowing(userKey string) (*dto.FollowAndUsers, error)
-	ListFollowers(userKey string) (*model.Follows, error)
+	ListFollowers(userKey string) (*dto.FollowAndUsers, error)
 	CreateFollow(userKey string, followParam *parameter.CreateFollow) (*model.Follow, error)
 }
 
@@ -79,13 +79,36 @@ func (followService *followService) ListFollowing(userKey string) (*dto.FollowAn
 }
 
 // ListFollowers フォローされているユーザー一覧
-func (followService *followService) ListFollowers(userKey string) (*model.Follows, error) {
-	followResults, err := followService.followRepository.ListByFollowingUserKey(userKey)
+func (followService *followService) ListFollowers(userKey string) (*dto.FollowAndUsers, error) {
+	follows, err := followService.followRepository.ListByFollowingUserKey(userKey)
 	if err != nil {
 		return nil, err
 	}
 
-	return followResults, nil
+	var userKeys []string
+	for _, follow := range *follows {
+		userKeys = append(userKeys, follow.UserKey)
+	}
+
+	users, err := followService.userRepository.ListByUserKeys(userKeys)
+	if err != nil {
+		return nil, err
+	}
+
+	followAndUsers := make(dto.FollowAndUsers, 0, len(*follows))
+	for _, follow := range *follows {
+		for _, user := range *users {
+			if follow.UserKey == user.UserKey {
+				result := dto.FollowAndUser{
+					Follow: follow,
+					User:   user,
+				}
+				followAndUsers = append(followAndUsers, result)
+			}
+		}
+	}
+
+	return &followAndUsers, nil
 }
 
 // CreateChat チャットを作成する

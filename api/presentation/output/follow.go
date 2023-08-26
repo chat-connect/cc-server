@@ -45,19 +45,20 @@ func ToListFollowing(userKey string, f *dto.FollowAndUsers) *ListFollows {
 	}
 }
 
-func ToListFollowers(userKey string, f *model.Follows) *ListFollows {
+func ToListFollowers(userKey string, f *dto.FollowAndUsers) *ListFollows {
 	if f == nil {
 		return nil
 	}
 
 	var list []ListFollowsContent
-	for _, follow := range *f {
+	for _, followAndUser := range *f {
 		followsContent := ListFollowsContent{
-			FollowKey:        follow.FollowKey,
-			UserKey:          follow.UserKey,
-			FollowingUserKey: follow.FollowingUserKey,
-			Mutual:           follow.Mutual,
-			MutualFollowKey:  follow.MutualFollowKey,
+			FollowKey:        followAndUser.Follow.FollowKey,
+			UserKey:          followAndUser.Follow.UserKey,
+			FollowingUserKey: followAndUser.Follow.FollowingUserKey,
+			Mutual:           followAndUser.Follow.Mutual,
+			MutualFollowKey:  followAndUser.Follow.MutualFollowKey,
+			Status:           ToUserStatus(&followAndUser.User),
 		}
 		list = append(list, followsContent)
 	}

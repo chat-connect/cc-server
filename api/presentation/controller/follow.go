@@ -69,7 +69,7 @@ func (followController *followController) ListFollowers() echo.HandlerFunc {
 		// parameters
 		userKey := c.Param("userKey")
 
-		followResults, err := followController.followService.ListFollowers(userKey)
+		followAndUserResults, err := followController.followService.ListFollowers(userKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("list_followers", 500, out)
@@ -77,7 +77,7 @@ func (followController *followController) ListFollowers() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToListFollowers(userKey, followResults)
+		out := output.ToListFollowers(userKey, followAndUserResults)
 		response := response.SuccessWith("list_followers", 200, out)
 
 		return c.JSON(200, response)
