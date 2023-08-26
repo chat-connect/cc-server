@@ -3,6 +3,7 @@ package service
 import (
 	"log"
 
+	"github.com/game-connect/gc-server/domain/dto"
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/repository"
 	"github.com/game-connect/gc-server/api/presentation/parameter"
@@ -11,22 +12,25 @@ import (
 
 type FollowService interface {
 	FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error)
-	ListFollowing(userKey string) (*model.Follows, error)
+	ListFollowing(userKey string) (*dto.FollowAndUsers, error)
 	ListFollowers(userKey string) (*model.Follows, error)
 	CreateFollow(userKey string, followParam *parameter.CreateFollow) (*model.Follow, error)
 }
 
 type followService struct {
 	followRepository      repository.FollowRepository
+	userRepository        repository.UserRepository
 	transactionRepository repository.TransactionRepository
 }
 
 func NewFollowService(
 		followRepository      repository.FollowRepository,
+		userRepository        repository.UserRepository,
 		transactionRepository repository.TransactionRepository,
 	) FollowService {
 	return &followService{
 		followRepository:      followRepository,
+		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
 }
@@ -42,13 +46,36 @@ func (followService *followService) FindByUserKeyAndFollowingUserKey(userKey, fo
 }
 
 // ListFollowing フォローしているユーザー一覧
-func (followService *followService) ListFollowing(userKey string) (*model.Follows, error) {
-	followResults, err := followService.followRepository.ListByUserKey(userKey)
+func (followService *followService) ListFollowing(userKey string) (*dto.FollowAndUsers, error) {
+	follows, err := followService.followRepository.ListByUserKey(userKey)
 	if err != nil {
 		return nil, err
 	}
 
-	return followResults, nil
+	var followingUserKeys []string
+	for _, follow := range *follows {
+		followingUserKeys = append(followingUserKeys, follow.FollowingUserKey)
+	}
+
+	users, err := followService.userRepository.ListByUserKeys(followingUserKeys)
+	if err != nil {
+		return nil, err
+	}
+
+	followAndUsers := make(dto.FollowAndUsers, 0, len(*follows))
+	for _, follow := range *follows {
+		for _, user := range *users {
+			if follow.FollowingUserKey == user.UserKey {
+				result := dto.FollowAndUser{
+					Follow: follow,
+					User:   user,
+				}
+				followAndUsers = append(followAndUsers, result)
+			}
+		}
+	}
+
+	return &followAndUsers, nil
 }
 
 // ListFollowers フォローされているユーザー一覧

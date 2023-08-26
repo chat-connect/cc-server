@@ -63,6 +63,7 @@ func InitializeFollowController() controller.FollowController {
     wire.Build(
         database.NewDB,
         dao.NewFollowDao,
+        dao.NewUserDao,
         dao.NewTransactionDao,
         service.NewFollowService,
         controller.NewFollowController,

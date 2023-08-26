@@ -37,6 +37,19 @@ func (userDao *userDao) FindByUserKey(userKey string) (entity *model.User, err e
 	return entity, err
 }
 
+func (userDao *userDao) ListByUserKeys(userKeys []string) (entity *model.Users, err error) {
+	entity = &model.Users{}
+	
+	res := userDao.Conn.
+		Where("user_key IN (?)", userKeys).
+		Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (userDao *userDao) CountByStatus(status string) (count int64, err error) {
 	entity := &model.User{}
 	res := userDao.Conn.Model(entity).Where("status = ?", status).Count(&count)

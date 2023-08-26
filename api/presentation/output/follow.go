@@ -1,6 +1,7 @@
 package output
 
 import (
+	"github.com/game-connect/gc-server/domain/dto"
 	"github.com/game-connect/gc-server/domain/model"
 )
 
@@ -11,26 +12,28 @@ type ListFollows struct {
 }
 
 type ListFollowsContent struct {
-	FollowKey        string `json:"follow_key"`
-	UserKey          string `json:"user_key"`
-	FollowingUserKey string `json:"following_user_key"`
-	Mutual           bool   `json:"mutual"`
-	MutualFollowKey  string `json:"mutual_follow_key"`
+	FollowKey        string      `json:"follow_key"`
+	UserKey          string      `json:"user_key"`
+	FollowingUserKey string      `json:"following_user_key"`
+	Mutual           bool        `json:"mutual"`
+	MutualFollowKey  string      `json:"mutual_follow_key"`
+	Status           *UserStatus `json:"status"`
 }
 
-func ToListFollowing(userKey string, f *model.Follows) *ListFollows {
+func ToListFollowing(userKey string, f *dto.FollowAndUsers) *ListFollows {
 	if f == nil {
 		return nil
 	}
 
 	var list []ListFollowsContent
-	for _, follow := range *f {
+	for _, followAndUser := range *f {
 		followsContent := ListFollowsContent{
-			FollowKey:        follow.FollowKey,
-			UserKey:          follow.UserKey,
-			FollowingUserKey: follow.FollowingUserKey,
-			Mutual:           follow.Mutual,
-			MutualFollowKey:  follow.MutualFollowKey,
+			FollowKey:        followAndUser.Follow.FollowKey,
+			UserKey:          followAndUser.Follow.UserKey,
+			FollowingUserKey: followAndUser.Follow.FollowingUserKey,
+			Mutual:           followAndUser.Follow.Mutual,
+			MutualFollowKey:  followAndUser.Follow.MutualFollowKey,
+			Status:           ToUserStatus(&followAndUser.User),
 		}
 		list = append(list, followsContent)
 	}

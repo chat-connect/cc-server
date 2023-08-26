@@ -60,8 +60,9 @@ func InitializeChannelController() controller.ChannelController {
 func InitializeFollowController() controller.FollowController {
 	db := database.NewDB()
 	followRepository := dao.NewFollowDao(db)
+	userRepository := dao.NewUserDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	followService := service.NewFollowService(followRepository, transactionRepository)
+	followService := service.NewFollowService(followRepository, userRepository, transactionRepository)
 	followController := controller.NewFollowController(followService)
 	return followController
 }
