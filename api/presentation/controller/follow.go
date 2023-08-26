@@ -11,6 +11,7 @@ import (
 )
 
 type FollowController interface {
+	CountFollowingAndFollowers() echo.HandlerFunc
 	ListFollowing() echo.HandlerFunc
 	ListFollowers() echo.HandlerFunc
 	CreateFollow() echo.HandlerFunc
@@ -26,6 +27,42 @@ func NewFollowController(
     return &followController{
 		followService: followService,
     }
+}
+
+// Create
+// @Summary     フォローしているユーザー一覧
+// @tags        Follow
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.FollowingAndFollowers}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      follow/{userKey}/count_following_and_followers [get]
+func (followController *followController) CountFollowingAndFollowers() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		userKey := c.Param("userKey")
+
+		followingCount, err := followController.followService.CountFollowing(userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("count_following_and_followers", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		followersCount, err := followController.followService.CountFollowers(userKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("count_following_and_followers", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToCountFollowingAndFollowers(userKey, followingCount, followersCount)
+		response := response.SuccessWith("count_following_and_followers", 200, out)
+
+		return c.JSON(200, response)
+	}
 }
 
 // Create

@@ -11,6 +11,8 @@ import (
 )
 
 type FollowService interface {
+	CountFollowing(userKey string) (int64, error)
+	CountFollowers(userKey string) (int64, error)
 	FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error)
 	ListFollowing(userKey string) (*dto.FollowAndUsers, error)
 	ListFollowers(userKey string) (*dto.FollowAndUsers, error)
@@ -33,6 +35,26 @@ func NewFollowService(
 		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// CountFollowing フォローしているユーザー数を取得する
+func (followService *followService) CountFollowing(userKey string) (int64, error) {
+	count, err := followService.followRepository.CountByUserKey(userKey)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+// CountFollowers フォローされているユーザー数を取得する
+func (followService *followService) CountFollowers(userKey string) (int64, error) {
+	count, err := followService.followRepository.CountByFollowingUserKey(userKey)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 // FindByUserKeyAndFollowingUserKey フォローユーザーを取得する

@@ -17,6 +17,32 @@ func NewFollowDao(conn *gorm.DB) repository.FollowRepository {
 	}
 }
 
+func (followDao *followDao) CountByUserKey(userKey string) (count int64, err error) {
+	entity := &model.Follow{}
+	res := followDao.Conn.
+		Model(entity).
+		Where("user_key = ?", userKey).
+		Count(&count)
+	if err := res.Error; err != nil {
+		return count, err
+	}
+	
+	return count, err
+}
+
+func (followDao *followDao) CountByFollowingUserKey(followingUserKey string) (count int64, err error) {
+	entity := &model.Follow{}
+	res := followDao.Conn.
+		Model(entity).
+		Where("following_user_key = ?", followingUserKey).
+		Count(&count)
+	if err := res.Error; err != nil {
+		return count, err
+	}
+	
+	return count, err
+}
+
 func (followDao *followDao) FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error) {
 	entity := &model.Follow{}
 	res := followDao.Conn.

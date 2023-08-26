@@ -5,10 +5,26 @@ import (
 	"github.com/game-connect/gc-server/domain/model"
 )
 
+type FollowingAndFollowers struct {
+	UserKey        string `json:"user_key"`
+	FollowingCount int64  `json:"following_count"`
+	FollowersCount int64  `json:"followers_count"`
+	Message        string `json:"message"`
+}
+
+func ToCountFollowingAndFollowers(userKey string, followingCount , followersCount int64) *FollowingAndFollowers {
+	return &FollowingAndFollowers{
+		UserKey: userKey,
+		FollowingCount: followingCount,
+		FollowersCount: followersCount,
+ 		Message: "count following adnd followers created",
+	}
+}
+
 type ListFollows struct {
-	UserKey string                 `json:"user_key"`
+	UserKey string               `json:"user_key"`
 	List    []ListFollowsContent `json:"list"`
-	Message string                 `json:"message"`
+	Message string               `json:"message"`
 }
 
 type ListFollowsContent struct {
