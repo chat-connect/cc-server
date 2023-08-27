@@ -40,6 +40,7 @@ func Init() {
 	room.POST("/:userKey/create_room", roomController.CreateRoom()) // room/:userKey/room_create
 	room.DELETE("/:userKey/delete_room/:roomKey", roomController.DeleteRoom()) // room/:userKey/room_delete/:roomKey
 
+	room.GET("/:userKey/list_room_user/:roomKey", roomUserController.ListRoomUser()) // room/:userKey/room_list_user
 	room.POST("/:userKey/join_room/:roomKey", roomUserController.JoinRoom()) // room/:userKey/room_join/:roomKey
 	room.DELETE("/:userKey/out_room/:roomKey", roomUserController.OutRoom()) // room/:userKey/room_out/:roomKey
 

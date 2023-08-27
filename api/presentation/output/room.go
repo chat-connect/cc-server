@@ -44,6 +44,28 @@ func ToListRoom(r *dto.RoomAndGenreAndGames) *ListRoom {
 	}
 }
 
+type ListRoomUser struct {
+	List    []UserStatus `json:"list"`
+	Message string       `json:"message"`
+}
+
+func ToListRoomUser(u *model.Users) *ListRoomUser {
+	if u == nil {
+		return nil
+	}
+
+	var list []UserStatus
+	for _, user := range *u {
+		userStatus := ToUserStatus(&user)
+		list = append(list, *userStatus)
+	}
+
+	return &ListRoomUser{
+		List:    list,
+		Message: "list user created",
+	}
+}
+
 type CreateRoom struct {
 	RoomKey     string `json:"room_key"`
 	Name        string `json:"name"`

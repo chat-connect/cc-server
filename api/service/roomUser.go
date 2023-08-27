@@ -9,6 +9,7 @@ import (
 )
 
 type RoomUserService interface {
+	ListRoomUser(roomKey string) (*model.Users, error)
 	JoinRoom(roomKey string, userKey string) (roomUserResult *model.RoomUser, err error)
 	OutRoom(roomKey string, userKey string) (err error)
 }
@@ -32,6 +33,26 @@ func NewRoomUserService(
 		userRepository:        userRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// ListRoomUser ルームに参加しているユーザー一覧
+func (roomUserService *roomUserService) ListRoomUser(roomKey string) (*model.Users, error) {
+	roomUsers, err := roomUserService.roomUserRepository.ListByRoomKey(roomKey)
+	if err != nil {
+		return nil, err
+	}
+
+	var userKeys []string
+	for _, roomUser := range *roomUsers {
+		userKeys = append(userKeys, roomUser.UserKey)
+	}
+
+	users, err := roomUserService.userRepository.ListByUserKeys(userKeys)
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }
 
 // JoinRoom ルームに参加する

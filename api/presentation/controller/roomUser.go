@@ -10,6 +10,7 @@ import (
 )
 
 type RoomUserController interface {
+	ListRoomUser() echo.HandlerFunc
 	JoinRoom() echo.HandlerFunc
 	OutRoom() echo.HandlerFunc
 }
@@ -27,6 +28,34 @@ func NewRoomUserController(
 		roomService:     roomService,
 		roomUserService: roomUserService,
     }
+}
+
+// List
+// @Summary     ルーム参加ユーザー一覧取得
+// @tags        Room
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListRoomUser}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /room/{userKey}/list_room_user/{roomKey} [get]
+func (roomUserController *roomUserController) ListRoomUser() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		roomKey := c.Param("roomKey")
+
+		roomUserResults, err := roomUserController.roomUserService.ListRoomUser(roomKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_room_user", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListRoomUser(roomUserResults)
+		response := response.SuccessWith("list_room_user", 200, out)
+
+		return c.JSON(200, response)
+	}
 }
 
 // Join
