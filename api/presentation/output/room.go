@@ -44,25 +44,28 @@ func ToListRoom(r *dto.RoomAndGenreAndGames) *ListRoom {
 	}
 }
 
-type ListRoomUser struct {
-	List    []UserStatus `json:"list"`
-	Message string       `json:"message"`
-}
-
-func ToListRoomUser(u *model.Users) *ListRoomUser {
-	if u == nil {
+func ToListRoomUser(userKey string, f *dto.FollowAndUsers) *ListFollows {
+	if f == nil {
 		return nil
 	}
 
-	var list []UserStatus
-	for _, user := range *u {
-		userStatus := ToUserStatus(&user)
-		list = append(list, *userStatus)
+	var list []ListFollowsContent
+	for _, followAndUser := range *f {
+		followsContent := ListFollowsContent{
+			FollowKey:        followAndUser.Follow.FollowKey,
+			UserKey:          followAndUser.User.UserKey,
+			FollowingUserKey: followAndUser.Follow.FollowingUserKey,
+			Mutual:           followAndUser.Follow.Mutual,
+			MutualFollowKey:  followAndUser.Follow.MutualFollowKey,
+			Status:           ToUserStatus(&followAndUser.User),
+		}
+		list = append(list, followsContent)
 	}
 
-	return &ListRoomUser{
+	return &ListFollows{
+		UserKey: userKey,
 		List:    list,
-		Message: "list user created",
+		Message: "list room user created",
 	}
 }
 

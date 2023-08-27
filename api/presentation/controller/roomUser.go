@@ -41,9 +41,10 @@ func NewRoomUserController(
 func (roomUserController *roomUserController) ListRoomUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		// parameters
+		userKey := c.Param("userKey")
 		roomKey := c.Param("roomKey")
 
-		roomUserResults, err := roomUserController.roomUserService.ListRoomUser(roomKey)
+		roomUserResults, err := roomUserController.roomUserService.ListRoomUser(userKey, roomKey)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("list_room_user", 500, out)
@@ -51,7 +52,7 @@ func (roomUserController *roomUserController) ListRoomUser() echo.HandlerFunc {
 			return c.JSON(500, response)
 		}
 
-		out := output.ToListRoomUser(roomUserResults)
+		out := output.ToListRoomUser(userKey, roomUserResults)
 		response := response.SuccessWith("list_room_user", 200, out)
 
 		return c.JSON(200, response)

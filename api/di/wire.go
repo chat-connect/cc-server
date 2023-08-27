@@ -37,6 +37,7 @@ func InitializeRoomUserController() controller.RoomUserController {
         dao.NewUserDao,
         dao.NewGenreDao,
         dao.NewGameDao,
+        dao.NewFollowDao,
         dao.NewTransactionDao,
         service.NewRoomService,
         service.NewRoomUserService,
