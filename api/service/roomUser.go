@@ -63,11 +63,6 @@ func (roomUserService *roomUserService) ListRoomUser(userKey, roomKey string) (*
 		return nil, err
 	}
 
-	var followingUserKeys []string
-	for _, follow := range *follows {
-		followingUserKeys = append(followingUserKeys, follow.FollowingUserKey)
-	}
-
 	followAndUsers := make(dto.FollowAndUsers, 0, len(*roomUsers))
 	for _, user := range *users {
 		followModel := &model.Follow{}
@@ -75,7 +70,9 @@ func (roomUserService *roomUserService) ListRoomUser(userKey, roomKey string) (*
 			if follow.FollowingUserKey == user.UserKey {
 				followModel.FollowKey = follow.FollowKey
 				followModel.UserKey = follow.UserKey
+				followModel.FollowingUserKey = follow.FollowingUserKey
 				followModel.Mutual = follow.Mutual
+				followModel.MutualFollowKey = follow.MutualFollowKey
 			}
 		}
 
