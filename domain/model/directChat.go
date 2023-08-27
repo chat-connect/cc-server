@@ -4,9 +4,9 @@ import (
 	"time"
 )
 
-type DirectMail struct {
+type DirectChat struct {
 	ID              int64     `json:"id"`
-	DirectMailKey   string    `json:"direct_mail_key"`
+	DirectChatKey   string    `json:"direct_mail_key"`
 	MutualFollowKey string    `json:"mutual_follow_key"`
 	UserKey         string    `json:"user_key"`
 	UserName        string    `json:"user_name"`
@@ -17,14 +17,14 @@ type DirectMail struct {
 	UpdatedAt       time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
-func EmptyDirectMail() *DirectMail {
-	return &DirectMail{}
+func EmptyDirectMail() *DirectChat {
+	return &DirectChat{}
 }
 
-func (directMail *DirectMail) IsEmpty() bool {
+func (directMail *DirectChat) IsEmpty() bool {
 	return (
 		directMail.ID == 0 &&
-		directMail.DirectMailKey == "" &&
+		directMail.DirectChatKey == "" &&
 		directMail.MutualFollowKey == "" &&
 		directMail.UserKey == "" &&
 		directMail.UserName == "" &&

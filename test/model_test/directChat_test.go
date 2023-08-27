@@ -7,22 +7,22 @@ import (
 	"github.com/game-connect/gc-server/domain/model"
 )
 
-func TestDirectMailModel_EmptyDirectMail(t *testing.T) {
+func TestDirectChat_EmptyDirectMail(t *testing.T) {
 	tests := []struct {
 		name     string
-		dm       *model.DirectMail
+		dm       *model.DirectChat
 		expected bool
 	}{
 		{
-			name:     "Empty DirectMail",
+			name:     "Empty DirectChat",
 			dm:       model.EmptyDirectMail(),
 			expected: true,
 		},
 		{
-			name: "Not Empty DirectMail",
-			dm: &model.DirectMail{
+			name: "Not Empty DirectChat",
+			dm: &model.DirectChat{
 				ID:              1,
-				DirectMailKey:   "test_key",
+				DirectChatKey:   "test_key",
 				MutualFollowKey: "test_follow_key",
 				UserKey:         "test_user_key",
 				UserName:        "test_user",

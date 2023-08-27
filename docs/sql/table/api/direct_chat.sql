@@ -1,7 +1,7 @@
 -- ダイレクトメール
-CREATE TABLE `direct_mail` (
+CREATE TABLE `direct_chat` (
     `id`                BIGINT       NOT NULL AUTO_INCREMENT COMMENT "ダイレクトメールID",
-    `direct_mail_key`   VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ダイレクトメールKEY",
+    `direct_chat_key`   VARCHAR(20)  NOT NULL UNIQUE KEY     COMMENT "ダイレクトメールKEY",
     `mutual_follow_key` VARCHAR(20)  NOT NULL                COMMENT "相互フォローKEY",
     `user_key`          VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
     `user_name`         VARCHAR(50)  NOT NULL                COMMENT "ユーザー名",
