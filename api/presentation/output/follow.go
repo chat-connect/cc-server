@@ -109,3 +109,13 @@ func ToCreateFollow(f *model.Follow) *CreateFollow {
 		Message:          "room follow completed",
 	}
 }
+
+type DeleteFollow struct {
+	Message  string `json:"message"`
+}
+
+func ToDeleteFollow() *DeleteFollow {
+	return &DeleteFollow{
+		Message: "delete follow completed",
+	}
+}

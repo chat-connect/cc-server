@@ -58,6 +58,7 @@ func Init() {
 	follow.GET("/:userKey/list_following", followController.ListFollowing()) // follow/:userKey/list_following
 	follow.GET("/:userKey/list_followers", followController.ListFollowers()) // follow/:userKey/list_followers
 	follow.POST("/:userKey/create_follow", followController.CreateFollow()) // follow/:userKey/create_follow
+	follow.PUT("/:userKey/delete_follow", followController.DeleteFollow()) // follow/:userKey/delete_follow
 
 	// chat: チャット関連
 	chat := e.Group("/chat")

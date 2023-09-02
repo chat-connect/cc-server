@@ -15,6 +15,7 @@ type FollowController interface {
 	ListFollowing() echo.HandlerFunc
 	ListFollowers() echo.HandlerFunc
 	CreateFollow() echo.HandlerFunc
+	DeleteFollow() echo.HandlerFunc
 }
 
 type followController struct {
@@ -141,7 +142,7 @@ func (followController *followController) CreateFollow() echo.HandlerFunc {
 		check, _ := followController.followService.FindByUserKeyAndFollowingUserKey(userKey, followParam.FollowingUserKey)
 		if check != nil && check.UserKey == userKey && check.FollowingUserKey ==followParam.FollowingUserKey {
 			out := output.NewError(fmt.Errorf("already followed"))
-			response := response.ErrorWith("chat_follow", 404, out)
+			response := response.ErrorWith("create_follow", 404, out)
 
 			return c.JSON(404, response)
 		}
@@ -149,13 +150,44 @@ func (followController *followController) CreateFollow() echo.HandlerFunc {
 		followResult, err := followController.followService.CreateFollow(userKey, followParam)
 		if err != nil {
 			out := output.NewError(err)
-			response := response.ErrorWith("chat_follow", 500, out)
+			response := response.ErrorWith("create_follow", 500, out)
 
 			return c.JSON(500, response)
 		}
 
 		out := output.ToCreateFollow(followResult)
-		response := response.SuccessWith("chat_follow", 200, out)
+		response := response.SuccessWith("create_follow", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// Delete
+// @Summary     フォロー削除
+// @tags        Follow
+// @Accept      json
+// @Produce     json
+// @Param       body body parameter.DeleteFollow true "フォロー作成"
+// @Success     200  {object} response.Success{items=output.DeleteFollow}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      follow/{userKey}/delete_follow [post]
+func (followController *followController) DeleteFollow() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		userKey := c.Param("userKey")
+		followParam := &parameter.DeleteFollow{}
+		c.Bind(followParam)
+
+		err := followController.followService.DeleteFollow(userKey, followParam)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("delete_follow", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToDeleteFollow()
+		response := response.SuccessWith("delete_follow", 200, out)
 
 		return c.JSON(200, response)
 	}

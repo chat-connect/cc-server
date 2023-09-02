@@ -127,3 +127,21 @@ func (followDao *followDao) Update(followModel *model.Follow, tx *gorm.DB) (*mod
 
 	return entity, nil
 }
+
+func (followDao *followDao) DeleteByUserKeyAndFollowingUserKey(userKey, followingUserKey string, tx *gorm.DB) (err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = followDao.Conn
+	}
+	
+	entity := &model.Follow{}
+
+	res := conn.Model(&model.Follow{}).Where("user_key = ?", userKey).Where("following_user_key = ?", followingUserKey).Delete(entity)
+	if err := res.Error; err != nil {
+		return err
+	}
+	
+	return err
+}

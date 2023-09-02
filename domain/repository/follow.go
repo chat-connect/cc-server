@@ -14,4 +14,5 @@ type FollowRepository interface {
 	ListByFollowingUserKey(followingUserKey string) (*model.Follows, error)
 	Insert(followModel *model.Follow, tx *gorm.DB) (*model.Follow, error)
 	Update(followModel *model.Follow, tx *gorm.DB) (*model.Follow, error)
+	DeleteByUserKeyAndFollowingUserKey(userKey, followingUserKey string, tx *gorm.DB) (error)
 }

@@ -17,6 +17,7 @@ type FollowService interface {
 	ListFollowing(userKey string) (*dto.FollowAndUsers, error)
 	ListFollowers(userKey string) (*dto.FollowAndUsers, error)
 	CreateFollow(userKey string, followParam *parameter.CreateFollow) (*model.Follow, error)
+	DeleteFollow(userKey string, followParam *parameter.DeleteFollow) error
 }
 
 type followService struct {
@@ -133,7 +134,7 @@ func (followService *followService) ListFollowers(userKey string) (*dto.FollowAn
 	return &followAndUsers, nil
 }
 
-// CreateChat チャットを作成する
+// CreateFollow フォローする
 func (followService *followService) CreateFollow(userKey string, followParam *parameter.CreateFollow) (*model.Follow, error) {
 	// transaction
 	tx, err := followService.transactionRepository.Begin()
@@ -193,4 +194,45 @@ func (followService *followService) CreateFollow(userKey string, followParam *pa
 	}
 
 	return followResult, nil
+}
+
+// DeleteFollow フォローを解除する
+func (followService *followService) DeleteFollow(userKey string, followParam *parameter.DeleteFollow) error {
+	// transaction
+	tx, err := followService.transactionRepository.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			err := followService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := followService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	err = followService.followRepository.DeleteByUserKeyAndFollowingUserKey(userKey, followParam.FollowingUserKey, tx)
+	if err != nil {
+		return err
+	}
+
+	// 相互フォローの確認
+	checkFollow, _ := followService.followRepository.FindByUserKeyAndFollowingUserKey(followParam.FollowingUserKey, userKey)
+	if checkFollow != nil {
+		checkFollow.Mutual = false
+		checkFollow.MutualFollowKey = ""
+		
+		_, err = followService.followRepository.Update(checkFollow, tx)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
