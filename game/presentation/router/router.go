@@ -34,7 +34,9 @@ func Init() {
 	// genre: ジャンル関連
 	genre := e.Group("/genre")
 	genre.GET("/list_genre", gameController.ListGenre()) // genre/list_genre
+	genre.POST("/list_genre_keys", gameController.ListGenreKeys()) // genre/list_genre_keys
 	genre.GET("/list_game", gameController.ListGame()) // genre/list_game
+	genre.POST("/list_game_keys", gameController.ListGameKeys()) // genre/list_game_keys
 	genre.GET("/list_genre_and_game", gameController.ListGenreAndGame()) // genre/list_game_and_game
 
 	// admin: 認証API

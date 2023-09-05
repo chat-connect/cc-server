@@ -9,6 +9,8 @@ import (
 	"github.com/game-connect/gc-server/domain/repository"
 	"github.com/game-connect/gc-server/api/presentation/parameter"
 	"github.com/game-connect/gc-server/config/key"
+	"github.com/game-connect/gc-server/infra/api"
+	apiParam "github.com/game-connect/gc-server/infra/api/parameter"
 )
 
 type RoomService interface {
@@ -23,8 +25,6 @@ type roomService struct {
 	roomRepository        repository.RoomRepository
 	roomUserRepository    repository.RoomUserRepository
 	userRepository        repository.UserRepository
-	genreRepository       repository.GenreRepository
-	gameRepository        repository.GameRepository
 	transactionRepository repository.TransactionRepository
 }
 
@@ -32,16 +32,12 @@ func NewRoomService(
 		roomRepository        repository.RoomRepository,
 		roomUserRepository    repository.RoomUserRepository,
 		userRepository        repository.UserRepository,
-		genreRepository       repository.GenreRepository,
-		gameRepository        repository.GameRepository,
 		transactionRepository repository.TransactionRepository,
 	) RoomService {
 	return &roomService{
 		roomRepository:        roomRepository,
 		roomUserRepository:    roomUserRepository,
 		userRepository:        userRepository,
-		genreRepository:       genreRepository,
-		gameRepository:        gameRepository,
 		transactionRepository: transactionRepository,
 	}
 }
@@ -74,18 +70,41 @@ func (roomService *roomService) ListRoom(userKey string) (roomResults *dto.RoomA
 		return nil, err
 	}
 
+	var genreKeys apiParam.GenreKeys
+	var gameKeys apiParam.GameKeys
+	genreMap := make(map[string]bool)
+	gameMap := make(map[string]bool)
+
+	for _, room := range *rooms {
+		if !genreMap[room.Genre] {
+			genreKey := apiParam.GenreKey{}
+			genreKey.GenreKey = room.Genre
+			genreKeys = append(genreKeys, genreKey)
+			genreMap[room.Genre] = true
+		}
+	
+		if !gameMap[room.Game] {
+			gameKey := apiParam.GameKey{}
+			gameKey.GameKey = room.Game
+			gameKeys = append(gameKeys, gameKey)
+			gameMap[room.Game] = true
+		}
+	}
+
+	genres, err := api.ListGenreKeys(&genreKeys)
+	if err != nil {
+		return nil, err
+	}
+
+	games, err := api.ListGameKeys(&gameKeys)
+	if err != nil {
+		return nil, err
+	}
+
 	roomItems := make(dto.RoomAndGenreAndGames, 0, len(*rooms))
 	for _, room := range *rooms {
-		ge, err := roomService.genreRepository.FindByGenreKey(room.Genre)
-		if err != nil {
-			return nil, err
-		}
-
-		ga, err := roomService.gameRepository.FindByGameKey(room.Game)
-		if err != nil {
-			return nil, err
-		}
-
+		ge := genres.SearchGenreKey(room.Genre)
+		ga := games.SearchGameKey(room.Game)
 		result := dto.RoomAndGenreAndGame{
 			Room:  room,
 			Genre: *ge,
@@ -154,17 +173,41 @@ func (roomService *roomService) SearchRoom(name string, genre string, game strin
 		}
 	}
 
+	var genreKeys apiParam.GenreKeys
+	var gameKeys apiParam.GameKeys
+	genreMap := make(map[string]bool)
+	gameMap := make(map[string]bool)
+
+	for _, room := range *rooms {
+		if !genreMap[room.Genre] {
+			genreKey := apiParam.GenreKey{}
+			genreKey.GenreKey = room.Genre
+			genreKeys = append(genreKeys, genreKey)
+			genreMap[room.Genre] = true
+		}
+	
+		if !gameMap[room.Game] {
+			gameKey := apiParam.GameKey{}
+			gameKey.GameKey = room.Game
+			gameKeys = append(gameKeys, gameKey)
+			gameMap[room.Game] = true
+		}
+	}
+
+	genres, err := api.ListGenreKeys(&genreKeys)
+	if err != nil {
+		return nil, err
+	}
+
+	games, err := api.ListGameKeys(&gameKeys)
+	if err != nil {
+		return nil, err
+	}
+
 	roomItems := make(dto.RoomAndGenreAndGames, 0, len(*rooms))
 	for _, room := range *rooms {
-		ge, err := roomService.genreRepository.FindByGenreKey(room.Genre)
-		if err != nil {
-			return nil, err
-		}
-
-		ga, err := roomService.gameRepository.FindByGameKey(room.Game)
-		if err != nil {
-			return nil, err
-		}
+		ge := genres.SearchGenreKey(room.Genre)
+		ga := games.SearchGameKey(room.Game)
 
 		result := dto.RoomAndGenreAndGame{
 			Room:  room,

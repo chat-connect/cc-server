@@ -32,3 +32,13 @@ func (game *Game) IsEmpty() bool {
 		game.GameTitle == "" &&
 		game.GameImagePath == "")
 }
+
+func (games *Games) SearchGameKey(gameKey string) *Game {
+	for _, game := range *games {
+		if game.GameKey == gameKey {
+			return &game
+		}
+	}
+	
+	return nil
+}

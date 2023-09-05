@@ -11,7 +11,9 @@ import (
 
 type GameController interface {
 	ListGenre() echo.HandlerFunc
+	ListGenreKeys() echo.HandlerFunc
 	ListGame() echo.HandlerFunc
+	ListGameKeys() echo.HandlerFunc
 	ListGenreAndGame() echo.HandlerFunc
 	CreateGame() echo.HandlerFunc
 }
@@ -52,6 +54,31 @@ func (gameController *gameController) ListGenre() echo.HandlerFunc {
 }
 
 // List
+// @Summary     ジャンル一覧取得
+// @tags        Genre
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListGenreKeys}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /genre/list_genre_keys [get]
+func (gameController *gameController) ListGenreKeys() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		genreResult, err := gameController.gameService.ListGenre()
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_genre_keys", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListGenre(genreResult)
+		response := response.SuccessWith("list_genre_keys", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// List
 // @Summary     ゲーム一覧取得
 // @tags        Game
 // @Accept      json
@@ -71,6 +98,31 @@ func (gameController *gameController) ListGame() echo.HandlerFunc {
 
 		out := output.ToListGame(gameResult)
 		response := response.SuccessWith("list_game", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// List
+// @Summary     ゲーム一覧取得
+// @tags        Game
+// @Accept      json
+// @Produce     json
+// @Success     200  {object} response.Success{items=output.ListGameKey}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /genre/list_game_keys [get]
+func (gameController *gameController) ListGameKeys() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		gameResult, err := gameController.gameService.ListGame()
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("list_game_keys", 500, out)
+			
+			return c.JSON(500, response)
+		}
+
+		out := output.ToListGame(gameResult)
+		response := response.SuccessWith("list_game_keys", 200, out)
 
 		return c.JSON(200, response)
 	}

@@ -28,3 +28,13 @@ func (genre *Genre) IsEmpty() bool {
 		genre.Description == "" &&
 		genre.Type == "")
 }
+
+func (genres *Genres) SearchGenreKey(genreKey string) *Genre {
+	for _, genre := range *genres {
+		if genre.GenreKey == genreKey {
+			return &genre
+		}
+	}
+	
+	return nil
+}
