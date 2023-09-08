@@ -8,6 +8,7 @@ import (
 
 type UserRepository interface {
 	FindByEmail(email string) (entity *model.User, err error)
+	FindByName(name string) (entity *model.Users, err error)
 	FindByUserKey(userKey string) (entity *model.User, err error)
 	ListByUserKeys(userKeys []string) (entity *model.Users, err error)
 	CountByStatus(status string) (count int64, err error)

@@ -27,6 +27,18 @@ func (userDao *userDao) FindByEmail(email string) (entity *model.User, err error
 	return entity, err
 }
 
+func (userDao *userDao) FindByName(name string) (entity *model.Users, err error) {
+	entity = &model.Users{}
+	res := userDao.Conn.
+		Where("name LIKE ?", "%" + name + "%").
+		Find(entity)
+	if err := res.Error; err != nil {
+		return entity, err
+	}
+	
+	return entity, err
+}
+
 func (userDao *userDao) FindByUserKey(userKey string) (entity *model.User, err error) {
 	entity = &model.User{}
 	res := userDao.Conn.Where("user_key = ?", userKey).Find(entity)

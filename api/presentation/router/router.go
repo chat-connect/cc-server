@@ -13,6 +13,7 @@ import (
 
 func Init() {
 	// di: wire ./api/di/wire.go
+	userController := di.InitializeUserController()
 	roomController := di.InitializeRoomController()
 	roomUserController := di.InitializeRoomUserController()
 	followController := di.InitializeFollowController()
@@ -31,6 +32,11 @@ func Init() {
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{ Output: log.GenerateApiLog() }))
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	// user: ユーザー関連
+	user := e.Group("/user")
+	user.Use(userMiddleware.UserMiddleware)
+	user.GET("/:userKey/search_user", userController.SearchUser()) // user/:userKey/search_user
 
 	// room: ルーム関連
 	room := e.Group("/room")

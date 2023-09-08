@@ -16,6 +16,16 @@ import (
 
 // Injectors from wire.go:
 
+// user
+func InitializeUserController() controller.UserController {
+	db := database.NewDB()
+	userRepository := dao.NewUserDao(db)
+	transactionRepository := dao.NewTransactionDao(db)
+	userService := service.NewUserService(userRepository, transactionRepository)
+	userController := controller.NewUserController(userService)
+	return userController
+}
+
 // room
 func InitializeRoomController() controller.RoomController {
 	db := database.NewDB()
