@@ -49,6 +49,16 @@ func (gameDao *gameDao) List() (entity *model.Games, err error) {
 	return entity, nil
 }
 
+func (gameDao *gameDao) ListByAdminUserKey(adminUserKey string) (entity *model.Games, err error) {
+	entity = &model.Games{}
+	res := gameDao.Conn.Where("admin_user_key = ?", adminUserKey).Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (gameDao *gameDao) Insert(gameModel *model.Game, tx *gorm.DB) (entity *model.Game, err error) {
 	var conn *gorm.DB
 	if tx != nil {

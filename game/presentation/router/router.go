@@ -50,10 +50,11 @@ func Init() {
 	admin.PUT("/logout_admin_user/:adminUserKey", adminUserController.LogoutAdminUser()) // admin/register_admin_logout/:adminUserKey
 	admin.DELETE("/delete_admin_user/:adminUserKey", adminUserController.DeleteAdminUser()) // admin/register_admin_delete/:adminUserKey
 
-	// admin: ゲームを登録
+	// link_game: ゲーム
 	linkGame := e.Group("/link_game")
 	linkGame.Use(adminUserMiddleware.CheckToken)
-	linkGame.POST("/:adminUserKey/create_game", gameController.CreateGame()) // linkGame/:adminUserKey/create_link_game
+	linkGame.POST("/:adminUserKey/create_game", gameController.CreateGame()) // linkGame/:adminUserKey/create_game
+	linkGame.GET("/:adminUserKey/list_game", gameController.ListGameByAdminUserKey()) // linkGame/:adminUserKey/list_game
 
 	// user: 認証API 
 	user := e.Group("/user")

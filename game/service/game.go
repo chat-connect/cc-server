@@ -14,6 +14,7 @@ type GameService interface {
 	FindByApiKey(apiKey string) (*model.Game, error)
 	ListGenre() (genreResult *model.Genres, err error)
 	ListGame() (gameResult *model.Games, err error)
+	ListGameByAdminUserKey(adminUserKey string) (gameResult *model.Games, err error)
 	CreateGame(adminUserKey string, gameParam *parameter.CreateGame) (*model.Game, error)
 }
 
@@ -61,6 +62,16 @@ func (gameService *gameService) ListGenre() (genreResult *model.Genres, err erro
 // ListGame ゲーム一覧を取得する
 func (gameService *gameService) ListGame() (genreResult *model.Games, err error) {
 	genreResult, err = gameService.gameRepository.List()
+	if err != nil {
+		return nil, err
+	}
+
+	return genreResult, nil
+}
+
+// ListGameByAdminUserKey 管理者ユーザーキーからゲーム一覧を取得する
+func (gameService *gameService) ListGameByAdminUserKey(adminUserKey string) (genreResult *model.Games, err error) {
+	genreResult, err = gameService.gameRepository.ListByAdminUserKey(adminUserKey)
 	if err != nil {
 		return nil, err
 	}

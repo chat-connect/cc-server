@@ -96,6 +96,40 @@ func ToListGame(c *model.Games) *ListGame {
 	}
 }
 
+type ListGameByAdminUserKey struct {
+	List    []ListGameByAdminUserKeyContent `json:"list"`
+	Message string             `json:"message"`
+}
+
+type ListGameByAdminUserKeyContent struct {
+	GameKey   string `json:"game_key"`
+	GenreKey  string `json:"genre_key"`
+	GameTitle string `json:"game_title"`
+	ApiKey    string `json:"api_key"`
+}
+
+func ToListGameByAdminUserKey(c *model.Games) *ListGameByAdminUserKey {
+	if c == nil {
+		return nil
+	}
+
+	var list []ListGameByAdminUserKeyContent
+	for _, genre := range *c {
+		genreContent := ListGameByAdminUserKeyContent{
+			GameKey:     genre.GameKey,
+			GenreKey:    genre.GenreKey,
+			GameTitle:   genre.GameTitle,
+			ApiKey:      genre.ApiKey,
+		}
+		list = append(list, genreContent)
+	}
+
+	return &ListGameByAdminUserKey{
+		List:    list,
+		Message: "game list created",
+	}
+}
+
 type ListGenreAndGame struct {
 	ListGenre []ListGenreContent `json:"list_genre"`
 	ListGame  []ListGameContent  `json:"list_game"`

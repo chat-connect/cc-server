@@ -10,5 +10,6 @@ type GameRepository interface {
 	FindByGameKey(gameKey string) (entity *model.Game, err error)
 	FindByApiKey(apiKey string) (entity *model.Game, err error)
 	List() (entity *model.Games, err error)
+	ListByAdminUserKey(adminUserKey string) (entity *model.Games, err error)
 	Insert(linkgameModel *model.Game, tx *gorm.DB) (entity *model.Game, err error)
 }
