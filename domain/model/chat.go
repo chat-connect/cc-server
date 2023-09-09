@@ -2,6 +2,8 @@ package model
 
 import (
     "time"
+
+	"gorm.io/plugin/soft_delete"
 )
 
 type Chats []Chat
@@ -15,6 +17,7 @@ type Chat struct {
  	Content    string    `json:"content"`
 	ImagePath string     `json:"image_path"`
 	PostedAt   time.Time `json:"posted_at"`
+	Deleted    soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
 	CreatedAt  time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt  time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }

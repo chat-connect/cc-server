@@ -2,6 +2,8 @@ package model
 
 import (
     "time"
+
+	"gorm.io/plugin/soft_delete"
 )
 
 type Games []Game
@@ -14,6 +16,7 @@ type Game struct {
 	ApiKey        string    `json:"api_key"`
 	GameTitle     string    `json:"game_title"`
 	GameImagePath string    `json:"game_image_path"`
+	Deleted       soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
 	CreatedAt     time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt     time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }

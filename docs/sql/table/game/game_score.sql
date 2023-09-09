@@ -9,6 +9,7 @@ CREATE TABLE `game_score` (
     `game_rank`             INT          NOT NULL                COMMENT "ランク",
     `game_play_time`        INT          NOT NULL                COMMENT "プレイ時間",
     `game_score_image_path` VARCHAR(191) NOT NULL                COMMENT "画像パス",
+    `deleted`               TINYINT      NOT NULL DEFAULT "0"    COMMENT "削除状態",
     `created_at`            TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at`            TIMESTAMP    NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

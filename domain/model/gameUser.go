@@ -2,6 +2,8 @@ package model
 
 import (
     "time"
+
+	"gorm.io/plugin/soft_delete"
 )
 
 type GameUsers []GameUser
@@ -11,8 +13,9 @@ type GameUser struct {
 	GameUserKey string  `json:"game_user_key"`
 	UserKey     string  `json:"user_key"`
 	GameKey     string  `json:"link_game_key"`
-	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
-    UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	Deleted     soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
+	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
+    UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
 func EmptyGameUser() *GameUser {

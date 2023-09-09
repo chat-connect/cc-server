@@ -6,6 +6,7 @@ CREATE TABLE `channel` (
     `name`        VARCHAR(50)  NOT NULL                COMMENT "チャンネル名",
     `description` VARCHAR(191) NOT NULL                COMMENT "説明",
     `type`        VARCHAR(191) NOT NULL                COMMENT "種別",
+    `deleted`     TINYINT      NOT NULL DEFAULT "0"    COMMENT "削除状態",
     `created_at`  TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at`  TIMESTAMP    NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

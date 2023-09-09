@@ -6,6 +6,7 @@ CREATE TABLE `follow` (
     `following_user_key` VARCHAR(50)  NOT NULL                COMMENT "フォローされているユーザーKEY",
     `mutual`             TINYINT      NOT NULL DEFAULT "0"    COMMENT "相互状態",
     `mutual_follow_key`  VARCHAR(20)  NOT NULL                COMMENT "相互フォローKEY",
+    `deleted`            TINYINT      NOT NULL DEFAULT "0"    COMMENT "削除状態",
     `created_at`         TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at`         TIMESTAMP    NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

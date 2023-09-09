@@ -2,6 +2,8 @@ package model
 
 import (
     "time"
+
+	"gorm.io/plugin/soft_delete"
 )
 
 type RoomUsers []RoomUser
@@ -13,6 +15,7 @@ type RoomUser struct {
 	UserKey     string     `json:"user_key"`
 	Host        bool      `json:"host"`
  	Status      string    `json:"status"`
+	Deleted     soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
