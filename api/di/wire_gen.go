@@ -20,8 +20,9 @@ import (
 func InitializeUserController() controller.UserController {
 	db := database.NewDB()
 	userRepository := dao.NewUserDao(db)
+	followRepository := dao.NewFollowDao(db)
 	transactionRepository := dao.NewTransactionDao(db)
-	userService := service.NewUserService(userRepository, transactionRepository)
+	userService := service.NewUserService(userRepository, followRepository, transactionRepository)
 	userController := controller.NewUserController(userService)
 	return userController
 }

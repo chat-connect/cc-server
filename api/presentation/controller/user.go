@@ -33,9 +33,10 @@ func NewUserController(userService service.UserService) UserController {
 // @Router      /auth/user_register [post]
 func (userController *userController) SearchUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		userKey := c.Param("userKey")
 		name := c.QueryParam("name")
 
-		userResults, err := userController.userService.SearchUser(name)
+		userResults, err := userController.userService.SearchUser(userKey, name)
 		if err != nil {
 			out := output.NewError(err)
 			response := response.ErrorWith("search_user", 500, out)

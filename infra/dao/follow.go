@@ -43,6 +43,18 @@ func (followDao *followDao) CountByFollowingUserKey(followingUserKey string) (co
 	return count, err
 }
 
+func (followDao *followDao) FindByUserKey(userKey string) (*model.Follow, error) {
+	entity := &model.Follow{}
+	res := followDao.Conn.
+		Where("user_key = ?", userKey).
+		Find(entity)
+	if err := res.Error; err != nil {
+		return nil, err
+	}
+	
+	return entity, nil
+}
+
 func (followDao *followDao) FindByUserKeyAndFollowingUserKey(userKey, followingUserKey string) (*model.Follow, error) {
 	entity := &model.Follow{}
 	res := followDao.Conn.

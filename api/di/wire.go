@@ -17,6 +17,7 @@ func InitializeUserController() controller.UserController {
     wire.Build(
         database.NewDB,
         dao.NewUserDao,
+        dao.NewFollowDao,
         dao.NewTransactionDao,
         service.NewUserService,
         controller.NewUserController,
