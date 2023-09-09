@@ -16,6 +16,7 @@ type GameService interface {
 	ListGame() (gameResult *model.Games, err error)
 	ListGameByAdminUserKey(adminUserKey string) (gameResult *model.Games, err error)
 	CreateGame(adminUserKey string, gameParam *parameter.CreateGame) (*model.Game, error)
+	DeleteGame(gameKey string) (error)
 }
 
 type gameService struct {
@@ -141,4 +142,33 @@ func (gameService *gameService) CreateGame(adminUserKey string, gameParam *param
 	}
 
 	return gameResult, nil
+}
+
+// DeleteGame ユーザーを削除する
+func (gameService *gameService) DeleteGame(gameKey string) (error) {
+	// transaction
+	tx, err := gameService.transactionRepository.Begin()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			err := gameService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := gameService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	err = gameService.gameRepository.DeleteByGameKey(gameKey, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -83,3 +83,21 @@ func (gameDao *gameDao) Insert(gameModel *model.Game, tx *gorm.DB) (entity *mode
 
 	return entity, nil
 }
+
+func (gameDao *gameDao) DeleteByGameKey(gameKey string, tx *gorm.DB) (err error) {
+	var conn *gorm.DB
+	if tx != nil {
+		conn = tx
+	} else {
+		conn = gameDao.Conn
+	}
+	
+	entity := &model.Game{}
+
+	res := conn.Model(&model.Game{}).Where("game_key = ?", gameKey).Delete(entity)
+	if err := res.Error; err != nil {
+		return err
+	}
+	
+	return err
+}

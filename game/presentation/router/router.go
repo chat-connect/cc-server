@@ -53,10 +53,11 @@ func Init() {
 	// link_game: ゲーム
 	linkGame := e.Group("/link_game")
 	linkGame.Use(adminUserMiddleware.CheckToken)
-	linkGame.POST("/:adminUserKey/create_game", gameController.CreateGame()) // linkGame/:adminUserKey/create_game
-	linkGame.GET("/:adminUserKey/list_game", gameController.ListGameByAdminUserKey()) // linkGame/:adminUserKey/list_game
+	linkGame.POST("/:adminUserKey/create_game", gameController.CreateGame()) // link_game/:adminUserKey/create_game
+	linkGame.DELETE("/:adminUserKey/delete_game/:gameKey", gameController.DeleteGame()) // link_game/:adminUserKey/delete_game
+	linkGame.GET("/:adminUserKey/list_game", gameController.ListGameByAdminUserKey()) // link_game/:adminUserKey/list_game
 
-	// user: 認証API 
+	// user: 認証API
 	user := e.Group("/user")
 	user.Use(gameMiddleware.CheckApiKey)
 	user.POST("/login_user", userController.LoginUser()) // user/login_user

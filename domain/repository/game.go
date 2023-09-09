@@ -12,4 +12,5 @@ type GameRepository interface {
 	List() (entity *model.Games, err error)
 	ListByAdminUserKey(adminUserKey string) (entity *model.Games, err error)
 	Insert(linkgameModel *model.Game, tx *gorm.DB) (entity *model.Game, err error)
+	DeleteByGameKey(gameKey string, tx *gorm.DB) (err error)
 }

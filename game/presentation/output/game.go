@@ -173,3 +173,13 @@ func ToListGenreAndGame(ge *model.Genres, ga *model.Games) *ListGenreAndGame {
 		Message:   "list genre and game created",
 	}
 }
+
+type DeleteGame struct {
+	Message string `json:"message"`
+}
+
+func ToDeleteGame() *DeleteGame {
+	return &DeleteGame{
+		Message: "delete game completed",
+	}
+}

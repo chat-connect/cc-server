@@ -17,6 +17,7 @@ type GameController interface {
 	ListGameKeys() echo.HandlerFunc
 	ListGenreAndGame() echo.HandlerFunc
 	CreateGame() echo.HandlerFunc
+	DeleteGame() echo.HandlerFunc
 }
 
 type gameController struct {
@@ -214,6 +215,35 @@ func (gameController *gameController) CreateGame() echo.HandlerFunc {
 
 		out := output.ToCreateGame(linkGameResult)
 		response := response.SuccessWith("create_game", 200, out)
+
+		return c.JSON(200, response)
+	}
+}
+
+// Create
+// @Summary     連携ゲーム削除
+// @tags        LinkGame
+// @Accept      json
+// @Produce     json
+// @Param       body body parameter.DeleteGame true "連携ゲーム削除"
+// @Success     200  {object} response.Success{items=output.DeleteGame}
+// @Failure     500  {object} response.Error{errors=output.Error}
+// @Router      /link_game/{admin_user_key}/delete_game  [post]
+func (gameController *gameController) DeleteGame() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// parameters
+		gameKey := c.Param("gameKey")
+
+		err := gameController.gameService.DeleteGame(gameKey)
+		if err != nil {
+			out := output.NewError(err)
+			response := response.ErrorWith("delete_game", 500, out)
+
+			return c.JSON(500, response)
+		}
+
+		out := output.ToDeleteGame()
+		response := response.SuccessWith("delete_game", 200, out)
 
 		return c.JSON(200, response)
 	}
