@@ -3,7 +3,7 @@ package model
 import (
     "time"
 
-	"gorm.io/plugin/soft_delete"
+	"gorm.io/gorm"
 )
 
 type GameUsers []GameUser
@@ -13,7 +13,7 @@ type GameUser struct {
 	GameUserKey string  `json:"game_user_key"`
 	UserKey     string  `json:"user_key"`
 	GameKey     string  `json:"link_game_key"`
-	Deleted     soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
+	DeletedAt   gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }

@@ -3,7 +3,7 @@ package model
 import (
     "time"
 
-	"gorm.io/plugin/soft_delete"
+	"gorm.io/gorm"
 )
 
 type Genres []Genre
@@ -14,7 +14,7 @@ type Genre struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Type        string    `json:"type"`
-	Deleted     soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
+	DeletedAt   gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }

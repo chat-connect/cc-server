@@ -3,7 +3,7 @@ package model
 import (
     "time"
 
-	"gorm.io/plugin/soft_delete"
+	"gorm.io/gorm"
 )
 
 type Follows []Follow
@@ -15,7 +15,7 @@ type Follow struct {
 	FollowingUserKey string    `json:"following_user_key"`
 	Mutual           bool      `json:"mutual"`
 	MutualFollowKey  string    `json:"mutual_follow_key"`
-	Deleted          soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
+	DeletedAt        gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 	CreatedAt        time.Time `json:"created_at" gorm:"autoCreateTime"`
     UpdatedAt        time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }

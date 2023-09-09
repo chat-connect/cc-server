@@ -8,7 +8,7 @@ CREATE TABLE `game_setting` (
     `game_rank`             TINYINT     NOT NULL DEFAULT "0"    COMMENT "ランク",
     `game_play_time`        TINYINT     NOT NULL DEFAULT "0"    COMMENT "プレイ時間",
     `game_score_image_path` TINYINT     NOT NULL DEFAULT "0"    COMMENT "画像パス",
-    `deleted`               TINYINT      NOT NULL DEFAULT "0"    COMMENT "削除状態",
+    `deleted_at`            TIMESTAMP    DEFAULT NULL            COMMENT "削除日時",
     `created_at`            TIMESTAMP   NOT NULL                COMMENT "作成日時",
     `updated_at`            TIMESTAMP   NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

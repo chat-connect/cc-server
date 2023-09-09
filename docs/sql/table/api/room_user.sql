@@ -6,7 +6,7 @@ CREATE TABLE `room_user` (
     `user_key`      VARCHAR(20)  NOT NULL                COMMENT "ユーザーKEY",
     `host`          TINYINT      NOT NULL DEFAULT "0"    COMMENT "ホストユーザー",
     `status`        VARCHAR(191) NOT NULL                COMMENT "状態",
-    `deleted`       TINYINT      NOT NULL DEFAULT "0"    COMMENT "削除状態",
+    `deleted_at`    TIMESTAMP    DEFAULT NULL            COMMENT "削除日時",
     `created_at`    TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at`    TIMESTAMP    NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

@@ -8,7 +8,7 @@ CREATE TABLE `user` (
     `token`      VARCHAR(255) NOT NULL                COMMENT "アクセストークン",
     `status`     VARCHAR(191) NOT NULL                COMMENT "状態",
     `image_path` VARCHAR(191) NOT NULL                COMMENT "画像パス",
-    `deleted`    TINYINT      NOT NULL DEFAULT "0"    COMMENT "削除状態",
+    `deleted_at` TIMESTAMP    DEFAULT NULL            COMMENT "削除日時",
     `created_at` TIMESTAMP    NOT NULL                COMMENT "作成日時",
     `updated_at` TIMESTAMP    NOT NULL                COMMENT "更新日時",
     PRIMARY KEY (`id`)

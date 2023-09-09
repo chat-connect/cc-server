@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"gorm.io/plugin/soft_delete"
+	"gorm.io/gorm"
 )
 
 type GameSetting struct {
@@ -15,7 +15,7 @@ type GameSetting struct {
 	GameRank           bool       `json:"game_rank"`
 	GamePlayTime       bool       `json:"game_play_time"`
 	GameScoreImagePath bool       `json:"game_score_image_path"`
-	Deleted            soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
+	DeletedAt          gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 	CreatedAt          time.Time  `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt          time.Time  `json:"updated_at" gorm:"autoUpdateTime"`
 }

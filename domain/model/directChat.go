@@ -3,7 +3,7 @@ package model
 import (
 	"time"
 
-	"gorm.io/plugin/soft_delete"
+	"gorm.io/gorm"
 )
 
 type DirectChat struct {
@@ -15,7 +15,7 @@ type DirectChat struct {
 	Content         string    `json:"content"`
 	ImagePath       string    `json:"image_path"`
 	PostedAt        time.Time `json:"posted_at"`
-	Deleted         soft_delete.DeletedAt `json:"deleted" gorm:"uniqueIndex:udx_name"`
+	DeletedAt       gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 	CreatedAt       time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt       time.Time `json:"updated_at" gorm:"autoUpdateTime"`
 }
