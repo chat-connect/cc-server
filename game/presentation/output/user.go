@@ -10,6 +10,7 @@ type LoginUser struct {
 	Email     string `json:"email"`
 	Token     string `json:"token"`
 	ImagePath string `json:"image_path"`
+	Description string `json:"description"`
 	Message   string `json:"message"`
 }
 
@@ -20,6 +21,7 @@ func ToLoginUser(u *model.User) *LoginUser {
 		Email:     u.Email,
 		Token:     u.Token,
 		ImagePath: u.ImagePath,
+		Description: u.Description,
 		Message:   "user login completed",
 	}
 }
