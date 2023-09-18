@@ -1,6 +1,9 @@
 package service
 
 import (
+	"log"
+
+	"github.com/game-connect/gc-server/api/presentation/parameter"
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/dto"
 	"github.com/game-connect/gc-server/domain/repository"
@@ -8,6 +11,7 @@ import (
 
 type UserService interface {
 	FindByUserKey(userKey string) (*model.User, error)
+	UpdateUser(userKey string, userParam *parameter.UpdateUser) (*model.User, error)
 	SearchUser(userKey, name string) (*dto.SearchUsers, error)
 }
 
@@ -32,6 +36,50 @@ func NewUserService(
 // FindByUserKey ユーザーを取得する
 func (userService *userService) FindByUserKey(userKey string) (*model.User, error) {
 	userResult, err := userService.userRepository.FindByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return userResult, nil
+}
+
+// UpdateUser ユーザーを更新する
+func (userService *userService) UpdateUser(userKey string, userParam *parameter.UpdateUser) (*model.User, error) {
+	checkUser, err := userService.userRepository.FindByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	userModel := &model.User{}
+	userModel.UserKey = userKey
+	userModel.Email = userParam.Email
+	userModel.Name = userParam.Name
+	userModel.Password = userParam.Password
+	userModel.Status = checkUser.Status
+	userModel.Description = userParam.Description
+	userModel.Token = checkUser.Token
+	userModel.ImagePath = "/user/" + userKey + ".png"
+
+	// transaction
+	tx, err := userService.transactionRepository.Begin()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if err != nil {
+			err := userService.transactionRepository.Rollback(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		} else {
+			err := userService.transactionRepository.Commit(tx)
+			if err != nil {
+				log.Panicln(err)
+			}
+		}
+	}()
+
+	userResult, err := userService.userRepository.Update(userModel, tx)
 	if err != nil {
 		return nil, err
 	}
