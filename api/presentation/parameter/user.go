@@ -17,6 +17,7 @@ type UpdateUser struct {
 	Email       string  `json:"email"`
 	Password    string  `json:"password"`
 	Description string  `json:"description"`
+	UserImage *string `json:"user_image"`
 }
 
 type UserKey struct {
