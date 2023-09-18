@@ -36,6 +36,7 @@ func Init() {
 	// user: ユーザー関連
 	user := e.Group("/user")
 	user.Use(userMiddleware.UserMiddleware)
+	user.GET("/:userKey/get_user", userController.GetUser()) // user/:userKey/get_user
 	user.GET("/:userKey/search_user", userController.SearchUser()) // user/:userKey/search_user
 
 	// room: ルーム関連

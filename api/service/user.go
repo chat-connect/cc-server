@@ -1,11 +1,13 @@
 package service
 
 import (
+	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/dto"
 	"github.com/game-connect/gc-server/domain/repository"
 )
 
 type UserService interface {
+	FindByUserKey(userKey string) (*model.User, error)
 	SearchUser(userKey, name string) (*dto.SearchUsers, error)
 }
 
@@ -25,6 +27,16 @@ func NewUserService(
 		followRepository:      followRepository,
 		transactionRepository: transactionRepository,
 	}
+}
+
+// FindByUserKey ユーザーを取得する
+func (userService *userService) FindByUserKey(userKey string) (*model.User, error) {
+	userResult, err := userService.userRepository.FindByUserKey(userKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return userResult, nil
 }
 
 // SearchUser ユーザーを検索する

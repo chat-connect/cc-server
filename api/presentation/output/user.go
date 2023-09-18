@@ -1,8 +1,31 @@
 package output
 
 import (
+	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/dto"
 )
+
+type GetUser struct {
+	UserKey     string `json:"user_key"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	Token       string `json:"token"`
+	ImagePath   string `json:"image_path"`
+	Message     string `json:"message"`
+	Description string `json:"description"`
+}
+
+func ToGetUser(u *model.User) *GetUser {
+	return &GetUser{
+		UserKey:     u.UserKey,
+		Name:        u.Name,
+		Email:       u.Email,
+		Token:       u.Token,
+		ImagePath:   u.ImagePath,
+		Description: u.Description,
+		Message:     "get user completed",
+	}
+}
 
 type SearchUser struct {
 	List    []SearchUserContent `json:"list"`

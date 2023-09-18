@@ -9,18 +9,18 @@ import (
 type Users []User
 
 type User struct {
-	ID          int64     `json:"id"`
-	UserKey     string    `json:"user_key"`
-	Name        string    `json:"name"`
-	Email       string    `json:"email"`
-	Password    string    `json:"password"`
-	Token       string    `json:"token"`
-	Status      string    `json:"status"`
-	Description string  `json:"description"`
-	ImagePath   string    `json:"image_path"`
+	ID          int64          `json:"id"`
+	UserKey     string         `json:"user_key"`
+	Name        string         `json:"name"`
+	Email       string         `json:"email"`
+	Password    string         `json:"password"`
+	Token       string         `json:"token"`
+	Status      string         `json:"status"`
+	Description string         `json:"description"`
+	ImagePath   string         `json:"image_path"`
 	DeletedAt   gorm.DeletedAt `json:"deleted_at" gorm:"index"`
-	CreatedAt   time.Time `json:"created_at" gorm:"autoCreateTime"`
-    UpdatedAt   time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	CreatedAt   time.Time      `json:"created_at" gorm:"autoCreateTime"`
+    UpdatedAt   time.Time      `json:"updated_at" gorm:"autoUpdateTime"`
 }
 
 func EmptyUser() *User {
