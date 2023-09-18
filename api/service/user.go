@@ -2,7 +2,6 @@ package service
 
 import (
 	"log"
-	"golang.org/x/crypto/bcrypt"
 
 	"github.com/game-connect/gc-server/api/presentation/parameter"
 	"github.com/game-connect/gc-server/domain/model"
@@ -51,17 +50,11 @@ func (userService *userService) UpdateUser(userKey string, userParam *parameter.
 		return nil, err
 	}
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userParam.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return nil, err
-	}
-	password := string(hashedPassword)
-
 	userModel := &model.User{}
 	userModel.UserKey = userKey
 	userModel.Email = userParam.Email
 	userModel.Name = userParam.Name
-	userModel.Password = password
+	userModel.Password = checkUser.Password
 	userModel.Status = checkUser.Status
 	userModel.Description = userParam.Description
 	userModel.Token = checkUser.Token
