@@ -7,6 +7,7 @@ import (
 	"github.com/game-connect/gc-server/domain/model"
 	"github.com/game-connect/gc-server/domain/dto"
 	"github.com/game-connect/gc-server/domain/repository"
+	"github.com/game-connect/gc-server/infra/api"
 )
 
 type UserService interface {
@@ -82,6 +83,14 @@ func (userService *userService) UpdateUser(userKey string, userParam *parameter.
 	userResult, err := userService.userRepository.Update(userModel, tx)
 	if err != nil {
 		return nil, err
+	}
+
+	// プロフィール画像をアップロード
+	if userParam.UserImage != nil {
+		err = api.UploadImage(*userParam.UserImage, userKey, "/user")
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return userResult, nil
