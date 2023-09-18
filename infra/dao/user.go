@@ -74,13 +74,14 @@ func (userDao *userDao) CountByStatus(status string) (count int64, err error) {
 
 func (userDao *userDao) Insert(param *model.User, tx *gorm.DB) (entity *model.User, err error) {
 	entity = &model.User{
-		UserKey:   param.UserKey,
-		Name:      param.Name,
-		Email:     param.Email,
-		Password:  param.Password,
-		Token:     param.Token,
-		Status:    param.Status,
-		ImagePath: param.ImagePath,
+		UserKey:     param.UserKey,
+		Name:        param.Name,
+		Email:       param.Email,
+		Password:    param.Password,
+		Token:       param.Token,
+		Status:      param.Status,
+		ImagePath:   param.ImagePath,
+		Description: param.Description,
 	}
 
 	var conn *gorm.DB
@@ -107,12 +108,14 @@ func (userDao *userDao) Update(param *model.User, tx *gorm.DB) (entity *model.Us
 	}
 	
 	entity = &model.User{
-		UserKey:  param.UserKey,
-		Name:     param.Name,
-		Email:    param.Email,
-		Password: param.Password,
-		Token:    param.Token,
-		Status:   param.Status,
+		UserKey:     param.UserKey,
+		Name:        param.Name,
+		Email:       param.Email,
+		Password:    param.Password,
+		Token:       param.Token,
+		Status:      param.Status,
+		ImagePath:   param.ImagePath,
+		Description: param.Description,
 	}
 
 	res := conn.Model(&model.User{}).Where("user_key = ?", entity.UserKey).Update(entity)

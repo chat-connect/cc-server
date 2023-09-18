@@ -97,6 +97,7 @@ func (userService *userService) RegisterUser(userParam *parameter.RegisterUser) 
 	userModel.Name = userParam.Name
 	userModel.Password = password
 	userModel.Status = "not_linked"
+	userModel.Description = ""
 	userModel.Token = "nil"
 	userModel.ImagePath = "/user/" + userKey + ".png"
 
