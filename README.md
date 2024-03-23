@@ -1,5 +1,5 @@
 # cc-server
-chat-connectのサーバー。
+ゲーム連携型チャットアプリケーション。
 
 ## URL
 - APIサーバー：[http://localhost:8001]()
